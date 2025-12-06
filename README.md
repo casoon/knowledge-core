@@ -4,82 +4,82 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
 
-> Modernes Monorepo-Template für Dokumentations- und Kursplattformen
+> Modern monorepo template for documentation and course platforms
 
-Ein produktionsreifes Template basierend auf **Astro**, **MDX**, **Tailwind CSS** und **pnpm Workspaces** - optimiert für die Erstellung von technischer Dokumentation und interaktiven Lernplattformen.
+A production-ready template based on **Astro**, **MDX**, **Tailwind CSS**, and **pnpm Workspaces** - optimized for creating technical documentation and interactive learning platforms.
 
 ## ✨ Features
 
-- 🚀 **Astro 5** - Schnelles, modernes Frontend-Framework
-- 📝 **MDX** - Markdown mit React-Komponenten
-- 🎨 **Tailwind CSS** - Utility-First CSS mit Dark Mode
-- 📦 **pnpm Workspaces** - Monorepo-Struktur
-- ⚡ **Volta** - Automatisches Node-Version-Management
-- 🧩 **Shared Components** - Wiederverwendbare UI-Komponenten
-- 🎓 **Interaktive Kurse** - Quiz, Übungen, Fortschritts-Tracking
-- 🌙 **Dark Mode** - Mit Theme-Persistence
-- 🔍 **Type-Safe** - TypeScript + Zod-Schemas
+- 🚀 **Astro 5** - Fast, modern frontend framework
+- 📝 **MDX** - Markdown with React components
+- 🎨 **Tailwind CSS** - Utility-first CSS with dark mode
+- 📦 **pnpm Workspaces** - Monorepo structure
+- ⚡ **Volta** - Automatic Node version management
+- 🧩 **Shared Components** - Reusable UI components
+- 🎓 **Interactive Courses** - Quiz, exercises, progress tracking
+- 🌙 **Dark Mode** - With theme persistence
+- 🔍 **Type-Safe** - TypeScript + Zod schemas
 
 ## 🎯 Use Cases
 
-- **Technische Dokumentation** - API-Referenzen, Guides, Tutorials
-- **Kursplattformen** - Interaktive Lernstrecken mit Quiz und Übungen
-- **Knowledge Bases** - Interne Dokumentation für Teams
-- **Developer Portals** - Entwickler-Ressourcen und Guides
+- **Technical Documentation** - API references, guides, tutorials
+- **Course Platforms** - Interactive learning paths with quizzes and exercises
+- **Knowledge Bases** - Internal documentation for teams
+- **Developer Portals** - Developer resources and guides
 
 ## 🚀 Quick Start
 
-### Voraussetzungen
+### Prerequisites
 
-- Node.js 24 oder höher
-- pnpm 9 oder höher
-- Volta (empfohlen)
+- Node.js 24 or higher
+- pnpm 9 or higher
+- Volta (recommended)
 
 ### Installation
 
-**Option 1: GitHub Template verwenden (empfohlen)**
+**Option 1: Use GitHub Template (recommended)**
 
-1. Klicke auf "Use this template" oben auf der GitHub-Seite
-2. Gib deinem Projekt einen Namen
-3. Clone dein neues Repository:
+1. Click "Use this template" at the top of the GitHub page
+2. Give your project a name
+3. Clone your new repository:
    ```bash
    git clone https://github.com/yourusername/your-project.git
    cd your-project
    ```
 
-**Option 2: Direktes Klonen**
+**Option 2: Direct Clone**
 
 ```bash
 git clone https://github.com/casoon/knowledge-core.git
 cd knowledge-core
 ```
 
-### Nach der Installation
+### After Installation
 
 ```bash
-# 1. Dependencies installieren
+# 1. Install dependencies
 pnpm install
 
-# 2. (Optional) Package-Namen personalisieren
-# Ändere @knowledge-core/* in deinen eigenen Namen in:
-# - package.json (alle Packages)
-# - Import-Statements in den Apps
+# 2. (Optional) Customize package names
+# Change @knowledge-core/* to your own scope in:
+# - package.json files (all packages)
+# - Import statements in apps
 
-# 3. Projekt starten
+# 3. Start the project
 pnpm dev
 ```
 
 ### Development
 
 ```bash
-# Beide Apps starten
+# Start both apps
 pnpm dev
 
-# Nur Dokumentation
+# Documentation only
 pnpm dev:docs
 # → http://localhost:4321
 
-# Nur Kursplattform
+# Courses only
 pnpm dev:courses
 # → http://localhost:4322
 ```
@@ -87,55 +87,55 @@ pnpm dev:courses
 ### Build
 
 ```bash
-# Alle Apps bauen
+# Build all apps
 pnpm build
 
-# Einzelne App
+# Build individual app
 pnpm build:docs
 pnpm build:courses
 ```
 
-## 📁 Projektstruktur
+## 📁 Project Structure
 
 ```
 knowledge-core/
 ├── apps/
-│   ├── docs/              # Dokumentations-App
+│   ├── docs/              # Documentation app
 │   │   ├── src/
-│   │   │   ├── content/   # MDX-Dateien
-│   │   │   ├── layouts/   # Astro-Layouts
-│   │   │   └── pages/     # Seiten & Routing
+│   │   │   ├── content/   # MDX files
+│   │   │   ├── layouts/   # Astro layouts
+│   │   │   └── pages/     # Pages & routing
 │   │   └── package.json
 │   │
-│   └── courses/           # Kursplattform-App
+│   └── courses/           # Course platform app
 │       ├── src/
 │       │   ├── content/
-│       │   │   ├── courses/  # Kurs-Definitionen
-│       │   │   └── lessons/  # Lektionen (MDX)
+│       │   │   ├── courses/  # Course definitions
+│       │   │   └── lessons/  # Lessons (MDX)
 │       │   ├── layouts/
 │       │   └── pages/
 │       └── package.json
 │
 ├── packages/
-│   ├── ui/                # Shared UI-Komponenten
-│   ├── styles/            # Tailwind + Theming
-│   ├── content-model/     # Type Definitions
-│   └── config/            # Shared Configs
+│   ├── ui/                # Shared UI components
+│   ├── styles/            # Tailwind + theming
+│   ├── content-model/     # Type definitions
+│   └── config/            # Shared configs
 │
-├── package.json           # Root Package
+├── package.json           # Root package
 └── pnpm-workspace.yaml
 ```
 
-## 📝 Inhalte erstellen
+## 📝 Creating Content
 
-### Dokumentationsseite
+### Documentation Page
 
-Erstelle eine MDX-Datei in `apps/docs/src/content/docs/`:
+Create an MDX file in `apps/docs/src/content/docs/`:
 
 ```mdx
 ---
-title: Meine Seite
-description: Beschreibung
+title: My Page
+description: Description
 category: guides
 order: 1
 tags: [tutorial]
@@ -144,22 +144,22 @@ status: stable
 
 import { Callout } from '@knowledge-core/ui';
 
-# Meine Seite
+# My Page
 
 <Callout type="info">
-Wichtige Information!
+Important information!
 </Callout>
 ```
 
-### Kurs erstellen
+### Creating a Course
 
-1. **Kurs-Definition** in `apps/courses/src/content/courses/my-course.json`:
+1. **Course definition** in `apps/courses/src/content/courses/my-course.json`:
 
 ```json
 {
-  "title": "Mein Kurs",
+  "title": "My Course",
   "slug": "my-course",
-  "description": "Kursbeschreibung",
+  "description": "Course description",
   "level": "beginner",
   "estimatedTotalMinutes": 120,
   "tags": ["programming"],
@@ -167,53 +167,53 @@ Wichtige Information!
 }
 ```
 
-2. **Lektion** in `apps/courses/src/content/lessons/`:
+2. **Lesson** in `apps/courses/src/content/lessons/`:
 
 ```mdx
 ---
 courseSlug: my-course
-title: Lektion 1
+title: Lesson 1
 module: Basics
 orderInModule: 1
 estimatedMinutes: 15
 goals:
-  - Ziel 1
-  - Ziel 2
+  - Goal 1
+  - Goal 2
 ---
 
 import { Quiz, Exercise } from '@knowledge-core/ui';
 
-# Lektion 1
+# Lesson 1
 
-<Exercise title="Übung" difficulty="easy">
-Aufgabe hier...
+<Exercise title="Exercise" difficulty="easy">
+Task here...
 </Exercise>
 
 <Quiz questions={[...]} />
 ```
 
-## 🧩 Verfügbare Komponenten
+## 🧩 Available Components
 
-### Content-Komponenten
+### Content Components
 
 - **Callout** - Info, Warning, Error, Success
-- **CodeBlock** - Syntax-Highlighting mit Copy-Button
-- **Card** - Content-Cards
-- **Tabs** / **TabPanel** - Tab-Navigation
+- **CodeBlock** - Syntax highlighting with copy button
+- **Card** - Content cards
+- **Tabs** / **TabPanel** - Tab navigation
 
-### Kurs-Komponenten
+### Course Components
 
-- **Quiz** - Interaktive Quiz mit Feedback
-- **Exercise** - Übungsblöcke
-- **Hint** - Ausklappbare Hinweise
-- **ProgressBar** - Fortschrittsanzeige
-- **CourseCard** - Kurs-Übersichtskarten
+- **Quiz** - Interactive quizzes with feedback
+- **Exercise** - Exercise blocks
+- **Hint** - Collapsible hints
+- **ProgressBar** - Progress indicator
+- **CourseCard** - Course overview cards
 
 ## 🎨 Theming
 
-### CSS-Variablen anpassen
+### Customize CSS Variables
 
-Bearbeite `packages/styles/src/tokens.css`:
+Edit `packages/styles/src/tokens.css`:
 
 ```css
 :root {
@@ -228,16 +228,16 @@ Bearbeite `packages/styles/src/tokens.css`:
 }
 ```
 
-### Tailwind Config erweitern
+### Extend Tailwind Config
 
-Bearbeite `packages/styles/tailwind.config.js`:
+Edit `packages/styles/tailwind.config.js`:
 
 ```javascript
 export default {
   theme: {
     extend: {
       colors: {
-        // Deine Farben
+        // Your colors
       }
     }
   }
@@ -248,38 +248,38 @@ export default {
 
 ```bash
 # Development
-pnpm dev                 # Alle Apps
-pnpm dev:docs           # Nur Docs
-pnpm dev:courses        # Nur Kurse
+pnpm dev                 # All apps
+pnpm dev:docs           # Docs only
+pnpm dev:courses        # Courses only
 
 # Build
-pnpm build              # Alle Apps
-pnpm build:docs         # Nur Docs
-pnpm build:courses      # Nur Kurse
+pnpm build              # All apps
+pnpm build:docs         # Docs only
+pnpm build:courses      # Courses only
 
 # Preview
-pnpm preview            # Alle Apps
-pnpm preview:docs       # Nur Docs
-pnpm preview:courses    # Nur Kurse
+pnpm preview            # All apps
+pnpm preview:docs       # Docs only
+pnpm preview:courses    # Courses only
 
 # Code Quality
 pnpm lint               # ESLint
 pnpm format             # Prettier
-pnpm check              # TypeScript + Astro Check
+pnpm check              # TypeScript + Astro check
 
 # Clean
-pnpm clean              # Alle Build-Artefakte löschen
+pnpm clean              # Remove all build artifacts
 ```
 
 ## 🚢 Deployment
 
-### Vercel (empfohlen)
+### Vercel (recommended)
 
-1. Push zu GitHub
-2. Importiere auf [Vercel](https://vercel.com)
-3. Wähle Root-Verzeichnis
-4. Build Command: `pnpm build:docs` oder `pnpm build:courses`
-5. Output Directory: `apps/docs/dist` oder `apps/courses/dist`
+1. Push to GitHub
+2. Import on [Vercel](https://vercel.com)
+3. Select root directory
+4. Build Command: `pnpm build:docs` or `pnpm build:courses`
+5. Output Directory: `apps/docs/dist` or `apps/courses/dist`
 
 ### Netlify
 
@@ -288,9 +288,6 @@ pnpm clean              # Alle Build-Artefakte löschen
 [build]
   command = "pnpm build:docs"
   publish = "apps/docs/dist"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 ```
 
 ### Cloudflare Pages
@@ -298,22 +295,22 @@ pnpm clean              # Alle Build-Artefakte löschen
 1. Build Command: `pnpm build:docs`
 2. Build output directory: `apps/docs/dist`
 
-## 📖 Weiterführende Dokumentation
+## 📖 Documentation
 
-- **[SETUP.md](SETUP.md)** - Detaillierte Setup-Anleitung und Personalisierung
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution Guidelines
+- **[SETUP.md](SETUP.md)** - Detailed setup guide and customization
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
 
 ## 🤝 Contributing
 
-Contributions sind willkommen! Siehe [CONTRIBUTING.md](CONTRIBUTING.md) für Details.
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## 📄 Lizenz
+## 📄 License
 
-MIT License - siehe [LICENSE](LICENSE)
+MIT License - see [LICENSE](LICENSE)
 
 ## 🙏 Credits
 
-Erstellt mit:
+Built with:
 - [Astro](https://astro.build)
 - [Tailwind CSS](https://tailwindcss.com)
 - [MDX](https://mdxjs.com)
