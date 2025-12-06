@@ -11,10 +11,7 @@ const Tag = href ? 'a' : 'div';
 
 <Tag
   href={href}
-  class:list={[
-    'card',
-    clickable && 'cursor-pointer hover:shadow-md transition-shadow',
-  ]}
+  class:list={['card', clickable && 'cursor-pointer hover:shadow-md transition-shadow']}
 >
   {title && <h3 class="text-lg font-semibold mb-3 text-text">{title}</h3>}
   <slot />

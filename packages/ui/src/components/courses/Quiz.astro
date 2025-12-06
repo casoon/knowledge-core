@@ -15,7 +15,10 @@ const { questions, title = 'Quiz' } = Astro.props;
 const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
 ---
 
-<div class="quiz-container my-8 p-6 bg-surface-alt rounded-lg border border-border" data-quiz-id={quizId}>
+<div
+  class="quiz-container my-8 p-6 bg-surface-alt rounded-lg border border-border"
+  data-quiz-id={quizId}
+>
   <h3 class="text-xl font-semibold text-text mb-6">{title}</h3>
 
   {
@@ -50,14 +53,8 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
   }
 
   <div class="flex items-center justify-between mt-6 pt-6 border-t border-border">
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-check-answers
-    >
-      Antworten überprüfen
-    </button>
-    <div class="quiz-result hidden text-sm" data-result />
+    <button type="button" class="btn btn-primary" data-check-answers> Antworten überprüfen </button>
+    <div class="quiz-result hidden text-sm" data-result></div>
   </div>
 </div>
 
@@ -122,7 +119,8 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
     if (resultDiv) {
       resultDiv.classList.remove('hidden');
       const percentage = Math.round((correct / total) * 100);
-      const resultClass = percentage >= 80 ? 'text-success' : percentage >= 60 ? 'text-warning' : 'text-error';
+      const resultClass =
+        percentage >= 80 ? 'text-success' : percentage >= 60 ? 'text-warning' : 'text-error';
       resultDiv.className = `quiz-result text-sm font-medium ${resultClass}`;
       resultDiv.textContent = `Ergebnis: ${correct} von ${total} richtig (${percentage}%)`;
     }

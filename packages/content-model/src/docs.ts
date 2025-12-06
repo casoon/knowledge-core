@@ -1,11 +1,6 @@
 import { z } from 'zod';
 
-export const docsCategorySchema = z.enum([
-  'getting-started',
-  'guides',
-  'api',
-  'cookbook',
-]);
+export const docsCategorySchema = z.enum(['getting-started', 'guides', 'api', 'cookbook']);
 
 export const docsStatusSchema = z.enum(['stable', 'beta', 'deprecated']);
 

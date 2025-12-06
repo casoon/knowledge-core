@@ -13,6 +13,7 @@ Dieser Kurs wurde aus dem Template ausgelagert und kann später als eigenständi
 ## Features
 
 Der Kurs demonstriert:
+
 - ✅ Quiz-Komponente
 - ✅ Exercise-Komponente
 - ✅ Hint-Komponente
@@ -38,6 +39,7 @@ cp lessons/*.mdx your-project/apps/courses/src/content/lessons/
 ## Weiterentwicklung
 
 Dieser Kurs kann erweitert werden mit:
+
 - Weiteren Modulen (Ownership, Error Handling, etc.)
 - Video-Content
 - Praktischen Projekten

@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.astro/
+
+# Lock files
+pnpm-lock.yaml
+
+# Problematic files (Prettier parser issues with inline scripts)
+packages/ui/src/components/navigation/NavBar.astro

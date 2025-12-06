@@ -26,10 +26,14 @@ export const lessonFrontmatterSchema = z.object({
   requiresExperience: z.boolean().default(false),
   type: lessonTypeSchema.default('text'),
   goals: z.array(z.string()).optional(),
-  resources: z.array(z.object({
-    title: z.string(),
-    url: z.string(),
-  })).optional(),
+  resources: z
+    .array(
+      z.object({
+        title: z.string(),
+        url: z.string(),
+      })
+    )
+    .optional(),
 });
 
 export type CourseLevel = z.infer<typeof courseLevelSchema>;

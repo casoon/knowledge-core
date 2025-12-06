@@ -31,13 +31,7 @@ const { title, description, tags = [], meta } = Astro.props;
         </span>
       )
     }
-    {
-      meta?.level && (
-        <span class="badge badge-info ml-2">
-          {meta.level}
-        </span>
-      )
-    }
+    {meta?.level && <span class="badge badge-info ml-2">{meta.level}</span>}
   </div>
 
   <h1 class="text-4xl font-bold text-text mb-4">{title}</h1>
@@ -58,12 +52,7 @@ const { title, description, tags = [], meta } = Astro.props;
     {
       meta?.estimatedMinutes && (
         <div class="flex items-center gap-2 text-sm text-text-muted">
-          <svg
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"

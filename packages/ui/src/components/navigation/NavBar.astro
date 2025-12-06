@@ -97,7 +97,8 @@ const { logo, logoHref = '/', links, showThemeToggle = true } = Astro.props;
 
 {
   showThemeToggle && (
-    <script>
+    /* prettier-ignore */
+    <script is:inline>
       // Theme toggle
       function createThemeToggle() {
         const container = document.getElementById('theme-toggle-container');

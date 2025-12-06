@@ -146,9 +146,7 @@ import { Callout } from '@knowledge-core/ui';
 
 # My Page
 
-<Callout type="info">
-Important information!
-</Callout>
+<Callout type="info">Important information!</Callout>
 ```
 
 ### Creating a Course
@@ -186,10 +184,16 @@ import { Quiz, Exercise } from '@knowledge-core/ui';
 # Lesson 1
 
 <Exercise title="Exercise" difficulty="easy">
-Task here...
+  Task here...
 </Exercise>
 
-<Quiz questions={[...]} />
+<Quiz
+  questions={
+    [
+      /* ... */
+    ]
+  }
+/>
 ```
 
 ## 🧩 Available Components
@@ -238,10 +242,10 @@ export default {
     extend: {
       colors: {
         // Your colors
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 ```
 
 ## 🔧 Scripts
@@ -311,6 +315,7 @@ MIT License - see [LICENSE](LICENSE)
 ## 🙏 Credits
 
 Built with:
+
 - [Astro](https://astro.build)
 - [Tailwind CSS](https://tailwindcss.com)
 - [MDX](https://mdxjs.com)

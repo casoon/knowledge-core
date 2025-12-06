@@ -19,6 +19,7 @@ Dies installiert alle benötigten Pakete für beide Apps und alle Shared Package
 Ersetze `@knowledge-core` mit deinem eigenen Scope (z.B. `@mein-projekt`):
 
 **Betroffene Dateien:**
+
 ```bash
 # In allen package.json Dateien:
 packages/ui/package.json
@@ -56,8 +57,8 @@ find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.astro" -o -name "*.
   -exec sed -i '' 's/@knowledge-core/@mein-projekt/g' {} +
 
 # Windows (PowerShell):
-Get-ChildItem -Recurse -Include *.json,*.ts,*.astro,*.mdx | 
-  Where-Object { $_.FullName -notmatch 'node_modules' } | 
+Get-ChildItem -Recurse -Include *.json,*.ts,*.astro,*.mdx |
+  Where-Object { $_.FullName -notmatch 'node_modules' } |
   ForEach-Object { (Get-Content $_.FullName) -replace '@knowledge-core','@mein-projekt' | Set-Content $_.FullName }
 ```
 
@@ -66,16 +67,18 @@ Get-ChildItem -Recurse -Include *.json,*.ts,*.astro,*.mdx |
 **Logo & Titel:**
 
 Bearbeite `packages/ui/src/components/navigation/NavBar.astro`:
+
 ```typescript
 // Ändere den Logo-Text
-logo="Mein Projekt"  // statt "Knowledge Core"
+logo = 'Mein Projekt'; // statt "Knowledge Core"
 ```
 
 **Footer:**
 
 Bearbeite `packages/ui/src/components/layout/Footer.astro`:
+
 ```typescript
-projectName = 'Mein Projekt'  // statt 'Knowledge Core'
+projectName = 'Mein Projekt'; // statt 'Knowledge Core'
 ```
 
 **Startseiten:**
@@ -92,19 +95,21 @@ Bearbeite `packages/styles/src/tokens.css`:
 ```css
 :root {
   /* Deine Primärfarbe */
-  --color-primary: 245 90% 60%;  /* HSL-Format */
-  
+  --color-primary: 245 90% 60%; /* HSL-Format */
+
   /* Weitere Anpassungen... */
 }
 ```
 
 **Hilfreiche Tools:**
+
 - [HSL Color Picker](https://hslpicker.com/)
 - [Tailwind Color Generator](https://uicolors.app/create)
 
 ### 4. Beispiel-Content entfernen/anpassen
 
 **Dokumentation:**
+
 ```bash
 apps/docs/src/content/docs/
 ├── getting-started/
@@ -115,6 +120,7 @@ apps/docs/src/content/docs/
 ```
 
 **Kurse:**
+
 ```bash
 apps/courses/src/content/
 ├── courses/
@@ -126,6 +132,7 @@ apps/courses/src/content/
 ### 5. Repository-Informationen aktualisieren
 
 **package.json (Root):**
+
 ```json
 {
   "name": "mein-projekt",
@@ -139,6 +146,7 @@ apps/courses/src/content/
 ```
 
 **README.md:**
+
 - Ersetze alle Verweise auf "Knowledge Core"
 - Aktualisiere Repository-URLs
 - Passe Beschreibungen an
@@ -223,14 +231,13 @@ import { Callout } from '@mein-projekt/ui';
 
 # Mein Guide
 
-<Callout type="info">
-Wichtige Information!
-</Callout>
+<Callout type="info">Wichtige Information!</Callout>
 ```
 
 ### Kurs erstellen
 
 **1. Kurs-Definition:**
+
 ```bash
 apps/courses/src/content/courses/mein-kurs.json
 ```
@@ -248,6 +255,7 @@ apps/courses/src/content/courses/mein-kurs.json
 ```
 
 **2. Lektion erstellen:**
+
 ```bash
 apps/courses/src/content/lessons/mein-kurs-lektion-1.mdx
 ```
@@ -269,7 +277,7 @@ import { Quiz, Exercise } from '@mein-projekt/ui';
 # Lektion 1
 
 <Exercise title="Übung" difficulty="easy">
-Aufgabe hier...
+  Aufgabe hier...
 </Exercise>
 ```
 
@@ -294,9 +302,9 @@ export default {
   theme: {
     extend: {
       // Deine Anpassungen
-    }
-  }
-}
+    },
+  },
+};
 ```
 
 ## ✅ Checkliste
