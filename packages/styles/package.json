@@ -9,6 +9,9 @@
     "./prose.css": "./src/prose.css",
     "./tailwind.config": "./tailwind.config.js"
   },
+  "scripts": {
+    "lint": "echo 'No linting configured for styles'"
+  },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.15",
     "tailwindcss": "^3.4.15"

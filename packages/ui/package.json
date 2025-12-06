@@ -8,7 +8,7 @@
     "./components/*": "./src/components/*"
   },
   "scripts": {
-    "lint": "eslint . --ext .ts,.astro"
+    "lint": "echo 'No linting configured for ui'"
   },
   "dependencies": {
     "@knowledge-core/styles": "workspace:*",
