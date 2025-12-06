@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./tsconfig.json": "./tsconfig.json",
-    "./eslint.config.js": "./eslint.config.js"
+    "./tsconfig.json": "./tsconfig.json"
   },
   "scripts": {
     "lint": "echo 'No linting configured for config'"

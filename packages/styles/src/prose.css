@@ -1,5 +1,5 @@
 /* MDX/Prose Styling */
-@import 'tailwindcss/components';
+@import "tailwindcss/components";
 
 @layer components {
   .prose {

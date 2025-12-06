@@ -13,18 +13,14 @@
     "preview": "pnpm --filter \"./apps/**\" preview",
     "preview:docs": "pnpm --filter docs preview",
     "preview:courses": "pnpm --filter courses preview",
-    "lint": "pnpm --filter \"./packages/**\" --filter \"./apps/**\" lint",
-    "format": "prettier --write \"**/*.{js,ts,astro,md,json,css}\"",
-    "format:check": "prettier --check \"**/*.{js,ts,astro,md,json,css}\"",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
     "check": "pnpm --filter \"./apps/**\" astro check",
     "clean": "pnpm --filter \"./apps/**\" --filter \"./packages/**\" clean && rm -rf node_modules"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.15.0",
-    "@typescript-eslint/parser": "^8.15.0",
-    "eslint": "^9.15.0",
-    "prettier": "^3.3.3",
-    "prettier-plugin-astro": "^0.14.1",
+    "@biomejs/biome": "^2.3.8",
     "typescript": "^5.6.3"
   },
   "volta": {

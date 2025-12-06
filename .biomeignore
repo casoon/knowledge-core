@@ -1,0 +1,9 @@
+node_modules
+dist
+.astro
+pnpm-lock.yaml
+**/*.astro
+**/*.md
+**/*.mdx
+packages/styles/src/*.css
+apps/*/src/styles/*.css
