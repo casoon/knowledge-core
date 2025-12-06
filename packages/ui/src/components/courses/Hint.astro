@@ -1,0 +1,62 @@
+---
+export interface Props {
+  title?: string;
+}
+
+const { title = 'Hinweis' } = Astro.props;
+const hintId = `hint-${Math.random().toString(36).substring(7)}`;
+---
+
+<div class="hint-container my-6">
+  <button
+    type="button"
+    class="hint-toggle flex items-center gap-2 text-text-muted hover:text-text transition-colors"
+    data-hint-toggle={hintId}
+    aria-expanded="false"
+  >
+    <svg
+      class="w-5 h-5 transition-transform hint-icon"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+    <span class="font-medium">{title}</span>
+  </button>
+
+  <div class="hint-content hidden mt-3 p-4 bg-warning-bg rounded-lg border border-warning" data-hint-content={hintId}>
+    <div class="flex gap-3">
+      <svg class="w-5 h-5 text-warning flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <div class="text-sm text-warning flex-1">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ hintId }}>
+  const toggle = document.querySelector(`[data-hint-toggle="${hintId}"]`);
+  const content = document.querySelector(`[data-hint-content="${hintId}"]`);
+  const icon = toggle?.querySelector('.hint-icon');
+
+  toggle?.addEventListener('click', () => {
+    const isHidden = content?.classList.contains('hidden');
+
+    if (isHidden) {
+      content?.classList.remove('hidden');
+      toggle.setAttribute('aria-expanded', 'true');
+      icon?.classList.add('rotate-90');
+    } else {
+      content?.classList.add('hidden');
+      toggle.setAttribute('aria-expanded', 'false');
+      icon?.classList.remove('rotate-90');
+    }
+  });
+</script>

@@ -1,0 +1,21 @@
+{
+  "name": "@knowledge-core/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./components/*": "./src/components/*"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .ts,.astro"
+  },
+  "dependencies": {
+    "@knowledge-core/styles": "workspace:*",
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.6.3"
+  }
+}

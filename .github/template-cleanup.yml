@@ -1,0 +1,37 @@
+name: Template Cleanup
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  template-cleanup:
+    name: Template Cleanup
+    runs-on: ubuntu-latest
+    if: github.event.repository.name != 'knowledge-core'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cleanup
+        run: |
+          # Remove template-specific files
+          rm -f .github/template-cleanup.yml
+
+          echo "✅ Template initialized successfully!"
+          echo "📝 Next steps:"
+          echo "1. Run: pnpm install"
+          echo "2. Customize packages names in package.json files"
+          echo "3. Update README.md with your project details"
+          echo "4. Start building: pnpm dev"
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "chore: initialize from template"
+          git push

@@ -1,0 +1,61 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  level: 'beginner' | 'intermediate' | 'advanced';
+  estimatedMinutes: number;
+  tags: string[];
+  href: string;
+  progress?: number;
+}
+
+const { title, description, level, estimatedMinutes, tags, href, progress } = Astro.props;
+
+const levelColors = {
+  beginner: 'badge-success',
+  intermediate: 'badge-warning',
+  advanced: 'badge-error',
+};
+---
+
+<a href={href} class="card cursor-pointer hover:shadow-lg transition-all group">
+  <div class="flex items-start justify-between mb-3">
+    <h3 class="text-xl font-bold text-text group-hover:text-primary transition-colors">
+      {title}
+    </h3>
+    <span class:list={['badge', levelColors[level]]}>{level}</span>
+  </div>
+
+  <p class="text-text-muted mb-4 line-clamp-2">{description}</p>
+
+  <div class="flex flex-wrap gap-2 mb-4">
+    {tags.map((tag) => <span class="badge badge-primary text-xs">{tag}</span>)}
+  </div>
+
+  <div class="flex items-center justify-between text-sm text-text-muted">
+    <div class="flex items-center gap-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <span>{Math.round(estimatedMinutes / 60)} Stunden</span>
+    </div>
+
+    {
+      progress !== undefined && (
+        <div class="flex items-center gap-2">
+          <div class="w-16 h-2 bg-surface-alt rounded-full overflow-hidden">
+            <div
+              class="h-full bg-primary transition-all"
+              style={`width: ${progress}%`}
+            />
+          </div>
+          <span>{progress}%</span>
+        </div>
+      )
+    }
+  </div>
+</a>

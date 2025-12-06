@@ -1,0 +1,79 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  tags?: string[];
+  meta?: {
+    status?: 'stable' | 'beta' | 'deprecated';
+    level?: 'beginner' | 'intermediate' | 'advanced';
+    estimatedMinutes?: number;
+  };
+}
+
+const { title, description, tags = [], meta } = Astro.props;
+---
+
+<header class="mb-8">
+  <div class="mb-4">
+    {
+      meta?.status && (
+        <span
+          class:list={[
+            'badge',
+            {
+              'badge-success': meta.status === 'stable',
+              'badge-warning': meta.status === 'beta',
+              'badge-error': meta.status === 'deprecated',
+            },
+          ]}
+        >
+          {meta.status}
+        </span>
+      )
+    }
+    {
+      meta?.level && (
+        <span class="badge badge-info ml-2">
+          {meta.level}
+        </span>
+      )
+    }
+  </div>
+
+  <h1 class="text-4xl font-bold text-text mb-4">{title}</h1>
+
+  {description && <p class="text-lg text-text-muted mb-4">{description}</p>}
+
+  <div class="flex flex-wrap gap-4 items-center">
+    {
+      tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span class="badge badge-primary">{tag}</span>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      meta?.estimatedMinutes && (
+        <div class="flex items-center gap-2 text-sm text-text-muted">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>{meta.estimatedMinutes} min</span>
+        </div>
+      )
+    }
+  </div>
+</header>

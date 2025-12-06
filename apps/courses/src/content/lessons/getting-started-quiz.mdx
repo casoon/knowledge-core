@@ -1,0 +1,166 @@
+---
+courseSlug: getting-started
+title: Quiz & Interaktivität
+module: Einführung
+orderInModule: 3
+estimatedMinutes: 20
+requiresExperience: false
+type: quiz
+goals:
+  - Lerne, wie Quiz funktionieren
+  - Verstehe die Quiz-Komponente
+  - Teste dein Wissen über Knowledge Core
+---
+
+import { Callout, Quiz, Exercise, Hint } from '@knowledge-core/ui';
+
+# Quiz & Interaktivität
+
+Eine der mächtigsten Features für Lernplattformen sind interaktive Quiz!
+
+## Wie Quiz funktionieren
+
+Quiz bestehen aus:
+- **Fragen** mit mehreren Optionen
+- **Richtige Antwort** (0-basierter Index)
+- **Erklärungen** für die Lösung (optional)
+- **Feedback** nach dem Check
+
+<Callout type="info">
+Nutzer können ihre Antworten überprüfen und erhalten sofortiges Feedback mit Erklärungen.
+</Callout>
+
+## Beispiel-Quiz
+
+Teste dein Wissen über Knowledge Core:
+
+<Quiz
+  title="Wissenstest: Knowledge Core Basics"
+  questions={[
+    {
+      question: "Welches Framework wird für die Frontend-Apps verwendet?",
+      options: [
+        "Next.js",
+        "Astro",
+        "SvelteKit",
+        "Nuxt"
+      ],
+      correctAnswer: 1,
+      explanation: "Knowledge Core verwendet Astro für optimale Performance und Developer Experience."
+    },
+    {
+      question: "In welchem Format werden Inhalte geschrieben?",
+      options: [
+        "Nur Markdown",
+        "HTML",
+        "MDX (Markdown + JSX)",
+        "reStructuredText"
+      ],
+      correctAnswer: 2,
+      explanation: "MDX kombiniert Markdown mit React-Komponenten, was interaktive Inhalte ermöglicht."
+    },
+    {
+      question: "Welcher Paketmanager wird verwendet?",
+      options: [
+        "npm",
+        "yarn",
+        "pnpm",
+        "bun"
+      ],
+      correctAnswer: 2,
+      explanation: "pnpm wird für seine Effizienz und native Monorepo-Unterstützung verwendet."
+    },
+    {
+      question: "Wo werden Shared Components definiert?",
+      options: [
+        "In jeder App separat",
+        "Im packages/ui Package",
+        "In einem CDN",
+        "In node_modules"
+      ],
+      correctAnswer: 1,
+      explanation: "Shared Components leben in packages/ui und werden von beiden Apps importiert."
+    }
+  ]}
+/>
+
+## Quiz in eigenen Kursen verwenden
+
+So fügst du ein Quiz hinzu:
+
+```mdx
+import { Quiz } from '@knowledge-core/ui';
+
+<Quiz
+  title="Mein Quiz"
+  questions={[
+    {
+      question: "Deine Frage?",
+      options: ["Option 1", "Option 2", "Option 3"],
+      correctAnswer: 1,
+      explanation: "Erklärung der richtigen Antwort"
+    }
+  ]}
+/>
+```
+
+<Hint title="Quiz-Best Practices">
+- **Klare Fragen**: Stelle eindeutige Fragen
+- **Plausible Optionen**: Alle Optionen sollten sinnvoll erscheinen
+- **Hilfreiche Erklärungen**: Erkläre, warum die Antwort richtig ist
+- **Angemessene Schwierigkeit**: Passe an deine Zielgruppe an
+</Hint>
+
+## Übung
+
+<Exercise title="Erstelle dein eigenes Quiz" difficulty="medium">
+Versuche folgendes:
+
+1. Erstelle eine neue Lektion
+2. Füge ein Quiz mit mindestens 3 Fragen hinzu
+3. Teste das Quiz im Browser
+4. Experimentiere mit verschiedenen Erklärungen
+
+**Bonus:** Kombiniere Quiz mit anderen Komponenten wie Callouts oder Hints!
+</Exercise>
+
+## Weitere Möglichkeiten
+
+### Multiple Quiz pro Lektion
+
+Du kannst mehrere Quiz in einer Lektion haben:
+
+<Quiz
+  title="Bonus-Quiz: MDX & Components"
+  questions={[
+    {
+      question: "Was ist ein Vorteil von MDX gegenüber normalem Markdown?",
+      options: [
+        "Schnellere Ladezeiten",
+        "Interaktive Komponenten einbinden",
+        "Besseres SEO",
+        "Kleinere Dateigröße"
+      ],
+      correctAnswer: 1,
+      explanation: "MDX erlaubt das Einbinden von React-Komponenten direkt in Markdown."
+    }
+  ]}
+/>
+
+## Zusammenfassung
+
+Du hast gelernt:
+- ✅ Wie Quiz aufgebaut sind
+- ✅ Wie man Quiz in Lektionen einbindet
+- ✅ Best Practices für gute Quiz-Fragen
+- ✅ Wie Quiz mit anderen Komponenten kombiniert werden
+
+<Callout type="success" title="Kurs abgeschlossen!">
+Herzlichen Glückwunsch! Du kennst jetzt die wichtigsten Features von Knowledge Core.
+
+**Nächste Schritte:**
+- Erstelle deinen eigenen Kurs
+- Passe das Theming an
+- Lies die SETUP.md für Details
+- Schau dir den ausgelagerten Rust-Kurs in `.github/example-content/` an
+</Callout>

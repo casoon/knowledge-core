@@ -1,0 +1,88 @@
+---
+export interface Tab {
+  label: string;
+  value: string;
+}
+
+export interface Props {
+  tabs: Tab[];
+  defaultTab?: string;
+}
+
+const { tabs, defaultTab } = Astro.props;
+const tabsId = `tabs-${Math.random().toString(36).substring(7)}`;
+const activeTab = defaultTab || tabs[0]?.value;
+---
+
+<div class="tabs-container my-6" data-tabs-id={tabsId}>
+  <div class="flex border-b border-border mb-4 overflow-x-auto">
+    {
+      tabs.map((tab) => (
+        <button
+          type="button"
+          class:list={[
+            'px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap',
+            'border-b-2 -mb-px',
+            tab.value === activeTab
+              ? 'border-primary text-primary'
+              : 'border-transparent text-text-muted hover:text-text',
+          ]}
+          data-tab-button={tab.value}
+          aria-selected={tab.value === activeTab ? 'true' : 'false'}
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="tabs-content">
+    <slot />
+  </div>
+</div>
+
+<script define:vars={{ tabsId, tabs, activeTab }}>
+  const container = document.querySelector(`[data-tabs-id="${tabsId}"]`);
+  const buttons = container?.querySelectorAll('[data-tab-button]');
+  const panels = container?.querySelectorAll('[data-tab-panel]');
+
+  // Initialize: show only active tab
+  panels?.forEach((panel) => {
+    const value = panel.getAttribute('data-tab-panel');
+    if (value === activeTab) {
+      panel.classList.remove('hidden');
+    } else {
+      panel.classList.add('hidden');
+    }
+  });
+
+  buttons?.forEach((button) => {
+    button.addEventListener('click', () => {
+      const value = button.getAttribute('data-tab-button');
+
+      // Update button states
+      buttons.forEach((btn) => {
+        const btnValue = btn.getAttribute('data-tab-button');
+        if (btnValue === value) {
+          btn.classList.remove('border-transparent', 'text-text-muted');
+          btn.classList.add('border-primary', 'text-primary');
+          btn.setAttribute('aria-selected', 'true');
+        } else {
+          btn.classList.add('border-transparent', 'text-text-muted');
+          btn.classList.remove('border-primary', 'text-primary');
+          btn.setAttribute('aria-selected', 'false');
+        }
+      });
+
+      // Update panel visibility
+      panels?.forEach((panel) => {
+        const panelValue = panel.getAttribute('data-tab-panel');
+        if (panelValue === value) {
+          panel.classList.remove('hidden');
+        } else {
+          panel.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>

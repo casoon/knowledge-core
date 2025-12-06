@@ -1,0 +1,39 @@
+{
+  "name": "knowledge-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo template for documentation and course platforms",
+  "scripts": {
+    "dev": "pnpm --filter \"./apps/**\" --parallel dev",
+    "dev:docs": "pnpm --filter docs dev",
+    "dev:courses": "pnpm --filter courses dev",
+    "build": "pnpm --filter \"./packages/**\" build && pnpm --filter \"./apps/**\" build",
+    "build:docs": "pnpm --filter docs build",
+    "build:courses": "pnpm --filter courses build",
+    "preview": "pnpm --filter \"./apps/**\" preview",
+    "preview:docs": "pnpm --filter docs preview",
+    "preview:courses": "pnpm --filter courses preview",
+    "lint": "pnpm --filter \"./packages/**\" --filter \"./apps/**\" lint",
+    "format": "prettier --write \"**/*.{js,ts,astro,md,json,css}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,astro,md,json,css}\"",
+    "check": "pnpm --filter \"./apps/**\" astro check",
+    "clean": "pnpm --filter \"./apps/**\" --filter \"./packages/**\" clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "eslint": "^9.15.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.6.3"
+  },
+  "volta": {
+    "node": "24.0.0",
+    "pnpm": "9.14.4"
+  },
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.14.4"
+}

@@ -1,0 +1,218 @@
+---
+title: Inhalte erstellen
+description: Lerne, wie du neue Dokumentationsseiten und Kurse erstellst
+category: guides
+order: 1
+tags: [content, mdx, docs, kurse]
+status: stable
+---
+
+import { Callout, CodeBlock, Tabs, TabPanel } from '@knowledge-core/ui';
+
+# Inhalte erstellen
+
+Knowledge Core verwendet **MDX** für alle Inhalte - sowohl Dokumentation als auch Kurse. MDX kombiniert Markdown mit React-Komponenten.
+
+## Dokumentationsseiten erstellen
+
+### 1. Neue MDX-Datei anlegen
+
+Erstelle eine Datei in `apps/docs/src/content/docs/`:
+
+```bash
+apps/docs/src/content/docs/
+├── getting-started/
+│   └── my-page.mdx
+├── guides/
+│   └── advanced-guide.mdx
+└── api/
+    └── reference.mdx
+```
+
+### 2. Frontmatter hinzufügen
+
+Jede Seite benötigt Frontmatter:
+
+```mdx
+---
+title: Meine neue Seite
+description: Eine kurze Beschreibung
+category: guides
+order: 10
+tags: [beispiel, tutorial]
+status: stable
+---
+
+# Meine neue Seite
+
+Dein Content hier...
+```
+
+<Callout type="info" title="Frontmatter-Felder">
+- **title** (required): Seitentitel
+- **description** (optional): Meta-Beschreibung
+- **category** (required): `getting-started`, `guides`, `api`, `cookbook`
+- **order** (default: 0): Sortierung in der Sidebar
+- **tags** (optional): Tags für Suche
+- **status** (default: stable): `stable`, `beta`, `deprecated`
+</Callout>
+
+### 3. Content schreiben
+
+Verwende Markdown + Komponenten:
+
+```mdx
+# Überschrift
+
+Normaler Text mit **fett** und *kursiv*.
+
+## Code-Beispiele
+
+\`\`\`typescript
+const greeting = "Hello, World!";
+console.log(greeting);
+\`\`\`
+
+## Komponenten verwenden
+
+<Callout type="warning">
+Wichtiger Hinweis für Nutzer!
+</Callout>
+```
+
+### Verfügbare Komponenten
+
+In MDX kannst du diese Komponenten importieren und verwenden:
+
+```mdx
+import { Callout, CodeBlock, Tabs, TabPanel, Card } from '@knowledge-core/ui';
+
+<Callout type="info" title="Information">
+Wichtige Info hier
+</Callout>
+
+<Tabs tabs={[
+  { label: 'JavaScript', value: 'js' },
+  { label: 'TypeScript', value: 'ts' }
+]}>
+  <TabPanel value="js">
+    JavaScript-Code hier
+  </TabPanel>
+  <TabPanel value="ts">
+    TypeScript-Code hier
+  </TabPanel>
+</Tabs>
+```
+
+## Kurse erstellen
+
+### 1. Kurs-Definition
+
+Erstelle eine JSON-Datei in `apps/courses/src/content/courses/`:
+
+```json
+{
+  "title": "Mein Kurs",
+  "slug": "mein-kurs",
+  "description": "Kurze Beschreibung des Kurses",
+  "level": "beginner",
+  "estimatedTotalMinutes": 120,
+  "tags": ["programmierung", "basics"],
+  "published": true
+}
+```
+
+### 2. Lektionen erstellen
+
+Erstelle MDX-Dateien in `apps/courses/src/content/lessons/`:
+
+```mdx
+---
+courseSlug: mein-kurs
+title: Lektion 1 - Einführung
+module: Grundlagen
+orderInModule: 1
+estimatedMinutes: 15
+type: text
+goals:
+  - Verstehe Konzept A
+  - Lerne Technik B
+---
+
+import { Callout, Exercise, Quiz, Hint } from '@knowledge-core/ui';
+
+# Lektion 1 - Einführung
+
+Dein Lektionsinhalt...
+
+<Exercise title="Übung 1" difficulty="easy">
+Versuche folgendes...
+</Exercise>
+
+<Quiz
+  questions={[
+    {
+      question: "Was ist 2 + 2?",
+      options: ["3", "4", "5"],
+      correctAnswer: 1,
+      explanation: "2 + 2 = 4"
+    }
+  ]}
+/>
+```
+
+### Kurs-Komponenten
+
+Für Kurse stehen zusätzliche interaktive Komponenten zur Verfügung:
+
+#### Quiz
+
+```mdx
+<Quiz
+  title="Wissenstest"
+  questions={[
+    {
+      question: "Frage hier",
+      options: ["Option 1", "Option 2", "Option 3"],
+      correctAnswer: 1,
+      explanation: "Erklärung der richtigen Antwort"
+    }
+  ]}
+/>
+```
+
+#### Übungen
+
+```mdx
+<Exercise title="Praktische Übung" difficulty="medium">
+Beschreibung der Aufgabe...
+</Exercise>
+```
+
+#### Hinweise
+
+```mdx
+<Hint title="Tipp">
+Versteckter Hinweis für Lernende
+</Hint>
+```
+
+## Best Practices
+
+### Dokumentation
+
+1. **Klare Struktur**: Verwende aussagekräftige Überschriften
+2. **Code-Beispiele**: Zeige praktische Anwendungen
+3. **Callouts**: Hebe wichtige Informationen hervor
+4. **Links**: Verweise auf verwandte Seiten
+
+### Kurse
+
+1. **Lernziele**: Definiere klare `goals` im Frontmatter
+2. **Interaktivität**: Nutze Quiz und Exercises
+3. **Schrittweise**: Baue Wissen progressiv auf
+4. **Ressourcen**: Verlinke zu weiterführendem Material
+
+<Callout type="success">
+Du bist jetzt bereit, eigene Inhalte zu erstellen! Beginne mit einer einfachen Seite und experimentiere mit den Komponenten.
+</Callout>

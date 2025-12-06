@@ -1,0 +1,11 @@
+{
+  "title": "Rust Grundlagen",
+  "slug": "rust-basics",
+  "description": "Lerne die Grundlagen der Programmiersprache Rust - von der Installation bis zu deinem ersten Programm.",
+  "level": "beginner",
+  "estimatedTotalMinutes": 180,
+  "tags": ["Rust", "Programmierung", "Grundlagen"],
+  "track": "beginner",
+  "prerequisites": [],
+  "published": true
+}

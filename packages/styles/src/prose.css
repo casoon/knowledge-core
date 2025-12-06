@@ -1,0 +1,129 @@
+/* MDX/Prose Styling */
+@import 'tailwindcss/components';
+
+@layer components {
+  .prose {
+    @apply max-w-none;
+    @apply text-text leading-relaxed;
+  }
+
+  .prose h1 {
+    @apply text-4xl font-bold mb-4 mt-8 text-text;
+  }
+
+  .prose h2 {
+    @apply text-3xl font-bold mb-3 mt-6 text-text border-b border-border pb-2;
+  }
+
+  .prose h3 {
+    @apply text-2xl font-semibold mb-2 mt-5 text-text;
+  }
+
+  .prose h4 {
+    @apply text-xl font-semibold mb-2 mt-4 text-text;
+  }
+
+  .prose h5 {
+    @apply text-lg font-semibold mb-2 mt-3 text-text;
+  }
+
+  .prose h6 {
+    @apply text-base font-semibold mb-2 mt-3 text-text;
+  }
+
+  .prose p {
+    @apply mb-4 text-text;
+  }
+
+  .prose a {
+    @apply text-primary underline decoration-primary/30 underline-offset-2;
+    @apply hover:decoration-primary transition-colors;
+  }
+
+  .prose strong {
+    @apply font-semibold text-text;
+  }
+
+  .prose em {
+    @apply italic;
+  }
+
+  .prose ul {
+    @apply list-disc pl-6 mb-4 space-y-2;
+  }
+
+  .prose ol {
+    @apply list-decimal pl-6 mb-4 space-y-2;
+  }
+
+  .prose li {
+    @apply text-text;
+  }
+
+  .prose li::marker {
+    @apply text-text-muted;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-primary pl-4 italic my-4 text-text-muted;
+  }
+
+  .prose code {
+    @apply bg-surface-alt px-1.5 py-0.5 rounded text-sm font-mono;
+    @apply text-primary before:content-[''] after:content-[''];
+  }
+
+  .prose pre {
+    @apply bg-surface-alt border border-border rounded-lg p-4 overflow-x-auto mb-4;
+    @apply text-sm font-mono;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0 text-text;
+  }
+
+  .prose img {
+    @apply rounded-lg my-6 shadow-md;
+  }
+
+  .prose hr {
+    @apply border-border my-8;
+  }
+
+  .prose table {
+    @apply w-full border-collapse mb-4;
+  }
+
+  .prose thead {
+    @apply bg-surface-alt;
+  }
+
+  .prose th {
+    @apply border border-border px-4 py-2 text-left font-semibold;
+  }
+
+  .prose td {
+    @apply border border-border px-4 py-2;
+  }
+
+  .prose tbody tr:hover {
+    @apply bg-surface-alt;
+  }
+
+  /* Code blocks with syntax highlighting */
+  .prose .astro-code {
+    @apply bg-surface-alt border border-border rounded-lg p-4 overflow-x-auto mb-4;
+  }
+
+  /* Headings with anchor links */
+  .prose .heading-link {
+    @apply opacity-0 ml-2 text-text-muted no-underline;
+    @apply hover:text-primary transition-opacity;
+  }
+
+  .prose h2:hover .heading-link,
+  .prose h3:hover .heading-link,
+  .prose h4:hover .heading-link {
+    @apply opacity-100;
+  }
+}

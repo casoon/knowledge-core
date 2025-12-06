@@ -1,0 +1,98 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  docs: CollectionEntry<'docs'>[];
+  currentPath: string;
+}
+
+const { docs, currentPath } = Astro.props;
+
+// Group docs by category
+const docsByCategory = docs.reduce(
+  (acc, doc) => {
+    const category = doc.data.category;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(doc);
+    return acc;
+  },
+  {} as Record<string, CollectionEntry<'docs'>[]>
+);
+
+// Sort within each category by order
+Object.keys(docsByCategory).forEach((category) => {
+  docsByCategory[category].sort((a, b) => a.data.order - b.data.order);
+});
+
+const categoryTitles = {
+  'getting-started': 'Erste Schritte',
+  'guides': 'Anleitungen',
+  'api': 'API-Referenz',
+  'cookbook': 'Cookbook',
+};
+
+const categories: Array<keyof typeof categoryTitles> = [
+  'getting-started',
+  'guides',
+  'api',
+  'cookbook',
+];
+---
+
+<nav class="p-6">
+  <div class="mb-6">
+    <input
+      type="search"
+      placeholder="Suche..."
+      class="input w-full"
+      id="docs-search"
+    />
+  </div>
+
+  <div class="space-y-6">
+    {
+      categories.map((category) => {
+        const categoryDocs = docsByCategory[category] || [];
+        if (categoryDocs.length === 0) return null;
+
+        return (
+          <div>
+            <h3 class="text-sm font-semibold text-text mb-2 uppercase tracking-wider">
+              {categoryTitles[category]}
+            </h3>
+            <ul class="space-y-1">
+              {categoryDocs.map((doc) => {
+                const href = `/docs/${doc.slug}`;
+                const isActive = currentPath === href || currentPath.startsWith(href + '/');
+
+                return (
+                  <li>
+                    <a
+                      href={href}
+                      class:list={[
+                        'block py-1.5 px-3 rounded text-sm transition-colors',
+                        isActive
+                          ? 'bg-primary/10 text-primary font-medium'
+                          : 'text-text-muted hover:text-text hover:bg-surface-alt',
+                      ]}
+                    >
+                      {doc.data.title}
+                      {doc.data.status === 'beta' && (
+                        <span class="ml-2 badge badge-warning text-xs">Beta</span>
+                      )}
+                      {doc.data.status === 'deprecated' && (
+                        <span class="ml-2 badge badge-error text-xs">Veraltet</span>
+                      )}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })
+    }
+  </div>
+</nav>

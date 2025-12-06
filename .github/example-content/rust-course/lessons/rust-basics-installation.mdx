@@ -1,0 +1,163 @@
+---
+courseSlug: rust-basics
+title: Rust installieren
+module: Grundlagen
+orderInModule: 2
+estimatedMinutes: 20
+requiresExperience: false
+type: text
+goals:
+  - Rust mit rustup installieren
+  - Die Installation verifizieren
+  - Den ersten Rust-Code kompilieren
+resources:
+  - title: Offizielle Rust-Installation
+    url: https://www.rust-lang.org/tools/install
+  - title: rustup Dokumentation
+    url: https://rust-lang.github.io/rustup/
+---
+
+import { Callout, CodeBlock, Tabs, TabPanel, Exercise } from '@knowledge-core/ui';
+
+# Rust installieren
+
+In dieser Lektion installieren wir Rust auf deinem System und verifizieren die Installation.
+
+## rustup - Der Rust Installer
+
+Rust wird über **rustup** installiert, ein Tool das:
+
+- Rust-Versionen verwaltet
+- Automatisch Updates durchführt
+- Verschiedene Toolchains unterstützt
+
+<Tabs tabs={[
+  { label: 'Linux/macOS', value: 'unix' },
+  { label: 'Windows', value: 'windows' }
+]}>
+  <TabPanel value="unix">
+    ## Installation auf Linux/macOS
+
+    Öffne ein Terminal und führe aus:
+
+    ```bash
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    ```
+
+    Folge den Anweisungen im Terminal. Die Standard-Installation ist für die meisten Nutzer empfohlen.
+
+    Nach der Installation:
+
+    ```bash
+    source $HOME/.cargo/env
+    ```
+
+    <Callout type="info">
+    Dieser Befehl lädt die Umgebungsvariablen. Bei neuen Terminal-Sessions ist dies nicht mehr nötig.
+    </Callout>
+  </TabPanel>
+
+  <TabPanel value="windows">
+    ## Installation auf Windows
+
+    1. Lade **rustup-init.exe** von [rust-lang.org](https://www.rust-lang.org/tools/install) herunter
+    2. Führe die Datei aus
+    3. Folge dem Installationsassistenten
+
+    **Wichtig**: Du benötigst die C++ Build Tools:
+    - Visual Studio 2022 mit "Desktop development with C++" oder
+    - [Build Tools für Visual Studio](https://visualstudio.microsoft.com/downloads/)
+
+    <Callout type="warning" title="Visual Studio erforderlich">
+    Ohne die C++ Build Tools kann Rust nicht kompilieren. Installiere diese vor rustup.
+    </Callout>
+  </TabPanel>
+</Tabs>
+
+## Installation verifizieren
+
+Prüfe, ob die Installation erfolgreich war:
+
+```bash
+rustc --version
+```
+
+Du solltest eine Ausgabe wie diese sehen:
+
+```
+rustc 1.75.0 (82e1608df 2024-12-21)
+```
+
+Prüfe auch Cargo (Rusts Paketmanager):
+
+```bash
+cargo --version
+```
+
+<Callout type="success" title="Geschafft!">
+Wenn beide Befehle eine Versionsnummer ausgeben, ist Rust erfolgreich installiert!
+</Callout>
+
+## Dein erstes Rust-Programm
+
+Erstelle eine neue Datei `hello.rs`:
+
+```rust
+fn main() {
+    println!("Hello, Rust!");
+}
+```
+
+Kompiliere und führe aus:
+
+```bash
+# Kompilieren
+rustc hello.rs
+
+# Ausführen
+./hello          # Linux/macOS
+hello.exe        # Windows
+```
+
+Ausgabe:
+```
+Hello, Rust!
+```
+
+<Exercise title="Probiere es aus!" difficulty="easy">
+1. Erstelle eine Datei `hello.rs` mit dem Code oben
+2. Kompiliere sie mit `rustc hello.rs`
+3. Führe das Programm aus
+4. Ändere den Text in `println!` und kompiliere erneut
+</Exercise>
+
+## Was installiert wurde?
+
+rustup hat mehrere Tools installiert:
+
+- **rustc** - Der Rust-Compiler
+- **cargo** - Build-Tool und Paketmanager
+- **rustdoc** - Dokumentations-Generator
+- **rustfmt** - Code-Formatter
+- **clippy** - Linter
+
+## Rust aktualisieren
+
+Rust wird regelmäßig aktualisiert. Updates installierst du mit:
+
+```bash
+rustup update
+```
+
+<Callout type="info">
+Rust veröffentlicht alle 6 Wochen eine neue Version. Updates sind stabil und abwärtskompatibel.
+</Callout>
+
+## Zusammenfassung
+
+- Rust wird über rustup installiert
+- rustc kompiliert Rust-Code
+- cargo ist das wichtigste Tool für Rust-Projekte
+- `rustup update` hält Rust aktuell
+
+In der nächsten Lektion erstellen wir unser erstes Cargo-Projekt!

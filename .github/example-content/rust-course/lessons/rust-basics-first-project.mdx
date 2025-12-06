@@ -1,0 +1,214 @@
+---
+courseSlug: rust-basics
+title: Dein erstes Cargo-Projekt
+module: Grundlagen
+orderInModule: 3
+estimatedMinutes: 25
+requiresExperience: false
+type: text
+goals:
+  - Ein neues Cargo-Projekt erstellen
+  - Die Projektstruktur verstehen
+  - Mit cargo build und cargo run arbeiten
+---
+
+import { Callout, CodeBlock, Exercise, Quiz } from '@knowledge-core/ui';
+
+# Dein erstes Cargo-Projekt
+
+Cargo ist Rusts Build-System und Paketmanager. In dieser Lektion lernst du, wie du Cargo-Projekte erstellst und verwaltest.
+
+## Ein neues Projekt erstellen
+
+Erstelle ein neues Projekt mit:
+
+```bash
+cargo new hello_cargo
+cd hello_cargo
+```
+
+<Callout type="info">
+`cargo new` erstellt automatisch ein Git-Repository. Mit `--vcs none` kannst du das deaktivieren.
+</Callout>
+
+## Projektstruktur
+
+Cargo hat folgende Struktur erstellt:
+
+```
+hello_cargo/
+├── Cargo.toml      # Projekt-Konfiguration
+├── .git/           # Git-Repository
+├── .gitignore
+└── src/
+    └── main.rs     # Dein Code
+```
+
+### Cargo.toml
+
+Die Projekt-Konfiguration:
+
+```toml
+[package]
+name = "hello_cargo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+```
+
+- **package** - Projekt-Metadaten
+- **dependencies** - Externe Bibliotheken (Crates)
+
+### src/main.rs
+
+Der generierte Code:
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
+```
+
+## Das Projekt bauen
+
+Kompiliere das Projekt:
+
+```bash
+cargo build
+```
+
+Dies erstellt:
+- `target/debug/hello_cargo` - Das kompilierte Programm
+- `Cargo.lock` - Exakte Dependency-Versionen
+
+<Callout type="info" title="Debug vs. Release">
+`cargo build` erstellt Debug-Builds (schneller zu kompilieren, langsamer beim Ausführen).
+Für Production: `cargo build --release`
+</Callout>
+
+## Das Projekt ausführen
+
+Statt manuell zu kompilieren und auszuführen:
+
+```bash
+cargo run
+```
+
+Dies:
+1. Kompiliert (falls nötig)
+2. Führt das Programm aus
+
+Ausgabe:
+```
+   Compiling hello_cargo v0.1.0 (/path/to/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.50s
+     Running `target/debug/hello_cargo`
+Hello, world!
+```
+
+## Code überprüfen
+
+Um nur zu prüfen, ob der Code kompiliert (ohne Binary zu erstellen):
+
+```bash
+cargo check
+```
+
+<Callout type="success">
+`cargo check` ist viel schneller als `cargo build` - perfekt während der Entwicklung!
+</Callout>
+
+## Weitere nützliche Cargo-Befehle
+
+```bash
+# Tests ausführen
+cargo test
+
+# Dokumentation erstellen
+cargo doc --open
+
+# Code formatieren
+cargo fmt
+
+# Linter ausführen
+cargo clippy
+```
+
+<Exercise title="Erweitere dein Projekt" difficulty="easy">
+1. Öffne `src/main.rs`
+2. Füge eine zweite `println!`-Zeile hinzu
+3. Führe `cargo run` aus
+4. Experimentiere mit verschiedenen Texten
+</Exercise>
+
+## Dependencies hinzufügen
+
+Füge eine Dependency in `Cargo.toml` hinzu:
+
+```toml
+[dependencies]
+rand = "0.8"
+```
+
+Verwende sie in `main.rs`:
+
+```rust
+use rand::Rng;
+
+fn main() {
+    let number = rand::thread_rng().gen_range(1..=100);
+    println!("Zufallszahl: {}", number);
+}
+```
+
+Beim nächsten `cargo build` wird `rand` automatisch heruntergeladen!
+
+<Quiz
+  title="Teste dein Wissen"
+  questions={[
+    {
+      question: "Welcher Befehl erstellt ein neues Cargo-Projekt?",
+      options: [
+        "cargo create projekt",
+        "cargo new projekt",
+        "cargo init projekt",
+        "rustc --new projekt"
+      ],
+      correctAnswer: 1,
+      explanation: "cargo new <name> erstellt ein neues Projekt mit Standard-Struktur."
+    },
+    {
+      question: "Was macht cargo check?",
+      options: [
+        "Führt das Programm aus",
+        "Erstellt ein Binary",
+        "Prüft nur, ob der Code kompiliert",
+        "Aktualisiert Dependencies"
+      ],
+      correctAnswer: 2,
+      explanation: "cargo check kompiliert nur zur Fehlerprüfung, ohne Binary zu erstellen - sehr schnell!"
+    },
+    {
+      question: "Wo werden Dependencies definiert?",
+      options: [
+        "In main.rs",
+        "In Cargo.lock",
+        "In Cargo.toml",
+        "In dependencies.txt"
+      ],
+      correctAnswer: 2,
+      explanation: "Dependencies werden im [dependencies] Block von Cargo.toml definiert."
+    }
+  ]}
+/>
+
+## Zusammenfassung
+
+- `cargo new` erstellt neue Projekte
+- `cargo run` kompiliert und führt aus
+- `cargo check` prüft schnell auf Fehler
+- Dependencies werden in `Cargo.toml` definiert
+- Cargo automatisiert Build, Tests und Dependency-Management
+
+In der nächsten Lektion lernen wir die Rust-Syntax kennen!

@@ -1,0 +1,97 @@
+---
+courseSlug: getting-started
+title: Willkommen
+module: Einführung
+orderInModule: 1
+estimatedMinutes: 10
+requiresExperience: false
+type: text
+goals:
+  - Verstehe die Struktur von Knowledge Core
+  - Lerne die verfügbaren Features kennen
+  - Erkunde die interaktiven Komponenten
+---
+
+import { Callout, Hint } from '@knowledge-core/ui';
+
+# Willkommen bei Knowledge Core
+
+Dies ist eine Beispiel-Lektion, die dir zeigt, wie Kurse in Knowledge Core funktionieren.
+
+## Was ist Knowledge Core?
+
+Knowledge Core ist ein **Monorepo-Template** für:
+
+- 📚 **Technische Dokumentation** - API-Docs, Guides, Tutorials
+- 🎓 **Kursplattformen** - Interaktive Lernstrecken
+- 💡 **Knowledge Bases** - Interne Wissensdatenbanken
+
+<Callout type="info" title="Tipp für Template-Nutzer">
+Dies ist Beispiel-Content! Du kannst ihn anpassen oder durch eigene Inhalte ersetzen.
+Im SETUP.md findest du Anleitungen dazu.
+</Callout>
+
+## Features dieser Plattform
+
+### 1. MDX-basierte Inhalte
+
+Alle Inhalte werden in **MDX** geschrieben - Markdown mit React-Komponenten:
+
+```mdx
+# Überschrift
+
+Normaler Text mit **fett** und *kursiv*.
+
+<Callout type="success">
+Interaktive Komponente!
+</Callout>
+```
+
+### 2. Interaktive Elemente
+
+Du kannst Komponenten wie Callouts, Quiz, Exercises und mehr verwenden.
+
+### 3. Fortschrittsverfolgung
+
+Die Plattform kann deinen Lernfortschritt tracken (localStorage-basiert).
+
+<Hint title="Für Entwickler">
+Der gesamte Source-Code ist Open Source! Du kannst alles anpassen und erweitern.
+Schau dir die Komponenten in `packages/ui/src/components/` an.
+</Hint>
+
+## Kursstruktur
+
+Kurse sind organisiert in:
+
+1. **Kurse** - Top-Level Container (JSON-Definitionen)
+2. **Module** - Thematische Gruppierungen
+3. **Lektionen** - Einzelne Lerneinheiten (MDX)
+
+```
+Kurs: "Getting Started"
+  ├── Modul: "Einführung"
+  │   ├── Lektion 1: Willkommen
+  │   └── Lektion 2: Features
+  └── Modul: "Praxis"
+      └── Lektion 3: Erste Schritte
+```
+
+## Nächste Schritte
+
+In den folgenden Lektionen lernst du:
+
+- Wie du interaktive Komponenten verwendest
+- Wie Quiz funktionieren
+- Wie du eigene Kurse erstellst
+
+<Callout type="success">
+Bereit? Klicke unten auf "Weiter" um fortzufahren!
+</Callout>
+
+## Zusammenfassung
+
+- Knowledge Core ist ein Template für Docs & Kurse
+- Inhalte werden in MDX geschrieben
+- Viele interaktive Komponenten verfügbar
+- Vollständig anpassbar und erweiterbar

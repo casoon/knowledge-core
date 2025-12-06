@@ -1,0 +1,65 @@
+---
+import { AppShell, Footer, NavBar, Card } from '@knowledge-core/ui';
+import '@knowledge-core/styles/global.css';
+---
+
+<AppShell title="Knowledge Core - Dokumentation & Kurse">
+  <NavBar
+    logo="Knowledge Core"
+    links={[
+      { text: 'Dokumentation', href: '/docs' },
+      { text: 'Kurse', href: '/courses' },
+    ]}
+  />
+
+  <main class="flex-1 mt-16">
+    <section class="container-custom py-20">
+      <div class="text-center mb-16">
+        <h1 class="text-5xl font-bold text-text mb-6">Willkommen bei Knowledge Core</h1>
+        <p class="text-xl text-text-muted max-w-2xl mx-auto">
+          Ein modernes Monorepo-Template für Dokumentation und Kursplattformen mit Astro, MDX und
+          Tailwind CSS.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <Card href="/docs" clickable title="📚 Dokumentation">
+          <p class="text-text-muted">
+            Technische Dokumentation mit strukturierter Navigation, Suchfunktion und dunklem Modus.
+          </p>
+        </Card>
+
+        <Card href="/courses" clickable title="🎓 Kurse">
+          <p class="text-text-muted">
+            Interaktive Lernplattform mit Fortschrittsverfolgung, Quiz und praktischen Übungen.
+          </p>
+        </Card>
+      </div>
+    </section>
+
+    <section class="bg-surface-alt py-16">
+      <div class="container-custom">
+        <h2 class="text-3xl font-bold text-text mb-8 text-center">Features</h2>
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div class="text-center">
+            <div class="text-4xl mb-4">⚡</div>
+            <h3 class="text-lg font-semibold mb-2">Schnell & Modern</h3>
+            <p class="text-sm text-text-muted">Astro + pnpm + Volta für optimale Performance</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">🎨</div>
+            <h3 class="text-lg font-semibold mb-2">Flexibles Theming</h3>
+            <p class="text-sm text-text-muted">Tailwind CSS mit Dark Mode und CSS-Variablen</p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">📦</div>
+            <h3 class="text-lg font-semibold mb-2">Monorepo-Struktur</h3>
+            <p class="text-sm text-text-muted">Shared Components und wiederverwendbare Pakete</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</AppShell>

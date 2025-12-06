@@ -1,0 +1,88 @@
+---
+courseSlug: rust-basics
+title: Einführung in Rust
+module: Grundlagen
+orderInModule: 1
+estimatedMinutes: 15
+requiresExperience: false
+type: text
+goals:
+  - Verstehen, was Rust ist und wofür es verwendet wird
+  - Die wichtigsten Features von Rust kennenlernen
+  - Motivation für das Erlernen von Rust entwickeln
+---
+
+import { Callout, Hint } from '@knowledge-core/ui';
+
+# Einführung in Rust
+
+Willkommen zum Rust-Grundlagenkurs! In dieser Lektion erfährst du, was Rust ist und warum es eine der beliebtesten Programmiersprachen ist.
+
+## Was ist Rust?
+
+Rust ist eine **moderne Systemprogrammiersprache**, die 2015 von Mozilla veröffentlicht wurde. Sie wurde entwickelt, um drei Hauptziele zu erreichen:
+
+1. **Sicherheit** - Verhindert häufige Programmierfehler wie Nullpointer und Data Races
+2. **Geschwindigkeit** - Performance vergleichbar mit C und C++
+3. **Nebenläufigkeit** - Sichere parallele Programmierung
+
+<Callout type="info" title="Wusstest du?">
+Rust wurde in den letzten Jahren 8x in Folge zur "Most Loved Programming Language" in der Stack Overflow Developer Survey gewählt!
+</Callout>
+
+## Warum Rust lernen?
+
+Rust bietet einzigartige Vorteile:
+
+### Memory Safety ohne Garbage Collector
+
+Rust garantiert Speichersicherheit zur Compile-Zeit, ohne einen Garbage Collector zu benötigen. Das bedeutet:
+
+- Keine Nullpointer-Exceptions
+- Keine Data Races
+- Keine Use-After-Free-Fehler
+
+### Zero-Cost Abstractions
+
+Du kannst high-level Code schreiben, der genauso schnell läuft wie handoptimierter low-level Code.
+
+### Hervorragendes Tooling
+
+- **Cargo** - Paketmanager und Build-Tool
+- **rustfmt** - Automatische Code-Formatierung
+- **Clippy** - Linter mit hilfreichen Verbesserungsvorschlägen
+- **rust-analyzer** - Leistungsstarker Language Server
+
+<Hint title="Für erfahrene Entwickler">
+Wenn du bereits Erfahrung mit C++ hast: Rust's Ownership-System ist vergleichbar mit RAII, aber viel strenger und in die Sprache integriert. Der Compiler zwingt dich, über Ownership nachzudenken, was anfangs frustrierend sein kann, aber langfristig zu robusterem Code führt.
+</Hint>
+
+## Wo wird Rust eingesetzt?
+
+Rust wird in vielen Bereichen verwendet:
+
+- **Systemprogrammierung** - Betriebssysteme, Dateisysteme
+- **Web-Backend** - APIs, Microservices
+- **WebAssembly** - Performance-kritische Web-Anwendungen
+- **Embedded Systems** - IoT, Robotik
+- **CLI-Tools** - Kommandozeilen-Programme
+- **Blockchain & Crypto** - Sicherheitskritische Anwendungen
+
+## Die Rust-Community
+
+Die Rust-Community ist bekannt für:
+
+- **Freundlichkeit** - "Rustaceans" helfen gerne
+- **Inklusion** - Code of Conduct wird ernst genommen
+- **Qualität** - Hohe Standards für Dokumentation und Code
+
+<Callout type="success">
+Du hast jetzt einen Überblick über Rust! In der nächsten Lektion richten wir deine Entwicklungsumgebung ein.
+</Callout>
+
+## Zusammenfassung
+
+- Rust ist eine sichere, schnelle und nebenläufige Systemprogrammiersprache
+- Der Compiler verhindert viele häufige Fehler
+- Rust wird in vielen modernen Anwendungsbereichen eingesetzt
+- Die Community ist hilfreich und einladend

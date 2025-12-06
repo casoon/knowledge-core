@@ -1,0 +1,32 @@
+---
+import { AppShell, Footer, NavBar } from '@knowledge-core/ui';
+import '@knowledge-core/styles/global.css';
+---
+
+<AppShell title="Knowledge Core - Kurse">
+  <NavBar
+    logo="Knowledge Core"
+    logoHref="/"
+    links={[
+      { text: 'Dokumentation', href: '/docs' },
+      { text: 'Kurse', href: '/courses', active: true },
+    ]}
+  />
+
+  <main class="flex-1 mt-16">
+    <section class="container-custom py-20">
+      <div class="text-center mb-16">
+        <h1 class="text-5xl font-bold text-text mb-6">Lerne mit interaktiven Kursen</h1>
+        <p class="text-xl text-text-muted max-w-2xl mx-auto">
+          Praxisnahe Kurse mit Fortschrittsverfolgung, Quiz und Übungen.
+        </p>
+      </div>
+
+      <div class="text-center">
+        <a href="/courses" class="btn btn-primary btn-lg"> Zu den Kursen </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</AppShell>

@@ -1,0 +1,127 @@
+---
+title: Projektstruktur
+description: Verstehe die Struktur des Knowledge Core Monorepos
+category: getting-started
+order: 2
+tags: [struktur, monorepo]
+status: stable
+---
+
+import { Callout } from '@knowledge-core/ui';
+
+# Projektstruktur
+
+Knowledge Core ist als **pnpm Monorepo** organisiert. Hier ist eine Übersicht:
+
+## Hauptverzeichnisse
+
+```
+knowledge-core/
+├── apps/               # Anwendungen
+│   ├── docs/          # Dokumentations-App
+│   └── courses/       # Kursplattform-App
+│
+├── packages/          # Shared Packages
+│   ├── ui/           # UI-Komponenten
+│   ├── styles/       # Tailwind & Theming
+│   ├── content-model/# Type Definitions
+│   └── config/       # Shared Configs
+│
+├── .github/          # GitHub Workflows
+├── package.json      # Root Package
+└── pnpm-workspace.yaml
+```
+
+## Apps
+
+### `/apps/docs`
+
+Die Dokumentations-App enthält:
+
+- **Content Collections** für strukturierte Docs
+- **Kategorien**: Getting Started, Guides, API, Cookbook
+- **Features**: Navigation, Search, Dark Mode
+
+### `/apps/courses`
+
+Die Kursplattform enthält:
+
+- **Kurse** und **Lektionen** als Content Collections
+- **Fortschrittsverfolgung** via localStorage
+- **Interaktive Komponenten**: Quiz, Übungen, Hints
+
+<Callout type="info">
+Beide Apps teilen sich UI-Komponenten und Styles aus den Packages.
+</Callout>
+
+## Packages
+
+### `@knowledge-core/ui`
+
+Enthält alle wiederverwendbaren UI-Komponenten:
+
+- Layout-Komponenten (AppShell, Header, Footer)
+- Navigation (NavBar, Sidebar)
+- Content-Komponenten (Callout, CodeBlock, Card)
+- Spezielle Komponenten für Docs und Kurse
+
+### `@knowledge-core/styles`
+
+Das zentrale Theming-System:
+
+- **tokens.css**: CSS-Variablen für Colors, Spacing, etc.
+- **tailwind.config.js**: Tailwind-Konfiguration
+- **global.css**: Globale Styles
+- **prose.css**: MDX/Markdown-Styling
+
+### `@knowledge-core/content-model`
+
+Type-Definitionen für Content:
+
+- Zod-Schemas für Frontmatter-Validierung
+- TypeScript-Interfaces für Docs und Kurse
+- Shared Types für Progress Tracking
+
+### `@knowledge-core/config`
+
+Gemeinsame Konfigurationen:
+
+- TypeScript Config
+- ESLint Config
+- Prettier Config (im Root)
+
+## Workflows
+
+### Development
+
+```bash
+# Alle Apps starten
+pnpm dev
+
+# Nur Docs
+pnpm dev:docs
+
+# Nur Courses
+pnpm dev:courses
+```
+
+### Build
+
+```bash
+# Alle Apps bauen
+pnpm build
+
+# Nur Docs
+pnpm build:docs
+```
+
+### Linting & Formatting
+
+```bash
+pnpm lint
+pnpm format
+```
+
+<Callout type="success">
+Die Monorepo-Struktur ermöglicht es, Code zwischen Apps zu teilen und trotzdem unabhängig zu deployen.
+</Callout>

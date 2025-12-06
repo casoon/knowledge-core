@@ -1,0 +1,98 @@
+:root {
+  /* Colors - Light Mode */
+  --color-primary: 245 90% 60%;
+  --color-primary-hover: 245 90% 50%;
+  --color-secondary: 210 20% 98%;
+  --color-surface: 0 0% 100%;
+  --color-surface-alt: 0 0% 98%;
+  --color-border: 0 0% 85%;
+  --color-text: 0 0% 13%;
+  --color-text-muted: 0 0% 40%;
+
+  /* Semantic Colors */
+  --color-success: 142 76% 36%;
+  --color-success-bg: 142 76% 95%;
+  --color-warning: 38 92% 50%;
+  --color-warning-bg: 38 92% 95%;
+  --color-error: 0 84% 60%;
+  --color-error-bg: 0 84% 95%;
+  --color-info: 211 100% 50%;
+  --color-info-bg: 211 100% 95%;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-s: 0.5rem;     /* 8px */
+  --spacing-m: 1rem;       /* 16px */
+  --spacing-l: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-Index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+}
+
+.dark {
+  /* Colors - Dark Mode */
+  --color-primary: 245 80% 70%;
+  --color-primary-hover: 245 80% 60%;
+  --color-secondary: 220 30% 18%;
+  --color-surface: 220 15% 11%;
+  --color-surface-alt: 220 15% 15%;
+  --color-border: 220 10% 30%;
+  --color-text: 0 0% 95%;
+  --color-text-muted: 0 0% 65%;
+
+  /* Semantic Colors - Dark Mode */
+  --color-success: 142 76% 50%;
+  --color-success-bg: 142 76% 15%;
+  --color-warning: 38 92% 60%;
+  --color-warning-bg: 38 92% 15%;
+  --color-error: 0 84% 70%;
+  --color-error-bg: 0 84% 15%;
+  --color-info: 211 100% 60%;
+  --color-info-bg: 211 100% 15%;
+
+  /* Shadows - Dark Mode */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+}

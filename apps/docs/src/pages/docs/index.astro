@@ -1,0 +1,126 @@
+---
+import { AppShell, Footer, NavBar, Card } from '@knowledge-core/ui';
+import '@knowledge-core/styles/global.css';
+import { getCollection } from 'astro:content';
+
+const allDocs = await getCollection('docs');
+
+// Group by category
+const docsByCategory = allDocs.reduce(
+  (acc, doc) => {
+    const category = doc.data.category;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(doc);
+    return acc;
+  },
+  {} as Record<string, typeof allDocs>
+);
+
+// Sort within categories
+Object.keys(docsByCategory).forEach((category) => {
+  docsByCategory[category].sort((a, b) => a.data.order - b.data.order);
+});
+
+const categoryInfo = {
+  'getting-started': {
+    title: 'Erste Schritte',
+    description: 'Schnellstart und grundlegende Konzepte',
+    icon: '🚀',
+  },
+  guides: {
+    title: 'Anleitungen',
+    description: 'How-to Guides und Tutorials',
+    icon: '📖',
+  },
+  api: {
+    title: 'API-Referenz',
+    description: 'Technische Referenz und API-Dokumentation',
+    icon: '⚙️',
+  },
+  cookbook: {
+    title: 'Cookbook',
+    description: 'Rezepte und Best Practices',
+    icon: '👨‍🍳',
+  },
+};
+---
+
+<AppShell title="Dokumentation | Knowledge Core">
+  <NavBar
+    logo="Knowledge Core"
+    logoHref="/"
+    links={[
+      { text: 'Dokumentation', href: '/docs', active: true },
+      { text: 'Kurse', href: '/courses' },
+    ]}
+  />
+
+  <main class="flex-1 mt-16">
+    <section class="container-custom py-12">
+      <div class="mb-12">
+        <h1 class="text-4xl font-bold text-text mb-4">Dokumentation</h1>
+        <p class="text-lg text-text-muted">
+          Alles was du brauchst, um mit Knowledge Core zu starten und eigene Projekte zu erstellen.
+        </p>
+      </div>
+
+      <div class="grid gap-8 max-w-5xl">
+        {
+          Object.entries(categoryInfo).map(([key, info]) => {
+            const docs = docsByCategory[key] || [];
+            if (docs.length === 0) return null;
+
+            return (
+              <div class="card">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="text-3xl">{info.icon}</span>
+                  <div>
+                    <h2 class="text-2xl font-bold text-text">{info.title}</h2>
+                    <p class="text-sm text-text-muted">{info.description}</p>
+                  </div>
+                </div>
+
+                <ul class="space-y-2">
+                  {docs.map((doc) => (
+                    <li>
+                      <a
+                        href={`/docs/${doc.slug}`}
+                        class="flex items-start justify-between p-3 rounded-lg hover:bg-surface-alt transition-colors group"
+                      >
+                        <div class="flex-1">
+                          <div class="font-medium text-text group-hover:text-primary transition-colors">
+                            {doc.data.title}
+                          </div>
+                          {doc.data.description && (
+                            <p class="text-sm text-text-muted mt-1">{doc.data.description}</p>
+                          )}
+                        </div>
+                        <svg
+                          class="w-5 h-5 text-text-muted group-hover:text-primary flex-shrink-0 ml-3"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })
+        }
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</AppShell>

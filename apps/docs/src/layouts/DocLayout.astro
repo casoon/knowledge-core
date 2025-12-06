@@ -1,0 +1,60 @@
+---
+import { AppShell, Footer, NavBar, SidebarLayout, PageHeader } from '@knowledge-core/ui';
+import '@knowledge-core/styles/global.css';
+import '@knowledge-core/styles/prose.css';
+import { getCollection } from 'astro:content';
+import DocsSidebar from '../components/DocsSidebar.astro';
+
+export interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+    tags?: string[];
+    status?: 'stable' | 'beta' | 'deprecated';
+  };
+}
+
+const { frontmatter } = Astro.props;
+const allDocs = await getCollection('docs');
+---
+
+<AppShell title={`${frontmatter.title} | Dokumentation`} description={frontmatter.description}>
+  <NavBar
+    logo="Knowledge Core"
+    logoHref="/"
+    links={[
+      { text: 'Dokumentation', href: '/docs', active: true },
+      { text: 'Kurse', href: '/courses' },
+    ]}
+  />
+
+  <SidebarLayout hasSidebar={true} hasTableOfContents={false}>
+    <DocsSidebar slot="sidebar" docs={allDocs} currentPath={Astro.url.pathname} />
+
+    <div class="max-w-4xl">
+      <PageHeader
+        title={frontmatter.title}
+        description={frontmatter.description}
+        tags={frontmatter.tags}
+        meta={{ status: frontmatter.status }}
+      />
+
+      <article class="prose">
+        <slot />
+      </article>
+
+      <div class="mt-12 pt-8 border-t border-border">
+        <div class="flex justify-between text-sm">
+          <div>
+            <!-- Previous page -->
+          </div>
+          <div>
+            <!-- Next page -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </SidebarLayout>
+
+  <Footer slot="footer" />
+</AppShell>

@@ -1,0 +1,10 @@
+{
+  "name": "@knowledge-core/config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig.json": "./tsconfig.json",
+    "./eslint.config.js": "./eslint.config.js"
+  }
+}

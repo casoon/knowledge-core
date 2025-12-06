@@ -1,0 +1,39 @@
+---
+export interface Props {
+  projectName?: string;
+  links?: Array<{ text: string; href: string }>;
+}
+
+const {
+  projectName = 'Knowledge Core',
+  links = [
+    { text: 'GitHub', href: '#' },
+    { text: 'Impressum', href: '#' },
+    { text: 'Datenschutz', href: '#' },
+  ],
+} = Astro.props;
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-border mt-auto">
+  <div class="container-custom py-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-sm text-text-muted">
+        © {currentYear} {projectName}. All rights reserved.
+      </div>
+      <nav class="flex gap-6">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class="text-sm text-text-muted hover:text-primary transition-colors"
+            >
+              {link.text}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+</footer>

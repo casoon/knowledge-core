@@ -1,0 +1,166 @@
+---
+import { AppShell, Footer, NavBar, ProgressBar } from '@knowledge-core/ui';
+import '@knowledge-core/styles/global.css';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const courses = await getCollection('courses');
+  return courses.map((course) => ({
+    params: { courseSlug: course.data.slug },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: CollectionEntry<'courses'>;
+}
+
+const { course } = Astro.props;
+const allLessons = await getCollection('lessons', ({ data }) => {
+  return data.courseSlug === course.data.slug;
+});
+
+// Group lessons by module
+const lessonsByModule = allLessons.reduce(
+  (acc, lesson) => {
+    const module = lesson.data.module;
+    if (!acc[module]) {
+      acc[module] = [];
+    }
+    acc[module].push(lesson);
+    return acc;
+  },
+  {} as Record<string, typeof allLessons>
+);
+
+// Sort lessons within each module
+Object.keys(lessonsByModule).forEach((module) => {
+  lessonsByModule[module].sort((a, b) => a.data.orderInModule - b.data.orderInModule);
+});
+
+const levelColors = {
+  beginner: 'badge-success',
+  intermediate: 'badge-warning',
+  advanced: 'badge-error',
+};
+---
+
+<AppShell title={`${course.data.title} | Kurse`} description={course.data.description}>
+  <NavBar
+    logo="Knowledge Core"
+    logoHref="/"
+    links={[
+      { text: 'Dokumentation', href: '/docs' },
+      { text: 'Kurse', href: '/courses', active: true },
+    ]}
+  />
+
+  <main class="flex-1 mt-16">
+    <section class="container-custom py-12">
+      <!-- Course Header -->
+      <div class="mb-12">
+        <div class="mb-4">
+          <span class:list={['badge', levelColors[course.data.level]]}>
+            {course.data.level}
+          </span>
+        </div>
+        <h1 class="text-4xl font-bold text-text mb-4">{course.data.title}</h1>
+        <p class="text-lg text-text-muted mb-6">{course.data.description}</p>
+
+        <div class="flex flex-wrap gap-4 items-center mb-6">
+          <div class="flex items-center gap-2 text-text-muted">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>{Math.round(course.data.estimatedTotalMinutes / 60)} Stunden</span>
+          </div>
+
+          <div class="flex gap-2">
+            {course.data.tags.map((tag) => <span class="badge badge-primary">{tag}</span>)}
+          </div>
+        </div>
+
+        {
+          allLessons.length > 0 && (
+            <div class="mb-6 max-w-md">
+              <ProgressBar current={0} total={allLessons.length} />
+            </div>
+          )
+        }
+
+        {
+          allLessons.length > 0 && (
+            <a href={`/courses/${course.data.slug}/${allLessons[0].slug}`} class="btn btn-primary">
+              Kurs starten
+            </a>
+          )
+        }
+      </div>
+
+      <!-- Course Content / Modules -->
+      <div class="max-w-4xl">
+        <h2 class="text-2xl font-bold text-text mb-6">Kursinhalt</h2>
+
+        {
+          Object.keys(lessonsByModule).length === 0 ? (
+            <div class="card">
+              <p class="text-text-muted">
+                Dieser Kurs hat noch keine Lektionen. Erstelle deine erste Lektion!
+              </p>
+            </div>
+          ) : (
+            <div class="space-y-6">
+              {Object.keys(lessonsByModule).map((module) => (
+                <div class="card">
+                  <h3 class="text-xl font-semibold text-text mb-4">{module}</h3>
+                  <ul class="space-y-2">
+                    {lessonsByModule[module].map((lesson) => (
+                      <li>
+                        <a
+                          href={`/courses/${course.data.slug}/${lesson.slug}`}
+                          class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-alt transition-colors group"
+                        >
+                          <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full border-2 border-border flex items-center justify-center text-xs">
+                              {lesson.data.orderInModule}
+                            </div>
+                            <span class="text-text group-hover:text-primary transition-colors">
+                              {lesson.data.title}
+                            </span>
+                          </div>
+                          <div class="flex items-center gap-4 text-sm text-text-muted">
+                            <span>{lesson.data.estimatedMinutes} min</span>
+                            <svg
+                              class="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                          </div>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</AppShell>

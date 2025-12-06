@@ -1,0 +1,136 @@
+---
+export interface NavLink {
+  text: string;
+  href: string;
+  active?: boolean;
+}
+
+export interface Props {
+  logo: string;
+  logoHref?: string;
+  links: NavLink[];
+  showThemeToggle?: boolean;
+}
+
+const { logo, logoHref = '/', links, showThemeToggle = true } = Astro.props;
+---
+
+<nav class="fixed top-0 left-0 right-0 z-fixed bg-surface border-b border-border">
+  <div class="container-custom">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href={logoHref} class="text-xl font-bold text-text hover:text-primary transition-colors">
+        {logo}
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-6">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                'text-sm font-medium transition-colors',
+                link.active
+                  ? 'text-primary'
+                  : 'text-text-muted hover:text-text',
+              ]}
+            >
+              {link.text}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Right side -->
+      <div class="flex items-center gap-4">
+        {showThemeToggle && <div id="theme-toggle-container"></div>}
+
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="md:hidden btn btn-ghost p-2"
+          aria-label="Toggle menu"
+          id="mobile-menu-button"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div class="hidden md:hidden pb-4" id="mobile-menu">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'block py-2 text-sm font-medium transition-colors',
+              link.active
+                ? 'text-primary'
+                : 'text-text-muted hover:text-text',
+            ]}
+          >
+            {link.text}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileMenuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>
+
+{
+  showThemeToggle && (
+    <script>
+      // Theme toggle
+      function createThemeToggle() {
+        const container = document.getElementById('theme-toggle-container');
+        if (!container) return;
+
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn btn-ghost p-2';
+        button.setAttribute('aria-label', 'Toggle theme');
+        button.id = 'theme-toggle';
+
+        const updateIcon = () => {
+          const isDark = document.documentElement.classList.contains('dark');
+          button.innerHTML = isDark
+            ? `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>`
+            : `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>`;
+        };
+
+        button.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+          updateIcon();
+        });
+
+        updateIcon();
+        container.appendChild(button);
+      }
+
+      createThemeToggle();
+    </script>
+  )
+}
