@@ -1,6 +1,6 @@
 # Knowledge Core
 
-[![GitHub Template](https://img.shields.io/badge/GitHub-Template-blue?logo=github)](https://github.com/yourusername/knowledge-core/generate)
+[![GitHub Template](https://img.shields.io/badge/GitHub-Template-blue?logo=github)](https://github.com/casoon/knowledge-core/generate)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
 
@@ -50,7 +50,7 @@ Ein produktionsreifes Template basierend auf **Astro**, **MDX**, **Tailwind CSS*
 **Option 2: Direktes Klonen**
 
 ```bash
-git clone https://github.com/yourusername/knowledge-core.git
+git clone https://github.com/casoon/knowledge-core.git
 cd knowledge-core
 ```
 
