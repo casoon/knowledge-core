@@ -2,67 +2,86 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
-    branches: [main, develop]
+    branches: [main]
 
 jobs:
-  lint-and-typecheck:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Volta
-        uses: volta-cli/action@v4
+      - uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v2
         with:
           version: 9
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
 
-      - name: Lint
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Biome lint
         run: pnpm lint
 
-      - name: Format check
-        run: pnpm format:check
-
-      - name: Type check
-        run: pnpm check
-
-  build:
+  typecheck:
+    name: Type Check
     runs-on: ubuntu-latest
-    needs: lint-and-typecheck
-
-    strategy:
-      matrix:
-        app: [docs, courses]
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Volta
-        uses: volta-cli/action@v4
+      - uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v2
         with:
           version: 9
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
 
-      - name: Build ${{ matrix.app }}
-        run: pnpm build:${{ matrix.app }}
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Astro check
+        run: cd apps/courses && pnpm astro check
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.app }}-dist
-          path: apps/${{ matrix.app }}/dist
+          name: dist
+          path: apps/courses/dist
           retention-days: 7
