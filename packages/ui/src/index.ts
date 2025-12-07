@@ -11,6 +11,7 @@ export { default as SearchBar } from "./components/navigation/SearchBar.astro";
 // Content Components
 export { default as Callout } from "./components/content/Callout.astro";
 export { default as CodeBlock } from "./components/content/CodeBlock.astro";
+export { default as CodeExample } from "./components/content/CodeExample.astro";
 export { default as Card } from "./components/content/Card.astro";
 export { default as Tabs } from "./components/content/Tabs.astro";
 export { default as TabPanel } from "./components/content/TabPanel.astro";
