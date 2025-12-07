@@ -6,6 +6,7 @@ export { default as SidebarLayout } from "./components/layout/SidebarLayout.astr
 
 // Navigation Components
 export { default as NavBar } from "./components/navigation/NavBar.astro";
+export { default as SearchBar } from "./components/navigation/SearchBar.astro";
 
 // Content Components
 export { default as Callout } from "./components/content/Callout.astro";

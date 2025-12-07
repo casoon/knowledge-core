@@ -1,4 +1,6 @@
 ---
+import SearchBar from './SearchBar.astro';
+
 export interface NavLink {
   text: string;
   href: string;
@@ -16,6 +18,7 @@ export interface Props {
   logoHref?: string;
   links: NavLink[];
   showThemeToggle?: boolean;
+  showSearch?: boolean;
   courseNav?: {
     courseTitle: string;
     courseSlug: string;
@@ -24,7 +27,7 @@ export interface Props {
   };
 }
 
-const { logo, logoHref = '/', links, showThemeToggle = true, courseNav } = Astro.props;
+const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, courseNav } = Astro.props;
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-fixed backdrop-blur-md border-b border-border bg-white/80 dark:bg-gray-900/80">
@@ -55,7 +58,8 @@ const { logo, logoHref = '/', links, showThemeToggle = true, courseNav } = Astro
       </div>
 
       <!-- Right side -->
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 md:gap-4">
+        {showSearch && <SearchBar />}
         {showThemeToggle && <div id="theme-toggle-container"></div>}
 
         <!-- Mobile menu button -->
