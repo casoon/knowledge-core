@@ -1,5 +1,5 @@
 ---
-import { AppShell, Footer, NavBar, SidebarLayout, PageHeader } from '@knowledge-core/ui';
+import { AppShell, Footer, NavBar, SidebarLayout, PageHeader, LessonNav } from '@knowledge-core/ui';
 import '@knowledge-core/styles/global.css';
 import '@knowledge-core/styles/prose.css';
 import { getCollection } from 'astro:content';
@@ -21,6 +21,27 @@ const allLessons = await getCollection('lessons', ({ data }) => {
   return data.courseSlug === courseSlug;
 });
 
+// Sort lessons by module and orderInModule
+allLessons.sort((a, b) => {
+  if (a.data.module !== b.data.module) {
+    return a.data.module.localeCompare(b.data.module);
+  }
+  return a.data.orderInModule - b.data.orderInModule;
+});
+
+// Group lessons by module
+const lessonsByModule = allLessons.reduce(
+  (acc, lesson) => {
+    const module = lesson.data.module;
+    if (!acc[module]) {
+      acc[module] = [];
+    }
+    acc[module].push(lesson);
+    return acc;
+  },
+  {} as Record<string, typeof allLessons>
+);
+
 // Find current lesson index
 const currentIndex = allLessons.findIndex((l) => l.slug === lessonSlug);
 const prevLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
@@ -38,6 +59,16 @@ const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentInde
       { text: 'Dokumentation', href: '/docs' },
       { text: 'Kurse', href: '/courses', active: true },
     ]}
+    courseNav={{
+      courseTitle: course?.data.title || 'Kurs',
+      courseSlug: courseSlug,
+      lessons: allLessons.map((l) => ({
+        slug: l.slug,
+        title: l.data.title,
+        module: l.data.module,
+      })),
+      currentLessonSlug: lessonSlug,
+    }}
   />
 
   <SidebarLayout hasSidebar={false} hasTableOfContents={false}>
@@ -174,6 +205,14 @@ const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentInde
       </div>
     </div>
   </SidebarLayout>
+
+  <LessonNav
+    courseTitle={course?.data.title || 'Kurs'}
+    courseSlug={courseSlug}
+    lessons={allLessons}
+    currentLessonSlug={lessonSlug}
+    lessonsByModule={lessonsByModule}
+  />
 
   <Footer slot="footer" />
 </AppShell>

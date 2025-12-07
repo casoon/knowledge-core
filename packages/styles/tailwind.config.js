@@ -1,4 +1,4 @@
-import typography from "@tailwindcss/typography";
+import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {

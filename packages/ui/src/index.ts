@@ -20,3 +20,4 @@ export { default as ProgressBar } from './components/courses/ProgressBar.astro';
 export { default as Quiz } from './components/courses/Quiz.astro';
 export { default as Exercise } from './components/courses/Exercise.astro';
 export { default as Hint } from './components/courses/Hint.astro';
+export { default as LessonNav } from './components/courses/LessonNav.astro';
