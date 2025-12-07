@@ -73,13 +73,28 @@
     @apply text-primary before:content-[''] after:content-[''];
   }
 
-  .prose pre {
-    @apply bg-surface-alt border border-border rounded-lg p-4 overflow-x-auto mb-4;
+  .prose pre:not(.astro-code) {
+    @apply bg-[#24292e] border border-border rounded-lg p-4 overflow-x-auto mb-4;
     @apply text-sm font-mono;
   }
 
-  .prose pre code {
-    @apply bg-transparent p-0 text-text;
+  .prose pre:not(.astro-code) code {
+    @apply bg-transparent p-0 text-[#e1e4e8];
+  }
+
+  /* Astro/Shiki code blocks - minimal styling to preserve syntax highlighting */
+  .prose pre.astro-code {
+    @apply border border-border rounded-lg p-4 overflow-x-auto mb-4;
+    @apply text-sm font-mono;
+  }
+
+  .prose pre.astro-code code {
+    @apply bg-transparent p-0;
+    color: inherit;
+  }
+
+  .prose pre.astro-code span {
+    color: inherit;
   }
 
   .prose img {
@@ -108,11 +123,6 @@
 
   .prose tbody tr:hover {
     @apply bg-surface-alt;
-  }
-
-  /* Code blocks with syntax highlighting */
-  .prose .astro-code {
-    @apply bg-surface-alt border border-border rounded-lg p-4 overflow-x-auto mb-4;
   }
 
   /* Headings with anchor links */
