@@ -44,23 +44,6 @@ const { code, lang = 'plaintext', title, showLineNumbers = false } = Astro.props
 </div>
 
 <script>
-  document.querySelectorAll('[data-copy-button]').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const codeBlock = button.closest('.code-block')?.querySelector('code');
-      if (!codeBlock) return;
-
-      const code = codeBlock.textContent || '';
-      await navigator.clipboard.writeText(code);
-
-      // Visual feedback
-      const originalHTML = button.innerHTML;
-      button.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-      </svg>`;
-
-      setTimeout(() => {
-        button.innerHTML = originalHTML;
-      }, 2000);
-    });
-  });
+  import { initCopyButtons } from '../../scripts/copy-code';
+  initCopyButtons();
 </script>

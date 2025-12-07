@@ -22,22 +22,31 @@ const { title, description, showFooter = true } = Astro.props;
       rel="stylesheet"
     />
     <script is:inline>
-      // Dark mode initialization
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
+      // Dark mode initialization (mit Error Handling für Private Browsing)
+      (function() {
+        function safeGetItem(key) {
+          try {
+            return typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
+          } catch {
+            return null;
+          }
         }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
-      })();
 
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+        const theme = (() => {
+          const stored = safeGetItem('theme');
+          if (stored) return stored;
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+          }
+          return 'light';
+        })();
+
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
     </script>
   </head>
   <body class="min-h-screen flex flex-col">

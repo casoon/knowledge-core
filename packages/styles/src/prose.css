@@ -74,12 +74,12 @@
   }
 
   .prose pre:not(.astro-code) {
-    @apply bg-[#24292e] border border-border rounded-lg p-4 overflow-x-auto mb-4;
+    @apply bg-surface-alt border border-border rounded-lg p-4 overflow-x-auto mb-4;
     @apply text-sm font-mono;
   }
 
   .prose pre:not(.astro-code) code {
-    @apply bg-transparent p-0 text-[#e1e4e8];
+    @apply bg-transparent p-0 text-text;
   }
 
   /* Astro/Shiki code blocks - minimal styling to preserve syntax highlighting */

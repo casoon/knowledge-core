@@ -313,29 +313,6 @@ const progress = Math.round(((currentIndex + 1) / lessons.length) * 100);
 </style>
 
 <script>
-  const nav = document.getElementById('lesson-nav');
-  const toggle = document.getElementById('lesson-nav-toggle');
-
-  if (nav && toggle) {
-    // Zustand aus localStorage laden
-    const isOpen = localStorage.getItem('lessonNavOpen') === 'true';
-    if (isOpen) {
-      nav.classList.add('open');
-      toggle.setAttribute('aria-expanded', 'true');
-    }
-
-    toggle.addEventListener('click', () => {
-      const nowOpen = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(nowOpen));
-      localStorage.setItem('lessonNavOpen', String(nowOpen));
-    });
-
-    // Aktive Lektion in den sichtbaren Bereich scrollen
-    const activeLink = nav.querySelector('.lesson-link.active');
-    if (activeLink) {
-      setTimeout(() => {
-        activeLink.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      }, 100);
-    }
-  }
+  import { initLessonNav } from '../../scripts/lesson-nav';
+  initLessonNav();
 </script>
