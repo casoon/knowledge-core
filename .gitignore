@@ -34,8 +34,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Lock files (regenerate with pnpm install)
-pnpm-lock.yaml
+# Lock files are now tracked for CI/CD
 
 # Testing
 coverage/
