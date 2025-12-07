@@ -1,5 +1,6 @@
 ---
 import SearchBar from './SearchBar.astro';
+import SyncProgress from '../courses/SyncProgress.astro';
 
 export interface NavLink {
   text: string;
@@ -19,6 +20,7 @@ export interface Props {
   links: NavLink[];
   showThemeToggle?: boolean;
   showSearch?: boolean;
+  showSync?: boolean;
   courseNav?: {
     courseTitle: string;
     courseSlug: string;
@@ -27,7 +29,7 @@ export interface Props {
   };
 }
 
-const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, courseNav } = Astro.props;
+const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, showSync = true, courseNav } = Astro.props;
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-fixed backdrop-blur-md border-b border-border bg-white/80 dark:bg-gray-900/80">
@@ -60,6 +62,7 @@ const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, 
       <!-- Right side -->
       <div class="flex items-center gap-2 md:gap-4">
         {showSearch && <SearchBar />}
+        {showSync && <SyncProgress />}
         {showThemeToggle && <div id="theme-toggle-container"></div>}
 
         <!-- Mobile menu button -->
