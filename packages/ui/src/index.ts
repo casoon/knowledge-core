@@ -18,6 +18,7 @@ export { default as TabPanel } from "./components/content/TabPanel.astro";
 export { default as CourseCard } from "./components/courses/CourseCard.astro";
 export { default as ProgressBar } from "./components/courses/ProgressBar.astro";
 export { default as TotalProgress } from "./components/courses/TotalProgress.astro";
+export { default as LessonComplete } from "./components/courses/LessonComplete.astro";
 export { default as Quiz } from "./components/courses/Quiz.astro";
 export { default as Exercise } from "./components/courses/Exercise.astro";
 export { default as Hint } from "./components/courses/Hint.astro";
