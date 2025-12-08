@@ -1,0 +1,95 @@
+---
+/**
+ * FontSizeControl - Schriftgrößen-Steuerung für bessere Lesbarkeit
+ *
+ * Ermöglicht das Vergrößern/Verkleinern der Schrift.
+ * Speichert die Einstellung in localStorage.
+ */
+---
+
+<div class="font-size-control flex items-center gap-1">
+  <button
+    type="button"
+    id="font-size-decrease"
+    class="btn btn-ghost p-1.5 text-text-muted hover:text-text"
+    aria-label="Schrift verkleinern"
+    title="Schrift verkleinern"
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+    </svg>
+  </button>
+
+  <span id="font-size-indicator" class="text-xs text-text-muted w-8 text-center font-mono">100%</span>
+
+  <button
+    type="button"
+    id="font-size-increase"
+    class="btn btn-ghost p-1.5 text-text-muted hover:text-text"
+    aria-label="Schrift vergrößern"
+    title="Schrift vergrößern"
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+(function() {
+  const STORAGE_KEY = 'font-size';
+  const MIN_SIZE = 80;
+  const MAX_SIZE = 150;
+  const STEP = 10;
+  const DEFAULT_SIZE = 100;
+
+  const decreaseBtn = document.getElementById('font-size-decrease');
+  const increaseBtn = document.getElementById('font-size-increase');
+  const indicator = document.getElementById('font-size-indicator');
+
+  if (!decreaseBtn || !increaseBtn || !indicator) return;
+
+  function safeGetItem(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
+  }
+
+  function safeSetItem(key, value) {
+    try { localStorage.setItem(key, value); } catch {}
+  }
+
+  function getCurrentSize() {
+    const stored = safeGetItem(STORAGE_KEY);
+    return stored ? parseInt(stored, 10) : DEFAULT_SIZE;
+  }
+
+  function applySize(size) {
+    document.documentElement.style.fontSize = size + '%';
+    indicator.textContent = size + '%';
+    safeSetItem(STORAGE_KEY, size.toString());
+
+    // Update button states
+    decreaseBtn.disabled = size <= MIN_SIZE;
+    increaseBtn.disabled = size >= MAX_SIZE;
+    decreaseBtn.classList.toggle('opacity-30', size <= MIN_SIZE);
+    increaseBtn.classList.toggle('opacity-30', size >= MAX_SIZE);
+  }
+
+  // Initial load
+  const initialSize = getCurrentSize();
+  applySize(initialSize);
+
+  decreaseBtn.addEventListener('click', () => {
+    const current = getCurrentSize();
+    if (current > MIN_SIZE) {
+      applySize(current - STEP);
+    }
+  });
+
+  increaseBtn.addEventListener('click', () => {
+    const current = getCurrentSize();
+    if (current < MAX_SIZE) {
+      applySize(current + STEP);
+    }
+  });
+})();
+</script>

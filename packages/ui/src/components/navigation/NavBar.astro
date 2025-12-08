@@ -1,6 +1,7 @@
 ---
 import SearchBar from './SearchBar.astro';
 import SyncProgress from '../courses/SyncProgress.astro';
+import FontSizeControl from './FontSizeControl.astro';
 
 export interface NavLink {
   text: string;
@@ -21,6 +22,7 @@ export interface Props {
   showThemeToggle?: boolean;
   showSearch?: boolean;
   showSync?: boolean;
+  showFontSize?: boolean;
   courseNav?: {
     courseTitle: string;
     courseSlug: string;
@@ -29,7 +31,7 @@ export interface Props {
   };
 }
 
-const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, showSync = true, courseNav } = Astro.props;
+const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, showSync = true, showFontSize = true, courseNav } = Astro.props;
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-fixed backdrop-blur-md border-b border-border bg-white/80 dark:bg-gray-900/80">
@@ -63,6 +65,7 @@ const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, 
       <div class="flex items-center gap-2 md:gap-4">
         {showSearch && <SearchBar />}
         {showSync && <SyncProgress />}
+        {showFontSize && <div class="hidden md:block"><FontSizeControl /></div>}
         {showThemeToggle && <div id="theme-toggle-container"></div>}
 
         <!-- Mobile menu button -->
@@ -115,30 +118,38 @@ const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, 
 
       <!-- Mobile Actions -->
       {!courseNav && (
-        <div class="flex items-center gap-3 py-3 border-t border-border">
-          {showSearch && (
-            <button
-              type="button"
-              id="mobile-search-trigger"
-              class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              Suchen
-            </button>
-          )}
-          {showSync && (
-            <button
-              type="button"
-              id="mobile-sync-trigger"
-              class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              Sync
-            </button>
+        <div class="space-y-3 py-3 border-t border-border">
+          <div class="flex items-center gap-3">
+            {showSearch && (
+              <button
+                type="button"
+                id="mobile-search-trigger"
+                class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Suchen
+              </button>
+            )}
+            {showSync && (
+              <button
+                type="button"
+                id="mobile-sync-trigger"
+                class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Sync
+              </button>
+            )}
+          </div>
+          {showFontSize && (
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-text-muted">Schriftgröße</span>
+              <FontSizeControl />
+            </div>
           )}
         </div>
       )}
@@ -206,18 +217,29 @@ const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, 
   (function() {
     const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
     const mobileSyncTrigger = document.getElementById('mobile-sync-trigger');
-    const searchButton = document.getElementById('search-button');
-    const syncButton = document.getElementById('sync-button');
+    const searchModal = document.getElementById('search-modal');
+    const searchInput = document.getElementById('search-input');
+    const syncModal = document.getElementById('sync-modal');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-    if (mobileSearchTrigger && searchButton) {
+    if (mobileSearchTrigger && searchModal) {
       mobileSearchTrigger.addEventListener('click', () => {
-        searchButton.click();
+        // Schließe Mobile-Menü
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+        // Öffne Search Modal
+        searchModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        if (searchInput) searchInput.focus();
       });
     }
 
-    if (mobileSyncTrigger && syncButton) {
+    if (mobileSyncTrigger && syncModal) {
       mobileSyncTrigger.addEventListener('click', () => {
-        syncButton.click();
+        // Schließe Mobile-Menü
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+        // Öffne Sync Modal
+        syncModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
       });
     }
   })();
