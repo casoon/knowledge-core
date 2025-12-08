@@ -16,7 +16,9 @@ export interface LessonNavItem {
 }
 
 export interface Props {
-  logo: string;
+  logo?: string;
+  logoSrc?: string;
+  logoAlt?: string;
   logoHref?: string;
   links: NavLink[];
   showThemeToggle?: boolean;
@@ -31,15 +33,19 @@ export interface Props {
   };
 }
 
-const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, showSync = true, showFontSize = true, courseNav } = Astro.props;
+const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle = true, showSearch = true, showSync = true, showFontSize = true, courseNav } = Astro.props;
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-fixed backdrop-blur-md border-b border-border bg-white/80 dark:bg-gray-900/80">
   <div class="container-custom">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href={logoHref} class="text-xl font-bold text-text hover:text-primary transition-colors">
-        {logo}
+      <a href={logoHref} class="flex items-center gap-2 text-text hover:text-primary transition-colors">
+        {logoSrc ? (
+          <img src={logoSrc} alt={logoAlt} class="h-8 w-auto" />
+        ) : (
+          <span class="text-xl font-bold">{logo}</span>
+        )}
       </a>
 
       <!-- Desktop Navigation -->
@@ -200,6 +206,12 @@ const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, 
                 });
               })()}
             </nav>
+            {showFontSize && (
+              <div class="flex items-center justify-between mt-4 pt-4 border-t border-border">
+                <span class="text-sm text-text-muted">Schriftgröße</span>
+                <FontSizeControl />
+              </div>
+            )}
           </div>
         )
       }
