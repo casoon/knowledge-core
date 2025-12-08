@@ -94,21 +94,54 @@ const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, 
 
     <!-- Mobile Navigation -->
     <div class="hidden md:hidden pb-4" id="mobile-menu">
-      {
-        links.map((link) => (
-          <a
-            href={link.href}
-            class:list={[
-              'block py-2 text-sm font-medium transition-colors',
-              link.active
-                ? 'text-primary'
-                : 'text-text-muted hover:text-text',
-            ]}
-          >
-            {link.text}
-          </a>
-        ))
-      }
+      <!-- Mobile Links -->
+      <div class="space-y-1 mb-4">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                'block py-2 text-sm font-medium transition-colors',
+                link.active
+                  ? 'text-primary'
+                  : 'text-text-muted hover:text-text',
+              ]}
+            >
+              {link.text}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Mobile Actions -->
+      {!courseNav && (
+        <div class="flex items-center gap-3 py-3 border-t border-border">
+          {showSearch && (
+            <button
+              type="button"
+              id="mobile-search-trigger"
+              class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              Suchen
+            </button>
+          )}
+          {showSync && (
+            <button
+              type="button"
+              id="mobile-sync-trigger"
+              class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Sync
+            </button>
+          )}
+        </div>
+      )}
 
       {
         courseNav && (
@@ -166,6 +199,28 @@ const { logo, logoHref = '/', links, showThemeToggle = true, showSearch = true, 
 <script>
   import { initMobileMenu } from '../../scripts/mobile-menu';
   initMobileMenu();
+</script>
+
+<script is:inline>
+  // Mobile menu triggers for search and sync
+  (function() {
+    const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+    const mobileSyncTrigger = document.getElementById('mobile-sync-trigger');
+    const searchButton = document.getElementById('search-button');
+    const syncButton = document.getElementById('sync-button');
+
+    if (mobileSearchTrigger && searchButton) {
+      mobileSearchTrigger.addEventListener('click', () => {
+        searchButton.click();
+      });
+    }
+
+    if (mobileSyncTrigger && syncButton) {
+      mobileSyncTrigger.addEventListener('click', () => {
+        syncButton.click();
+      });
+    }
+  })();
 </script>
 
 {
