@@ -8,6 +8,11 @@
 
 A production-ready template based on **Astro**, **MDX**, **Tailwind CSS**, and **pnpm Workspaces** - optimized for creating technical documentation and interactive learning platforms.
 
+## Live Previews
+
+- **Docs App:** [kc-docs.casoon.dev](https://kc-docs.casoon.dev)
+- **Courses App:** [kc-courses.casoon.dev](https://kc-courses.casoon.dev)
+
 ## Features
 
 - **Astro 5** - Fast, modern frontend framework
