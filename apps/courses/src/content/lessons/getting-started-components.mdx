@@ -1,17 +1,17 @@
 ---
 courseSlug: getting-started
-title: Interaktive Komponenten
-module: Einführung
+title: Interactive Components
+module: Introduction
 orderInModule: 2
 estimatedMinutes: 15
 requiresExperience: false
 type: text
 goals:
-  - Lerne die verschiedenen Komponenten kennen
-  - Verstehe, wie Callouts verwendet werden
-  - Experimentiere mit Tabs und Code-Blöcken
+  - Learn about the different components
+  - Understand how callouts are used
+  - Experiment with tabs and code blocks
 resources:
-  - title: MDX Dokumentation
+  - title: MDX Documentation
     url: https://mdxjs.com
   - title: Astro Components
     url: https://docs.astro.build/en/core-concepts/astro-components/
@@ -19,33 +19,33 @@ resources:
 
 import { Callout, Tabs, TabPanel, Exercise, Hint } from '@knowledge-core/ui';
 
-# Interaktive Komponenten
+# Interactive Components
 
-Knowledge Core bietet verschiedene Komponenten für interaktive Inhalte.
+Knowledge Core provides various components for interactive content.
 
 ## Callouts
 
-Callouts heben wichtige Informationen hervor:
+Callouts highlight important information:
 
 <Callout type="info" title="Information">
-Dies ist eine Info-Callout für allgemeine Hinweise.
+This is an info callout for general notes.
 </Callout>
 
-<Callout type="success" title="Erfolg">
-Zeigt positive Bestätigungen oder erledigte Schritte.
+<Callout type="success" title="Success">
+Shows positive confirmations or completed steps.
 </Callout>
 
-<Callout type="warning" title="Warnung">
-Wichtige Warnungen, die Nutzer beachten sollten.
+<Callout type="warning" title="Warning">
+Important warnings that users should note.
 </Callout>
 
-<Callout type="error" title="Fehler">
-Kritische Informationen oder häufige Fehler.
+<Callout type="error" title="Error">
+Critical information or common errors.
 </Callout>
 
 ## Tabs
 
-Tabs eignen sich für alternative Ansichten oder Multi-Platform-Anleitungen:
+Tabs are great for alternative views or multi-platform instructions:
 
 <Tabs tabs={[
   { label: 'Option A', value: 'a' },
@@ -55,19 +55,19 @@ Tabs eignen sich für alternative Ansichten oder Multi-Platform-Anleitungen:
   <TabPanel value="a">
     ### Option A
 
-    Dies ist der Inhalt für Option A. Du kannst hier:
-    - Text schreiben
-    - Code-Beispiele zeigen
-    - Weitere Komponenten nutzen
+    This is the content for Option A. Here you can:
+    - Write text
+    - Show code examples
+    - Use more components
   </TabPanel>
   
   <TabPanel value="b">
     ### Option B
 
-    Unterschiedlicher Inhalt für Option B.
+    Different content for Option B.
 
     ```javascript
-    const example = "Code-Beispiel in Tab B";
+    const example = "Code example in Tab B";
     console.log(example);
     ```
   </TabPanel>
@@ -76,14 +76,14 @@ Tabs eignen sich für alternative Ansichten oder Multi-Platform-Anleitungen:
     ### Option C
 
     <Callout type="info">
-    Du kannst sogar Callouts in Tabs verschachteln!
+    You can even nest callouts inside tabs!
     </Callout>
   </TabPanel>
 </Tabs>
 
-## Code-Blöcke
+## Code Blocks
 
-Syntax-Highlighted Code mit verschiedenen Sprachen:
+Syntax-highlighted code with different languages:
 
 **JavaScript:**
 ```javascript
@@ -115,35 +115,35 @@ def greet(name):
 print(greet("World"))
 ```
 
-## Übungen
+## Exercises
 
-<Exercise title="Probiere es selbst" difficulty="easy">
-Erstelle eine eigene Lektion in `apps/courses/src/content/lessons/`:
+<Exercise title="Try it yourself" difficulty="easy">
+Create your own lesson in `apps/courses/src/content/lessons/`:
 
-1. Kopiere diese Datei
-2. Ändere den Frontmatter (title, slug, etc.)
-3. Passe den Content an
-4. Teste mit `pnpm dev:courses`
+1. Copy this file
+2. Change the frontmatter (title, slug, etc.)
+3. Customize the content
+4. Test with `pnpm dev:courses`
 </Exercise>
 
-## Hinweise
+## Hints
 
-<Hint title="Entwickler-Tipp">
-Alle Komponenten findest du in `packages/ui/src/components/`.
-Du kannst eigene Komponenten hinzufügen oder bestehende anpassen!
+<Hint title="Developer Tip">
+You can find all components in `packages/ui/src/components/`.
+You can add your own components or customize existing ones!
 </Hint>
 
-<Hint title="Styling-Tipp">
-Das Theming erfolgt über CSS-Variablen in `packages/styles/src/tokens.css`.
-Passe die Farben an deine Marke an!
+<Hint title="Styling Tip">
+Theming is done via CSS variables in `packages/styles/src/tokens.css`.
+Customize the colors to match your brand!
 </Hint>
 
-## Zusammenfassung
+## Summary
 
-Du hast gelernt:
-- ✅ Wie Callouts verschiedene Informationstypen darstellen
-- ✅ Wie Tabs alternative Inhalte zeigen
-- ✅ Wie Code-Beispiele eingebunden werden
-- ✅ Wie Exercises und Hints funktionieren
+You learned:
+- How callouts represent different information types
+- How tabs show alternative content
+- How code examples are embedded
+- How exercises and hints work
 
-Bereit für die nächste Lektion? Dort lernst du Quiz kennen!
+Ready for the next lesson? There you'll learn about quizzes!

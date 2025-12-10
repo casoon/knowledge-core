@@ -6,7 +6,12 @@ export interface Props {
   showLineNumbers?: boolean;
 }
 
-const { code, lang = 'plaintext', title, showLineNumbers = false } = Astro.props;
+const {
+  code,
+  lang = "plaintext",
+  title,
+  showLineNumbers = false,
+} = Astro.props;
 ---
 
 <div class="code-block my-6">
@@ -21,8 +26,8 @@ const { code, lang = 'plaintext', title, showLineNumbers = false } = Astro.props
   <div class="relative group">
     <pre
       class:list={[
-        'bg-surface-alt border border-border p-4 overflow-x-auto text-sm font-mono',
-        title ? 'rounded-b-lg' : 'rounded-lg',
+        "bg-surface-alt border border-border p-4 overflow-x-auto text-sm font-mono",
+        title ? "rounded-b-lg" : "rounded-lg",
       ]}
       class:has-line-numbers={showLineNumbers}><code class={`language-${lang}`}>{code}</code></pre>
     <button
@@ -31,7 +36,12 @@ const { code, lang = 'plaintext', title, showLineNumbers = false } = Astro.props
       data-copy-button
       aria-label="Copy code"
     >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -44,6 +54,6 @@ const { code, lang = 'plaintext', title, showLineNumbers = false } = Astro.props
 </div>
 
 <script>
-  import { initCopyButtons } from '../../scripts/copy-code';
+  import { initCopyButtons } from "../../scripts/copy-code";
   initCopyButtons();
 </script>

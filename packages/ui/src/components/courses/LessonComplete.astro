@@ -6,7 +6,8 @@ export interface Props {
   courseOverviewHref: string;
 }
 
-const { courseSlug, lessonSlug, nextLessonHref, courseOverviewHref } = Astro.props;
+const { courseSlug, lessonSlug, nextLessonHref, courseOverviewHref } =
+  Astro.props;
 ---
 
 <div
@@ -18,17 +19,38 @@ const { courseSlug, lessonSlug, nextLessonHref, courseOverviewHref } = Astro.pro
   <div class="flex flex-col sm:flex-row items-center gap-4">
     <div class="flex-1">
       <div class="flex items-center gap-3 mb-2">
-        <div class="completion-icon w-10 h-10 rounded-full bg-surface-alt border-2 border-border flex items-center justify-center transition-all duration-300" data-completion-icon>
-          <svg class="w-5 h-5 text-text-muted check-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        <div
+          class="completion-icon w-10 h-10 rounded-full bg-surface-alt border-2 border-border flex items-center justify-center transition-all duration-300"
+          data-completion-icon
+        >
+          <svg
+            class="w-5 h-5 text-text-muted check-icon hidden"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"></path>
           </svg>
-          <svg class="w-5 h-5 text-text-muted circle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" stroke-width="2" />
+          <svg
+            class="w-5 h-5 text-text-muted circle-icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
           </svg>
         </div>
         <div>
-          <h3 class="font-semibold text-text" data-completion-title>Lektion abschließen</h3>
-          <p class="text-sm text-text-muted" data-completion-subtitle>Markiere diese Lektion als erledigt</p>
+          <h3 class="font-semibold text-text" data-completion-title>
+            Complete Lesson
+          </h3>
+          <p class="text-sm text-text-muted" data-completion-subtitle>
+            Mark this lesson as complete
+          </p>
         </div>
       </div>
     </div>
@@ -39,63 +61,91 @@ const { courseSlug, lessonSlug, nextLessonHref, courseOverviewHref } = Astro.pro
         class="btn btn-primary flex items-center gap-2"
         data-complete-button
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"></path>
         </svg>
-        <span data-button-text>Als erledigt markieren</span>
+        <span data-button-text>Mark as Complete</span>
       </button>
 
-      {nextLessonHref ? (
-        <a href={nextLessonHref} class="btn btn-secondary hidden" data-next-button>
-          Nächste Lektion →
-        </a>
-      ) : (
-        <a href={courseOverviewHref} class="btn btn-secondary hidden" data-next-button>
-          Kurs abschließen
-        </a>
-      )}
+      {
+        nextLessonHref ? (
+          <a
+            href={nextLessonHref}
+            class="btn btn-secondary hidden"
+            data-next-button
+          >
+            Next Lesson →
+          </a>
+        ) : (
+          <a
+            href={courseOverviewHref}
+            class="btn btn-secondary hidden"
+            data-next-button
+          >
+            Complete Course
+          </a>
+        )
+      }
     </div>
   </div>
 </div>
 
 <script>
-  import { markLessonCompleted, isLessonCompleted } from '../../scripts/progress';
+  import {
+    markLessonCompleted,
+    isLessonCompleted,
+  } from "../../scripts/progress";
 
   function initLessonComplete(): void {
-    const container = document.querySelector('[data-lesson-complete]');
+    const container = document.querySelector("[data-lesson-complete]");
     if (!container) return;
 
-    const courseSlug = container.getAttribute('data-course-slug') || '';
-    const lessonSlug = container.getAttribute('data-lesson-slug') || '';
+    const courseSlug = container.getAttribute("data-course-slug") || "";
+    const lessonSlug = container.getAttribute("data-lesson-slug") || "";
 
-    const completionIcon = container.querySelector('[data-completion-icon]');
-    const checkIcon = container.querySelector('.check-icon');
-    const circleIcon = container.querySelector('.circle-icon');
-    const completionTitle = container.querySelector('[data-completion-title]');
-    const completionSubtitle = container.querySelector('[data-completion-subtitle]');
-    const completeButton = container.querySelector('[data-complete-button]') as HTMLButtonElement;
-    const buttonText = container.querySelector('[data-button-text]');
-    const nextButton = container.querySelector('[data-next-button]');
+    const completionIcon = container.querySelector("[data-completion-icon]");
+    const checkIcon = container.querySelector(".check-icon");
+    const circleIcon = container.querySelector(".circle-icon");
+    const completionTitle = container.querySelector("[data-completion-title]");
+    const completionSubtitle = container.querySelector(
+      "[data-completion-subtitle]",
+    );
+    const completeButton = container.querySelector(
+      "[data-complete-button]",
+    ) as HTMLButtonElement;
+    const buttonText = container.querySelector("[data-button-text]");
+    const nextButton = container.querySelector("[data-next-button]");
 
     function updateUI(completed: boolean): void {
       if (completed) {
-        completionIcon?.classList.remove('bg-surface-alt', 'border-border');
-        completionIcon?.classList.add('bg-success', 'border-success');
-        checkIcon?.classList.remove('hidden');
-        checkIcon?.classList.add('text-white');
-        circleIcon?.classList.add('hidden');
+        completionIcon?.classList.remove("bg-surface-alt", "border-border");
+        completionIcon?.classList.add("bg-success", "border-success");
+        checkIcon?.classList.remove("hidden");
+        checkIcon?.classList.add("text-white");
+        circleIcon?.classList.add("hidden");
 
-        if (completionTitle) completionTitle.textContent = 'Lektion abgeschlossen!';
-        if (completionSubtitle) completionSubtitle.textContent = 'Du hast diese Lektion erfolgreich bearbeitet';
+        if (completionTitle) completionTitle.textContent = "Lesson Completed!";
+        if (completionSubtitle)
+          completionSubtitle.textContent =
+            "You have successfully completed this lesson";
 
         if (completeButton) {
           completeButton.disabled = true;
-          completeButton.classList.remove('btn-primary');
-          completeButton.classList.add('btn-ghost', 'opacity-50');
+          completeButton.classList.remove("btn-primary");
+          completeButton.classList.add("btn-ghost", "opacity-50");
         }
-        if (buttonText) buttonText.textContent = 'Erledigt ✓';
+        if (buttonText) buttonText.textContent = "Completed ✓";
 
-        nextButton?.classList.remove('hidden');
+        nextButton?.classList.remove("hidden");
       }
     }
 
@@ -106,22 +156,24 @@ const { courseSlug, lessonSlug, nextLessonHref, courseOverviewHref } = Astro.pro
     }
 
     // Handle click
-    completeButton?.addEventListener('click', () => {
+    completeButton?.addEventListener("click", () => {
       const success = markLessonCompleted(courseSlug, lessonSlug);
       if (success) {
         updateUI(true);
 
         // Dispatch custom event for other components
-        window.dispatchEvent(new CustomEvent('lesson-completed', {
-          detail: { courseSlug, lessonSlug }
-        }));
+        window.dispatchEvent(
+          new CustomEvent("lesson-completed", {
+            detail: { courseSlug, lessonSlug },
+          }),
+        );
       }
     });
   }
 
   // Initialize
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLessonComplete);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLessonComplete);
   } else {
     initLessonComplete();
   }

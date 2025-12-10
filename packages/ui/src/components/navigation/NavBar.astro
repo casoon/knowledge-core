@@ -1,8 +1,8 @@
 ---
-import SearchBar from './SearchBar.astro';
-import SyncProgress from '../courses/SyncProgress.astro';
-import FontSizeControl from './FontSizeControl.astro';
-import QuizToggle from './QuizToggle.astro';
+import SearchBar from "./SearchBar.astro";
+import SyncProgress from "../courses/SyncProgress.astro";
+import FontSizeControl from "./FontSizeControl.astro";
+import QuizToggle from "./QuizToggle.astro";
 
 export interface NavLink {
   text: string;
@@ -35,20 +35,34 @@ export interface Props {
   };
 }
 
-const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle = true, showSearch = true, showSync = true, showFontSize = true, showQuizToggle = true, courseNav } = Astro.props;
+const {
+  logo,
+  logoSrc,
+  logoAlt = "Logo",
+  logoHref = "/",
+  links,
+  showThemeToggle = true,
+  showSearch = true,
+  showSync = true,
+  showFontSize = true,
+  showQuizToggle = true,
+  courseNav,
+} = Astro.props;
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-fixed backdrop-blur-md border-b border-border bg-white/80 dark:bg-gray-900/80">
+<nav
+  class="fixed top-0 left-0 right-0 z-fixed backdrop-blur-md border-b border-border bg-white/80 dark:bg-gray-900/80"
+  data-show-theme-toggle={showThemeToggle ? "true" : "false"}
+>
   <div class="container-custom">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href={logoHref} class="flex items-center gap-2 text-text hover:text-primary transition-colors flex-shrink-0">
-        {logoSrc && (
-          <img src={logoSrc} alt={logoAlt} class="h-8 w-auto" />
-        )}
-        {logo && (
-          <span class="text-xl font-bold hidden md:inline">{logo}</span>
-        )}
+      <a
+        href={logoHref}
+        class="flex items-center gap-2 text-text hover:text-primary transition-colors flex-shrink-0"
+      >
+        {logoSrc && <img src={logoSrc} alt={logoAlt} class="h-8 w-auto" />}
+        {logo && <span class="text-xl font-bold hidden md:inline">{logo}</span>}
       </a>
 
       <!-- Desktop Navigation -->
@@ -58,10 +72,10 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
             <a
               href={link.href}
               class:list={[
-                'text-sm font-medium transition-colors',
+                "text-sm font-medium transition-colors",
                 link.active
-                  ? 'text-primary'
-                  : 'text-text-muted hover:text-text',
+                  ? "text-primary"
+                  : "text-text-muted hover:text-text",
               ]}
             >
               {link.text}
@@ -73,28 +87,56 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
       <!-- Right side -->
       <div class="flex items-center gap-2 md:gap-4">
         {showSearch && <SearchBar />}
-        {showSync && <div class="hidden md:block"><SyncProgress /></div>}
-        {showQuizToggle && <div class="hidden md:block"><QuizToggle /></div>}
-        {showFontSize && <div class="hidden md:block"><FontSizeControl /></div>}
-        {showThemeToggle && <div id="theme-toggle-container"></div>}
+        {
+          showSync && (
+            <div class="hidden md:block">
+              <SyncProgress />
+            </div>
+          )
+        }
+        {
+          showQuizToggle && (
+            <div class="hidden md:block">
+              <QuizToggle />
+            </div>
+          )
+        }
+        {
+          showFontSize && (
+            <div class="hidden md:block">
+              <FontSizeControl />
+            </div>
+          )
+        }
+        {showThemeToggle && <div id="theme-toggle-container" />}
 
         <!-- Mobile menu button -->
         <button
           type="button"
           class="md:hidden btn btn-ghost p-2"
-          aria-label="Menü öffnen"
+          aria-label="Open menu"
           aria-expanded="false"
           aria-controls="mobile-menu"
           id="mobile-menu-button"
         >
-          <svg class="w-6 h-6 menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            class="w-6 h-6 menu-icon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"
               d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
-          <svg class="w-6 h-6 close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg
+            class="w-6 h-6 close-icon hidden"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -114,10 +156,10 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
             <a
               href={link.href}
               class:list={[
-                'block py-2 text-sm font-medium transition-colors',
+                "block py-2 text-sm font-medium transition-colors",
                 link.active
-                  ? 'text-primary'
-                  : 'text-text-muted hover:text-text',
+                  ? "text-primary"
+                  : "text-text-muted hover:text-text",
               ]}
             >
               {link.text}
@@ -127,48 +169,70 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
       </div>
 
       <!-- Mobile Actions -->
-      {!courseNav && (
-        <div class="space-y-3 py-3 border-t border-border">
-          <div class="flex items-center gap-3">
-            {showSearch && (
-              <button
-                type="button"
-                id="mobile-search-trigger"
-                class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Suchen
-              </button>
+      {
+        !courseNav && (
+          <div class="space-y-3 py-3 border-t border-border">
+            <div class="flex items-center gap-3">
+              {showSearch && (
+                <button
+                  type="button"
+                  id="mobile-search-trigger"
+                  class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  Search
+                </button>
+              )}
+              {showSync && (
+                <button
+                  type="button"
+                  id="mobile-sync-trigger"
+                  class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                  Sync
+                </button>
+              )}
+            </div>
+            {showFontSize && (
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-text-muted">Font Size</span>
+                <FontSizeControl />
+              </div>
             )}
-            {showSync && (
-              <button
-                type="button"
-                id="mobile-sync-trigger"
-                class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
-              >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                Sync
-              </button>
+            {showQuizToggle && (
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-text-muted">Show Quizzes</span>
+                <QuizToggle />
+              </div>
             )}
           </div>
-          {showFontSize && (
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-text-muted">Schriftgröße</span>
-              <FontSizeControl />
-            </div>
-          )}
-          {showQuizToggle && (
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-text-muted">Quizze anzeigen</span>
-              <QuizToggle />
-            </div>
-          )}
-        </div>
-      )}
+        )
+      }
 
       {
         courseNav && (
@@ -181,31 +245,42 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
                 {courseNav.courseTitle}
               </a>
               <span class="text-xs text-text-muted">
-                {courseNav.lessons.findIndex(l => l.slug === courseNav.currentLessonSlug) + 1} / {courseNav.lessons.length}
+                {courseNav.lessons.findIndex(
+                  (l) => l.slug === courseNav.currentLessonSlug,
+                ) + 1}{" "}
+                / {courseNav.lessons.length}
               </span>
             </div>
-            <nav class="max-h-64 overflow-y-auto -mx-2 px-2" aria-label="Kursnavigation">
+            <nav
+              class="max-h-64 overflow-y-auto -mx-2 px-2"
+              aria-label="Course navigation"
+            >
               {(() => {
-                const modules = [...new Set(courseNav.lessons.map(l => l.module))];
+                const modules = [
+                  ...new Set(courseNav.lessons.map((l) => l.module)),
+                ];
                 return modules.map((module) => {
-                  const moduleLessons = courseNav.lessons.filter(l => l.module === module);
+                  const moduleLessons = courseNav.lessons.filter(
+                    (l) => l.module === module,
+                  );
                   return (
                     <div class="mb-3">
                       <h4 class="text-xs font-semibold text-text-muted uppercase tracking-wide mb-1.5 px-1">
                         {module}
                       </h4>
                       {moduleLessons.map((lesson) => {
-                        const isActive = lesson.slug === courseNav.currentLessonSlug;
+                        const isActive =
+                          lesson.slug === courseNav.currentLessonSlug;
                         return (
                           <a
                             href={`/courses/${courseNav.courseSlug}/${lesson.slug}`}
                             class:list={[
-                              'block py-1.5 pl-3 text-sm transition-colors border-l-2 rounded-r',
+                              "block py-1.5 pl-3 text-sm transition-colors border-l-2 rounded-r",
                               isActive
-                                ? 'border-primary text-primary font-medium bg-primary/5'
-                                : 'border-transparent text-text-muted hover:text-text hover:border-border hover:bg-surface-alt',
+                                ? "border-primary text-primary font-medium bg-primary/5"
+                                : "border-transparent text-text-muted hover:text-text hover:border-border hover:bg-surface-alt",
                             ]}
-                            aria-current={isActive ? 'page' : undefined}
+                            aria-current={isActive ? "page" : undefined}
                           >
                             {lesson.title}
                           </a>
@@ -220,13 +295,13 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
               <div class="mt-4 pt-4 border-t border-border space-y-3">
                 {showFontSize && (
                   <div class="flex items-center justify-between">
-                    <span class="text-sm text-text-muted">Schriftgröße</span>
+                    <span class="text-sm text-text-muted">Font Size</span>
                     <FontSizeControl />
                   </div>
                 )}
                 {showQuizToggle && (
                   <div class="flex items-center justify-between">
-                    <span class="text-sm text-text-muted">Quizze anzeigen</span>
+                    <span class="text-sm text-text-muted">Show Quizzes</span>
                     <QuizToggle />
                   </div>
                 )}
@@ -239,122 +314,20 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
   </div>
 </nav>
 
-<script is:inline>
-  // Mobile menu toggle
-  (function() {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
+<script>
+  import {
+    initMobileMenu,
+    initMobileTriggers,
+    initThemeToggle,
+  } from "../../scripts/navbar-manager";
 
-    if (!mobileMenuButton || !mobileMenu) return;
+  initMobileMenu();
+  initMobileTriggers();
 
-    const menuIcon = mobileMenuButton.querySelector('.menu-icon');
-    const closeIcon = mobileMenuButton.querySelector('.close-icon');
-
-    mobileMenuButton.addEventListener('click', () => {
-      const isHidden = mobileMenu.classList.toggle('hidden');
-      const isOpen = !isHidden;
-
-      mobileMenuButton.setAttribute('aria-expanded', String(isOpen));
-      mobileMenuButton.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
-
-      if (menuIcon && closeIcon) {
-        menuIcon.classList.toggle('hidden', isOpen);
-        closeIcon.classList.toggle('hidden', !isOpen);
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
-        mobileMenuButton.setAttribute('aria-expanded', 'false');
-        mobileMenuButton.setAttribute('aria-label', 'Menü öffnen');
-        if (menuIcon && closeIcon) {
-          menuIcon.classList.remove('hidden');
-          closeIcon.classList.add('hidden');
-        }
-      }
-    });
-  })();
-
-  // Mobile menu triggers for search and sync
-  (function() {
-    const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
-    const mobileSyncTrigger = document.getElementById('mobile-sync-trigger');
-    const searchModal = document.getElementById('search-modal');
-    const searchInput = document.getElementById('search-input');
-    const syncModal = document.getElementById('sync-modal');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileSearchTrigger && searchModal) {
-      mobileSearchTrigger.addEventListener('click', () => {
-        // Schließe Mobile-Menü
-        if (mobileMenu) mobileMenu.classList.add('hidden');
-        // Öffne Search Modal
-        searchModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-        if (searchInput) searchInput.focus();
-      });
-    }
-
-    if (mobileSyncTrigger && syncModal) {
-      mobileSyncTrigger.addEventListener('click', () => {
-        // Schließe Mobile-Menü
-        if (mobileMenu) mobileMenu.classList.add('hidden');
-        // Öffne Sync Modal
-        syncModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-      });
-    }
-  })();
+  // Theme Toggle wird nur initialisiert wenn showThemeToggle true ist
+  // Das wird über data-attribute gesteuert
+  const nav = document.querySelector("nav");
+  if (nav?.dataset.showThemeToggle !== "false") {
+    initThemeToggle();
+  }
 </script>
-
-{
-  showThemeToggle && (
-    /* prettier-ignore */
-    <script is:inline>
-      // Theme toggle
-      (function() {
-        function safeSetItem(key, value) {
-          try {
-            localStorage.setItem(key, value);
-          } catch {
-            // localStorage nicht verfügbar
-          }
-        }
-
-        function createThemeToggle() {
-          const container = document.getElementById('theme-toggle-container');
-          if (!container) return;
-
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.className = 'btn btn-ghost p-2';
-          button.setAttribute('aria-label', 'Toggle theme');
-          button.id = 'theme-toggle';
-
-          const updateIcon = () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            button.innerHTML = isDark
-              ? `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>`
-              : `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>`;
-          };
-
-          button.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.toggle('dark');
-            safeSetItem('theme', isDark ? 'dark' : 'light');
-            updateIcon();
-          });
-
-          updateIcon();
-          container.appendChild(button);
-        }
-
-        createThemeToggle();
-      })();
-    </script>
-  )
-}

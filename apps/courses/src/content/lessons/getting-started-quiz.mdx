@@ -1,44 +1,44 @@
 ---
 courseSlug: getting-started
-title: Quiz & Interaktivität
-module: Einführung
+title: Quizzes & Interactivity
+module: Introduction
 orderInModule: 3
 estimatedMinutes: 20
 requiresExperience: false
 type: quiz
 goals:
-  - Lerne, wie Quiz funktionieren
-  - Verstehe die Quiz-Komponente
-  - Teste dein Wissen über Knowledge Core
+  - Learn how quizzes work
+  - Understand the Quiz component
+  - Test your knowledge about Knowledge Core
 ---
 
 import { Callout, Quiz, Exercise, Hint } from '@knowledge-core/ui';
 
-# Quiz & Interaktivität
+# Quizzes & Interactivity
 
-Eine der mächtigsten Features für Lernplattformen sind interaktive Quiz!
+One of the most powerful features for learning platforms are interactive quizzes!
 
-## Wie Quiz funktionieren
+## How Quizzes Work
 
-Quiz bestehen aus:
-- **Fragen** mit mehreren Optionen
-- **Richtige Antwort** (0-basierter Index)
-- **Erklärungen** für die Lösung (optional)
-- **Feedback** nach dem Check
+Quizzes consist of:
+- **Questions** with multiple options
+- **Correct answer** (0-based index)
+- **Explanations** for the solution (optional)
+- **Feedback** after checking
 
 <Callout type="info">
-Nutzer können ihre Antworten überprüfen und erhalten sofortiges Feedback mit Erklärungen.
+Users can check their answers and receive instant feedback with explanations.
 </Callout>
 
-## Beispiel-Quiz
+## Example Quiz
 
-Teste dein Wissen über Knowledge Core:
+Test your knowledge about Knowledge Core:
 
 <Quiz
-  title="Wissenstest: Knowledge Core Basics"
+  title="Knowledge Test: Knowledge Core Basics"
   questions={[
     {
-      question: "Welches Framework wird für die Frontend-Apps verwendet?",
+      question: "Which framework is used for the frontend apps?",
       options: [
         "Next.js",
         "Astro",
@@ -46,21 +46,21 @@ Teste dein Wissen über Knowledge Core:
         "Nuxt"
       ],
       correctAnswer: 1,
-      explanation: "Knowledge Core verwendet Astro für optimale Performance und Developer Experience."
+      explanation: "Knowledge Core uses Astro for optimal performance and developer experience."
     },
     {
-      question: "In welchem Format werden Inhalte geschrieben?",
+      question: "In what format is content written?",
       options: [
-        "Nur Markdown",
+        "Markdown only",
         "HTML",
         "MDX (Markdown + JSX)",
         "reStructuredText"
       ],
       correctAnswer: 2,
-      explanation: "MDX kombiniert Markdown mit React-Komponenten, was interaktive Inhalte ermöglicht."
+      explanation: "MDX combines Markdown with React components, enabling interactive content."
     },
     {
-      question: "Welcher Paketmanager wird verwendet?",
+      question: "Which package manager is used?",
       options: [
         "npm",
         "yarn",
@@ -68,99 +68,99 @@ Teste dein Wissen über Knowledge Core:
         "bun"
       ],
       correctAnswer: 2,
-      explanation: "pnpm wird für seine Effizienz und native Monorepo-Unterstützung verwendet."
+      explanation: "pnpm is used for its efficiency and native monorepo support."
     },
     {
-      question: "Wo werden Shared Components definiert?",
+      question: "Where are shared components defined?",
       options: [
-        "In jeder App separat",
-        "Im packages/ui Package",
-        "In einem CDN",
+        "In each app separately",
+        "In the packages/ui package",
+        "In a CDN",
         "In node_modules"
       ],
       correctAnswer: 1,
-      explanation: "Shared Components leben in packages/ui und werden von beiden Apps importiert."
+      explanation: "Shared components live in packages/ui and are imported by both apps."
     }
   ]}
 />
 
-## Quiz in eigenen Kursen verwenden
+## Using Quizzes in Your Courses
 
-So fügst du ein Quiz hinzu:
+Here's how to add a quiz:
 
 ```mdx
 import { Quiz } from '@knowledge-core/ui';
 
 <Quiz
-  title="Mein Quiz"
+  title="My Quiz"
   questions={[
     {
-      question: "Deine Frage?",
+      question: "Your question?",
       options: ["Option 1", "Option 2", "Option 3"],
       correctAnswer: 1,
-      explanation: "Erklärung der richtigen Antwort"
+      explanation: "Explanation of the correct answer"
     }
   ]}
 />
 ```
 
-<Hint title="Quiz-Best Practices">
-- **Klare Fragen**: Stelle eindeutige Fragen
-- **Plausible Optionen**: Alle Optionen sollten sinnvoll erscheinen
-- **Hilfreiche Erklärungen**: Erkläre, warum die Antwort richtig ist
-- **Angemessene Schwierigkeit**: Passe an deine Zielgruppe an
+<Hint title="Quiz Best Practices">
+- **Clear questions**: Ask unambiguous questions
+- **Plausible options**: All options should seem reasonable
+- **Helpful explanations**: Explain why the answer is correct
+- **Appropriate difficulty**: Match your target audience
 </Hint>
 
-## Übung
+## Exercise
 
-<Exercise title="Erstelle dein eigenes Quiz" difficulty="medium">
-Versuche folgendes:
+<Exercise title="Create your own quiz" difficulty="medium">
+Try the following:
 
-1. Erstelle eine neue Lektion
-2. Füge ein Quiz mit mindestens 3 Fragen hinzu
-3. Teste das Quiz im Browser
-4. Experimentiere mit verschiedenen Erklärungen
+1. Create a new lesson
+2. Add a quiz with at least 3 questions
+3. Test the quiz in the browser
+4. Experiment with different explanations
 
-**Bonus:** Kombiniere Quiz mit anderen Komponenten wie Callouts oder Hints!
+**Bonus:** Combine quizzes with other components like Callouts or Hints!
 </Exercise>
 
-## Weitere Möglichkeiten
+## More Possibilities
 
-### Multiple Quiz pro Lektion
+### Multiple Quizzes per Lesson
 
-Du kannst mehrere Quiz in einer Lektion haben:
+You can have multiple quizzes in one lesson:
 
 <Quiz
-  title="Bonus-Quiz: MDX & Components"
+  title="Bonus Quiz: MDX & Components"
   questions={[
     {
-      question: "Was ist ein Vorteil von MDX gegenüber normalem Markdown?",
+      question: "What is an advantage of MDX over regular Markdown?",
       options: [
-        "Schnellere Ladezeiten",
-        "Interaktive Komponenten einbinden",
-        "Besseres SEO",
-        "Kleinere Dateigröße"
+        "Faster load times",
+        "Embed interactive components",
+        "Better SEO",
+        "Smaller file size"
       ],
       correctAnswer: 1,
-      explanation: "MDX erlaubt das Einbinden von React-Komponenten direkt in Markdown."
+      explanation: "MDX allows embedding React components directly in Markdown."
     }
   ]}
 />
 
-## Zusammenfassung
+## Summary
 
-Du hast gelernt:
-- ✅ Wie Quiz aufgebaut sind
-- ✅ Wie man Quiz in Lektionen einbindet
-- ✅ Best Practices für gute Quiz-Fragen
-- ✅ Wie Quiz mit anderen Komponenten kombiniert werden
+You learned:
+- How quizzes are structured
+- How to embed quizzes in lessons
+- Best practices for good quiz questions
+- How quizzes can be combined with other components
 
-<Callout type="success" title="Kurs abgeschlossen!">
-Herzlichen Glückwunsch! Du kennst jetzt die wichtigsten Features von Knowledge Core.
+<Callout type="success" title="Course completed!">
+Congratulations! You now know the key features of Knowledge Core.
 
-**Nächste Schritte:**
-- Erstelle deinen eigenen Kurs
-- Passe das Theming an
-- Lies die SETUP.md für Details
-- Schau dir den ausgelagerten Rust-Kurs in `.github/example-content/` an
+**Next steps:**
+- Create your own course
+- Customize the theming
+- Read SETUP.md for details
+- Check out the Rust course example in `.github/example-content/`
 </Callout>

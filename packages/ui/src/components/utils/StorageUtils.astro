@@ -1,0 +1,56 @@
+---
+/**
+ * StorageUtils - Globale Storage-Hilfsfunktionen für Inline-Scripts
+ *
+ * Diese Komponente stellt safeGetItem, safeSetItem, safeRemoveItem
+ * global zur Verfügung, damit sie in is:inline Scripts verwendet werden können.
+ *
+ * Verwendung: Einmal in AppShell.astro oder BaseLayout einbinden.
+ */
+---
+
+<script is:inline>
+(function() {
+  // Nur einmal initialisieren
+  if (window.__storageUtils) return;
+
+  window.__storageUtils = {
+    safeGetItem: function(key) {
+      try {
+        return typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
+      } catch {
+        return null;
+      }
+    },
+
+    safeSetItem: function(key, value) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(key, value);
+          return true;
+        }
+        return false;
+      } catch {
+        return false;
+      }
+    },
+
+    safeRemoveItem: function(key) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem(key);
+          return true;
+        }
+        return false;
+      } catch {
+        return false;
+      }
+    }
+  };
+
+  // Auch als globale Funktionen für einfacheren Zugriff
+  window.safeGetItem = window.__storageUtils.safeGetItem;
+  window.safeSetItem = window.__storageUtils.safeSetItem;
+  window.safeRemoveItem = window.__storageUtils.safeRemoveItem;
+})();
+</script>

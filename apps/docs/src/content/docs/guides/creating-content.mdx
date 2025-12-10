@@ -1,23 +1,23 @@
 ---
-title: Inhalte erstellen
-description: Lerne, wie du neue Dokumentationsseiten und Kurse erstellst
+title: Creating Content
+description: Learn how to create new documentation pages and courses
 category: guides
 order: 1
-tags: [content, mdx, docs, kurse]
+tags: [content, mdx, docs, courses]
 status: stable
 ---
 
 import { Callout, CodeBlock, Tabs, TabPanel } from '@knowledge-core/ui';
 
-# Inhalte erstellen
+# Creating Content
 
-Knowledge Core verwendet **MDX** für alle Inhalte - sowohl Dokumentation als auch Kurse. MDX kombiniert Markdown mit React-Komponenten.
+Knowledge Core uses **MDX** for all content - both documentation and courses. MDX combines Markdown with React components.
 
-## Dokumentationsseiten erstellen
+## Creating Documentation Pages
 
-### 1. Neue MDX-Datei anlegen
+### 1. Create a New MDX File
 
-Erstelle eine Datei in `apps/docs/src/content/docs/`:
+Create a file in `apps/docs/src/content/docs/`:
 
 ```bash
 apps/docs/src/content/docs/
@@ -29,66 +29,66 @@ apps/docs/src/content/docs/
     └── reference.mdx
 ```
 
-### 2. Frontmatter hinzufügen
+### 2. Add Frontmatter
 
-Jede Seite benötigt Frontmatter:
+Every page needs frontmatter:
 
 ```mdx
 ---
-title: Meine neue Seite
-description: Eine kurze Beschreibung
+title: My New Page
+description: A short description
 category: guides
 order: 10
-tags: [beispiel, tutorial]
+tags: [example, tutorial]
 status: stable
 ---
 
-# Meine neue Seite
+# My New Page
 
-Dein Content hier...
+Your content here...
 ```
 
-<Callout type="info" title="Frontmatter-Felder">
-- **title** (required): Seitentitel
-- **description** (optional): Meta-Beschreibung
+<Callout type="info" title="Frontmatter Fields">
+- **title** (required): Page title
+- **description** (optional): Meta description
 - **category** (required): `getting-started`, `guides`, `api`, `cookbook`
-- **order** (default: 0): Sortierung in der Sidebar
-- **tags** (optional): Tags für Suche
+- **order** (default: 0): Sort order in sidebar
+- **tags** (optional): Tags for search
 - **status** (default: stable): `stable`, `beta`, `deprecated`
 </Callout>
 
-### 3. Content schreiben
+### 3. Write Content
 
-Verwende Markdown + Komponenten:
+Use Markdown + components:
 
 ```mdx
-# Überschrift
+# Heading
 
-Normaler Text mit **fett** und *kursiv*.
+Normal text with **bold** and *italic*.
 
-## Code-Beispiele
+## Code Examples
 
 \`\`\`typescript
 const greeting = "Hello, World!";
 console.log(greeting);
 \`\`\`
 
-## Komponenten verwenden
+## Using Components
 
 <Callout type="warning">
-Wichtiger Hinweis für Nutzer!
+Important notice for users!
 </Callout>
 ```
 
-### Verfügbare Komponenten
+### Available Components
 
-In MDX kannst du diese Komponenten importieren und verwenden:
+In MDX you can import and use these components:
 
 ```mdx
 import { Callout, CodeBlock, Tabs, TabPanel, Card } from '@knowledge-core/ui';
 
 <Callout type="info" title="Information">
-Wichtige Info hier
+Important info here
 </Callout>
 
 <Tabs tabs={[
@@ -96,63 +96,63 @@ Wichtige Info hier
   { label: 'TypeScript', value: 'ts' }
 ]}>
   <TabPanel value="js">
-    JavaScript-Code hier
+    JavaScript code here
   </TabPanel>
   <TabPanel value="ts">
-    TypeScript-Code hier
+    TypeScript code here
   </TabPanel>
 </Tabs>
 ```
 
-## Kurse erstellen
+## Creating Courses
 
-### 1. Kurs-Definition
+### 1. Course Definition
 
-Erstelle eine JSON-Datei in `apps/courses/src/content/courses/`:
+Create a JSON file in `apps/courses/src/content/courses/`:
 
 ```json
 {
-  "title": "Mein Kurs",
-  "slug": "mein-kurs",
-  "description": "Kurze Beschreibung des Kurses",
+  "title": "My Course",
+  "slug": "my-course",
+  "description": "Short course description",
   "level": "beginner",
   "estimatedTotalMinutes": 120,
-  "tags": ["programmierung", "basics"],
+  "tags": ["programming", "basics"],
   "published": true
 }
 ```
 
-### 2. Lektionen erstellen
+### 2. Create Lessons
 
-Erstelle MDX-Dateien in `apps/courses/src/content/lessons/`:
+Create MDX files in `apps/courses/src/content/lessons/`:
 
 ```mdx
 ---
-courseSlug: mein-kurs
-title: Lektion 1 - Einführung
-module: Grundlagen
+courseSlug: my-course
+title: Lesson 1 - Introduction
+module: Basics
 orderInModule: 1
 estimatedMinutes: 15
 type: text
 goals:
-  - Verstehe Konzept A
-  - Lerne Technik B
+  - Understand concept A
+  - Learn technique B
 ---
 
 import { Callout, Exercise, Quiz, Hint } from '@knowledge-core/ui';
 
-# Lektion 1 - Einführung
+# Lesson 1 - Introduction
 
-Dein Lektionsinhalt...
+Your lesson content...
 
-<Exercise title="Übung 1" difficulty="easy">
-Versuche folgendes...
+<Exercise title="Exercise 1" difficulty="easy">
+Try the following...
 </Exercise>
 
 <Quiz
   questions={[
     {
-      question: "Was ist 2 + 2?",
+      question: "What is 2 + 2?",
       options: ["3", "4", "5"],
       correctAnswer: 1,
       explanation: "2 + 2 = 4"
@@ -161,58 +161,58 @@ Versuche folgendes...
 />
 ```
 
-### Kurs-Komponenten
+### Course Components
 
-Für Kurse stehen zusätzliche interaktive Komponenten zur Verfügung:
+Additional interactive components are available for courses:
 
 #### Quiz
 
 ```mdx
 <Quiz
-  title="Wissenstest"
+  title="Knowledge Test"
   questions={[
     {
-      question: "Frage hier",
+      question: "Question here",
       options: ["Option 1", "Option 2", "Option 3"],
       correctAnswer: 1,
-      explanation: "Erklärung der richtigen Antwort"
+      explanation: "Explanation of the correct answer"
     }
   ]}
 />
 ```
 
-#### Übungen
+#### Exercises
 
 ```mdx
-<Exercise title="Praktische Übung" difficulty="medium">
-Beschreibung der Aufgabe...
+<Exercise title="Practical Exercise" difficulty="medium">
+Task description...
 </Exercise>
 ```
 
-#### Hinweise
+#### Hints
 
 ```mdx
-<Hint title="Tipp">
-Versteckter Hinweis für Lernende
+<Hint title="Tip">
+Hidden hint for learners
 </Hint>
 ```
 
 ## Best Practices
 
-### Dokumentation
+### Documentation
 
-1. **Klare Struktur**: Verwende aussagekräftige Überschriften
-2. **Code-Beispiele**: Zeige praktische Anwendungen
-3. **Callouts**: Hebe wichtige Informationen hervor
-4. **Links**: Verweise auf verwandte Seiten
+1. **Clear Structure**: Use descriptive headings
+2. **Code Examples**: Show practical applications
+3. **Callouts**: Highlight important information
+4. **Links**: Reference related pages
 
-### Kurse
+### Courses
 
-1. **Lernziele**: Definiere klare `goals` im Frontmatter
-2. **Interaktivität**: Nutze Quiz und Exercises
-3. **Schrittweise**: Baue Wissen progressiv auf
-4. **Ressourcen**: Verlinke zu weiterführendem Material
+1. **Learning Goals**: Define clear `goals` in frontmatter
+2. **Interactivity**: Use quizzes and exercises
+3. **Step by Step**: Build knowledge progressively
+4. **Resources**: Link to further material
 
 <Callout type="success">
-Du bist jetzt bereit, eigene Inhalte zu erstellen! Beginne mit einer einfachen Seite und experimentiere mit den Komponenten.
+You're now ready to create your own content! Start with a simple page and experiment with the components.
 </Callout>

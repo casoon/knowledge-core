@@ -11,7 +11,7 @@ export interface Props {
   title?: string;
 }
 
-const { questions, title = 'Quiz' } = Astro.props;
+const { questions, title = "Quiz" } = Astro.props;
 const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
 ---
 
@@ -52,30 +52,34 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
     ))
   }
 
-  <div class="flex items-center justify-between mt-6 pt-6 border-t border-border">
-    <button type="button" class="btn btn-primary" data-check-answers> Antworten überprüfen </button>
+  <div
+    class="flex items-center justify-between mt-6 pt-6 border-t border-border"
+  >
+    <button type="button" class="btn btn-primary" data-check-answers>
+      Check Answers
+    </button>
     <div class="quiz-result hidden text-sm" data-result></div>
   </div>
 </div>
 
 <script define:vars={{ questions, quizId }}>
   const quizContainer = document.querySelector(`[data-quiz-id="${quizId}"]`);
-  const checkButton = quizContainer?.querySelector('[data-check-answers]');
-  const resultDiv = quizContainer?.querySelector('[data-result]');
+  const checkButton = quizContainer?.querySelector("[data-check-answers]");
+  const resultDiv = quizContainer?.querySelector("[data-result]");
 
-  checkButton?.addEventListener('click', () => {
+  checkButton?.addEventListener("click", () => {
     let correct = 0;
     const total = questions.length;
 
     questions.forEach((question, qIndex) => {
       const selectedInput = quizContainer?.querySelector(
-        `input[name="${quizId}-q${qIndex}"]:checked`
+        `input[name="${quizId}-q${qIndex}"]:checked`,
       );
       const feedbackDiv = quizContainer?.querySelector(
-        `[data-question-index="${qIndex}"] [data-feedback]`
+        `[data-question-index="${qIndex}"] [data-feedback]`,
       );
       const feedbackContent = quizContainer?.querySelector(
-        `[data-question-index="${qIndex}"] [data-feedback-content]`
+        `[data-question-index="${qIndex}"] [data-feedback-content]`,
       );
 
       if (!selectedInput || !feedbackDiv || !feedbackContent) return;
@@ -85,31 +89,33 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
 
       if (isCorrect) {
         correct++;
-        feedbackDiv.classList.remove('hidden');
-        feedbackContent.className = 'p-4 rounded-lg bg-success-bg border border-success';
+        feedbackDiv.classList.remove("hidden");
+        feedbackContent.className =
+          "p-4 rounded-lg bg-success-bg border border-success";
         feedbackContent.innerHTML = `
           <div class="flex items-start gap-3">
             <svg class="w-5 h-5 text-success flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
             <div>
-              <div class="font-medium text-success mb-1">Richtig!</div>
-              ${question.explanation ? `<p class="text-sm text-success">${question.explanation}</p>` : ''}
+              <div class="font-medium text-success mb-1">Correct!</div>
+              ${question.explanation ? `<p class="text-sm text-success">${question.explanation}</p>` : ""}
             </div>
           </div>
         `;
       } else {
-        feedbackDiv.classList.remove('hidden');
-        feedbackContent.className = 'p-4 rounded-lg bg-error-bg border border-error';
+        feedbackDiv.classList.remove("hidden");
+        feedbackContent.className =
+          "p-4 rounded-lg bg-error-bg border border-error";
         feedbackContent.innerHTML = `
           <div class="flex items-start gap-3">
             <svg class="w-5 h-5 text-error flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
             <div>
-              <div class="font-medium text-error mb-1">Leider falsch</div>
-              <p class="text-sm text-error">Die richtige Antwort ist: ${question.options[question.correctAnswer]}</p>
-              ${question.explanation ? `<p class="text-sm text-error mt-2">${question.explanation}</p>` : ''}
+              <div class="font-medium text-error mb-1">Incorrect</div>
+              <p class="text-sm text-error">The correct answer is: ${question.options[question.correctAnswer]}</p>
+              ${question.explanation ? `<p class="text-sm text-error mt-2">${question.explanation}</p>` : ""}
             </div>
           </div>
         `;
@@ -117,14 +123,18 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
     });
 
     if (resultDiv) {
-      resultDiv.classList.remove('hidden');
+      resultDiv.classList.remove("hidden");
       const percentage = Math.round((correct / total) * 100);
       const resultClass =
-        percentage >= 80 ? 'text-success' : percentage >= 60 ? 'text-warning' : 'text-error';
+        percentage >= 80
+          ? "text-success"
+          : percentage >= 60
+            ? "text-warning"
+            : "text-error";
       resultDiv.className = `quiz-result text-sm font-medium ${resultClass}`;
-      resultDiv.textContent = `Ergebnis: ${correct} von ${total} richtig (${percentage}%)`;
+      resultDiv.textContent = `Result: ${correct} of ${total} correct (${percentage}%)`;
     }
 
-    checkButton.textContent = 'Erneut versuchen';
+    checkButton.textContent = "Try Again";
   });
 </script>

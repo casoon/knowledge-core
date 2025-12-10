@@ -3,7 +3,7 @@ export interface Props {
   placeholder?: string;
 }
 
-const { placeholder = 'Suchen... (⌘K)' } = Astro.props;
+const { placeholder = "Search... (⌘K)" } = Astro.props;
 ---
 
 <div class="search-container">
@@ -12,10 +12,14 @@ const { placeholder = 'Suchen... (⌘K)' } = Astro.props;
     type="button"
     id="search-button"
     class="hidden md:flex items-center gap-2 px-3 py-1.5 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all cursor-pointer"
-    aria-label="Suche öffnen"
+    aria-label="Open search"
   >
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
     </svg>
     <span class="hidden lg:inline">{placeholder}</span>
   </button>
@@ -25,38 +29,65 @@ const { placeholder = 'Suchen... (⌘K)' } = Astro.props;
     type="button"
     id="search-button-mobile"
     class="md:hidden btn btn-ghost p-2"
-    aria-label="Suche öffnen"
+    aria-label="Open search"
   >
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
     </svg>
   </button>
 </div>
 
 <!-- Search Modal -->
-<div id="search-modal" class="fixed inset-0 z-modal hidden" role="dialog" aria-modal="true" aria-label="Suche">
+<div
+  id="search-modal"
+  class="fixed inset-0 z-modal hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Search"
+>
   <!-- Backdrop -->
-  <div id="search-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+  <div
+    id="search-backdrop"
+    class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+  >
+  </div>
 
   <!-- Modal Content -->
   <div class="relative flex items-start justify-center pt-[15vh] px-4">
-    <div class="w-full max-w-2xl bg-surface border border-border rounded-xl shadow-2xl overflow-hidden">
+    <div
+      class="w-full max-w-2xl bg-surface border border-border rounded-xl shadow-2xl overflow-hidden"
+    >
       <!-- Search Header -->
       <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
-        <svg class="w-5 h-5 text-text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <svg
+          class="w-5 h-5 text-text-muted flex-shrink-0"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
         <input
           type="search"
           id="search-input"
           class="flex-1 bg-transparent text-text placeholder-text-muted outline-none text-base"
-          placeholder="Kurse und Lektionen durchsuchen..."
+          placeholder="Search courses and lessons..."
           autocomplete="off"
           autocorrect="off"
           autocapitalize="off"
           spellcheck="false"
         />
-        <kbd class="hidden sm:inline-flex items-center px-2 py-0.5 text-xs font-mono text-text-muted bg-surface-alt border border-border rounded">
+        <kbd
+          class="hidden sm:inline-flex items-center px-2 py-0.5 text-xs font-mono text-text-muted bg-surface-alt border border-border rounded"
+        >
           ESC
         </kbd>
       </div>
@@ -64,20 +95,26 @@ const { placeholder = 'Suchen... (⌘K)' } = Astro.props;
       <!-- Search Results -->
       <div id="search-results" class="max-h-[60vh] overflow-y-auto p-2">
         <div class="text-center py-8 text-text-muted text-sm">
-          Beginne zu tippen um zu suchen...
+          Start typing to search...
         </div>
       </div>
 
       <!-- Search Footer -->
-      <div class="flex items-center justify-between px-4 py-2 border-t border-border bg-surface-alt text-xs text-text-muted">
+      <div
+        class="flex items-center justify-between px-4 py-2 border-t border-border bg-surface-alt text-xs text-text-muted"
+      >
         <div class="flex items-center gap-4">
           <span class="flex items-center gap-1">
-            <kbd class="px-1.5 py-0.5 bg-surface border border-border rounded">↵</kbd>
-            Öffnen
+            <kbd class="px-1.5 py-0.5 bg-surface border border-border rounded"
+              >↵</kbd
+            >
+            Open
           </span>
           <span class="flex items-center gap-1">
-            <kbd class="px-1.5 py-0.5 bg-surface border border-border rounded">↑↓</kbd>
-            Navigieren
+            <kbd class="px-1.5 py-0.5 bg-surface border border-border rounded"
+              >↑↓</kbd
+            >
+            Navigate
           </span>
         </div>
         <span>Powered by Pagefind</span>
@@ -86,166 +123,9 @@ const { placeholder = 'Suchen... (⌘K)' } = Astro.props;
   </div>
 </div>
 
-<script is:inline>
-(function() {
-  let pagefind = null;
-  let selectedIndex = -1;
-  let results = [];
-
-  const modal = document.getElementById('search-modal');
-  const backdrop = document.getElementById('search-backdrop');
-  const input = document.getElementById('search-input');
-  const resultsContainer = document.getElementById('search-results');
-  const searchButton = document.getElementById('search-button');
-  const searchButtonMobile = document.getElementById('search-button-mobile');
-
-  if (!modal || !input || !resultsContainer) return;
-
-  // Load Pagefind
-  async function loadPagefind() {
-    if (pagefind) return pagefind;
-    try {
-      pagefind = await import('/pagefind/pagefind.js');
-      await pagefind.init();
-      return pagefind;
-    } catch (e) {
-      console.warn('Pagefind not available:', e);
-      return null;
-    }
-  }
-
-  function openModal() {
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    input.focus();
-    loadPagefind();
-  }
-
-  function closeModal() {
-    modal.classList.add('hidden');
-    document.body.style.overflow = '';
-    input.value = '';
-    resultsContainer.innerHTML = '<div class="text-center py-8 text-text-muted text-sm">Beginne zu tippen um zu suchen...</div>';
-    selectedIndex = -1;
-    results = [];
-  }
-
-  function updateSelection() {
-    const items = resultsContainer.querySelectorAll('.search-result-item');
-    items.forEach((item, i) => {
-      if (i === selectedIndex) {
-        item.classList.add('bg-primary/10', 'border-primary/30');
-        item.classList.remove('border-transparent');
-        item.scrollIntoView({ block: 'nearest' });
-      } else {
-        item.classList.remove('bg-primary/10', 'border-primary/30');
-        item.classList.add('border-transparent');
-      }
-    });
-  }
-
-  function navigateToSelected() {
-    if (selectedIndex >= 0 && results[selectedIndex]) {
-      window.location.href = results[selectedIndex].url;
-    }
-  }
-
-  async function performSearch(query) {
-    if (!query.trim()) {
-      resultsContainer.innerHTML = '<div class="text-center py-8 text-text-muted text-sm">Beginne zu tippen um zu suchen...</div>';
-      results = [];
-      selectedIndex = -1;
-      return;
-    }
-
-    const pf = await loadPagefind();
-    if (!pf) {
-      resultsContainer.innerHTML = '<div class="text-center py-8 text-text-muted text-sm">Suche nicht verfügbar</div>';
-      return;
-    }
-
-    const search = await pf.search(query);
-    results = [];
-
-    if (search.results.length === 0) {
-      resultsContainer.innerHTML = '<div class="text-center py-8 text-text-muted text-sm">Keine Ergebnisse gefunden</div>';
-      return;
-    }
-
-    // Load first 10 results
-    const loadedResults = await Promise.all(
-      search.results.slice(0, 10).map(r => r.data())
-    );
-
-    results = loadedResults.map((data, i) => ({
-      url: data.url,
-      title: data.meta?.title || data.url,
-      excerpt: data.excerpt
-    }));
-
-    resultsContainer.innerHTML = results.map((result, i) => `
-      <a href="${result.url}" class="search-result-item block p-3 rounded-lg border border-transparent hover:bg-primary/10 hover:border-primary/30 transition-colors">
-        <div class="font-medium text-text mb-1">${result.title}</div>
-        <div class="text-sm text-text-muted line-clamp-2">${result.excerpt || ''}</div>
-      </a>
-    `).join('');
-
-    selectedIndex = 0;
-    updateSelection();
-  }
-
-  // Event Listeners
-  searchButton?.addEventListener('click', openModal);
-  searchButtonMobile?.addEventListener('click', openModal);
-  backdrop?.addEventListener('click', closeModal);
-
-  // Keyboard shortcuts
-  document.addEventListener('keydown', (e) => {
-    // Cmd/Ctrl + K to open
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      if (modal.classList.contains('hidden')) {
-        openModal();
-      } else {
-        closeModal();
-      }
-    }
-
-    // ESC to close
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeModal();
-    }
-
-    // Arrow navigation in results
-    if (!modal.classList.contains('hidden')) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (selectedIndex < results.length - 1) {
-          selectedIndex++;
-          updateSelection();
-        }
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (selectedIndex > 0) {
-          selectedIndex--;
-          updateSelection();
-        }
-      } else if (e.key === 'Enter' && selectedIndex >= 0) {
-        e.preventDefault();
-        navigateToSelected();
-      }
-    }
-  });
-
-  // Search input
-  let debounceTimeout;
-  input.addEventListener('input', (e) => {
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => {
-      performSearch(e.target.value);
-    }, 200);
-  });
-})();
+<script>
+  import { initSearchManager } from "../../scripts/search-manager";
+  initSearchManager();
 </script>
 
 <style>

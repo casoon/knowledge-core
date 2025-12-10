@@ -1,11 +1,11 @@
 ---
-import { AppShell, Footer, NavBar, ProgressBar } from '@knowledge-core/ui';
-import '@knowledge-core/styles/global.css';
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
+import { AppShell, Footer, NavBar, ProgressBar } from "@knowledge-core/ui";
+import "@knowledge-core/styles/global.css";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
-  const courses = await getCollection('courses');
+  const courses = await getCollection("courses");
   return courses.map((course) => ({
     params: { courseSlug: course.data.slug },
     props: { course },
@@ -13,11 +13,11 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  course: CollectionEntry<'courses'>;
+  course: CollectionEntry<"courses">;
 }
 
 const { course } = Astro.props;
-const allLessons = await getCollection('lessons', ({ data }) => {
+const allLessons = await getCollection("lessons", ({ data }) => {
   return data.courseSlug === course.data.slug;
 });
 
@@ -31,37 +31,35 @@ const lessonsByModule = allLessons.reduce(
     acc[module].push(lesson);
     return acc;
   },
-  {} as Record<string, typeof allLessons>
+  {} as Record<string, typeof allLessons>,
 );
 
 // Sort lessons within each module
 Object.keys(lessonsByModule).forEach((module) => {
-  lessonsByModule[module].sort((a, b) => a.data.orderInModule - b.data.orderInModule);
+  lessonsByModule[module].sort(
+    (a, b) => a.data.orderInModule - b.data.orderInModule,
+  );
 });
 
 const levelColors = {
-  beginner: 'badge-success',
-  intermediate: 'badge-warning',
-  advanced: 'badge-error',
+  beginner: "badge-success",
+  intermediate: "badge-warning",
+  advanced: "badge-error",
 };
 ---
 
-<AppShell title={`${course.data.title} | Kurse`} description={course.data.description}>
-  <NavBar
-    logo="Knowledge Core"
-    logoHref="/"
-    links={[
-      { text: 'Dokumentation', href: '/docs' },
-      { text: 'Kurse', href: '/courses', active: true },
-    ]}
-  />
+<AppShell
+  title={`${course.data.title} | Courses`}
+  description={course.data.description}
+>
+  <NavBar logo="Courses" logoHref="/" links={[]} />
 
   <main class="flex-1 mt-16">
     <section class="container-custom py-12">
       <!-- Course Header -->
       <div class="mb-12">
         <div class="mb-4">
-          <span class:list={['badge', levelColors[course.data.level]]}>
+          <span class:list={["badge", levelColors[course.data.level]]}>
             {course.data.level}
           </span>
         </div>
@@ -70,18 +68,29 @@ const levelColors = {
 
         <div class="flex flex-wrap gap-4 items-center mb-6">
           <div class="flex items-center gap-2 text-text-muted">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
-            <span>{Math.round(course.data.estimatedTotalMinutes / 60)} Stunden</span>
+            <span
+              >{Math.round(course.data.estimatedTotalMinutes / 60)} hours</span
+            >
           </div>
 
           <div class="flex gap-2">
-            {course.data.tags.map((tag) => <span class="badge badge-primary">{tag}</span>)}
+            {
+              course.data.tags.map((tag) => (
+                <span class="badge badge-primary">{tag}</span>
+              ))
+            }
           </div>
         </div>
 
@@ -95,8 +104,11 @@ const levelColors = {
 
         {
           allLessons.length > 0 && (
-            <a href={`/courses/${course.data.slug}/${allLessons[0].slug}`} class="btn btn-primary">
-              Kurs starten
+            <a
+              href={`/courses/${course.data.slug}/${allLessons[0].slug}`}
+              class="btn btn-primary"
+            >
+              Start Course
             </a>
           )
         }
@@ -104,13 +116,13 @@ const levelColors = {
 
       <!-- Course Content / Modules -->
       <div class="max-w-4xl">
-        <h2 class="text-2xl font-bold text-text mb-6">Kursinhalt</h2>
+        <h2 class="text-2xl font-bold text-text mb-6">Course Content</h2>
 
         {
           Object.keys(lessonsByModule).length === 0 ? (
             <div class="card">
               <p class="text-text-muted">
-                Dieser Kurs hat noch keine Lektionen. Erstelle deine erste Lektion!
+                This course has no lessons yet. Create your first lesson!
               </p>
             </div>
           ) : (

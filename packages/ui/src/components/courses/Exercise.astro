@@ -1,25 +1,27 @@
 ---
 export interface Props {
   title: string;
-  difficulty?: 'easy' | 'medium' | 'hard';
+  difficulty?: "easy" | "medium" | "hard";
 }
 
 const { title, difficulty } = Astro.props;
 
 const difficultyColors = {
-  easy: 'badge-success',
-  medium: 'badge-warning',
-  hard: 'badge-error',
+  easy: "badge-success",
+  medium: "badge-warning",
+  hard: "badge-error",
 };
 
 const difficultyLabels = {
-  easy: 'Einfach',
-  medium: 'Mittel',
-  hard: 'Schwer',
+  easy: "Easy",
+  medium: "Medium",
+  hard: "Hard",
 };
 ---
 
-<div class="exercise-container my-8 p-6 bg-info-bg rounded-lg border-l-4 border-info">
+<div
+  class="exercise-container my-8 p-6 bg-info-bg rounded-lg border-l-4 border-info"
+>
   <div class="flex items-start justify-between mb-4">
     <div class="flex items-center gap-3">
       <svg
@@ -39,7 +41,7 @@ const difficultyLabels = {
     </div>
     {
       difficulty && (
-        <span class:list={['badge', difficultyColors[difficulty]]}>
+        <span class:list={["badge", difficultyColors[difficulty]]}>
           {difficultyLabels[difficulty]}
         </span>
       )

@@ -1,6 +1,6 @@
 ---
 title: Installation
-description: Installiere Knowledge Core und beginne mit deinem ersten Projekt
+description: Install Knowledge Core and start your first project
 category: getting-started
 order: 1
 tags: [setup, installation]
@@ -11,43 +11,43 @@ import { Callout, CodeBlock } from '@knowledge-core/ui';
 
 # Installation
 
-Willkommen! Diese Anleitung führt dich durch die Installation von Knowledge Core.
+Welcome! This guide walks you through installing Knowledge Core.
 
-## Voraussetzungen
+## Prerequisites
 
-Bevor du beginnst, stelle sicher, dass du Folgendes installiert hast:
+Before you begin, make sure you have the following installed:
 
-- **Node.js 24** oder höher
-- **pnpm 9** oder höher
-- **Volta** (empfohlen für Version Management)
+- **Node.js 24** or higher
+- **pnpm 9** or higher
+- **Volta** (recommended for version management)
 
-<Callout type="info" title="Tipp">
-Volta verwaltet automatisch die richtigen Node- und pnpm-Versionen für dieses Projekt.
+<Callout type="info" title="Tip">
+Volta automatically manages the correct Node and pnpm versions for this project.
 </Callout>
 
-## Volta installieren
+## Installing Volta
 
-Falls du Volta noch nicht installiert hast:
+If you haven't installed Volta yet:
 
 ```bash
 curl https://get.volta.sh | bash
 ```
 
-Nach der Installation wird Volta automatisch die richtigen Versionen verwenden.
+After installation, Volta will automatically use the correct versions.
 
-## Template verwenden
+## Using the Template
 
 ### Option 1: GitHub Template
 
-1. Klicke auf "Use this template" auf GitHub
-2. Clone dein neues Repository
-3. Installiere Dependencies:
+1. Click "Use this template" on GitHub
+2. Clone your new repository
+3. Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-### Option 2: Manueller Clone
+### Option 2: Manual Clone
 
 ```bash
 git clone https://github.com/yourusername/knowledge-core.git
@@ -55,36 +55,36 @@ cd knowledge-core
 pnpm install
 ```
 
-## Projekt starten
+## Starting the Project
 
-### Dokumentation starten
+### Start Documentation
 
 ```bash
 pnpm dev:docs
 ```
 
-Die Dokumentation läuft dann auf `http://localhost:4321`
+The documentation will run at `http://localhost:4321`
 
-### Kursplattform starten
+### Start Course Platform
 
 ```bash
 pnpm dev:courses
 ```
 
-Die Kursplattform läuft auf `http://localhost:4322`
+The course platform runs at `http://localhost:4322`
 
-### Beide Apps gleichzeitig
+### Both Apps Simultaneously
 
 ```bash
 pnpm dev
 ```
 
-<Callout type="success" title="Geschafft!">
-Dein Projekt läuft jetzt lokal. Öffne deinen Browser und beginne mit der Entwicklung.
+<Callout type="success" title="Done!">
+Your project is now running locally. Open your browser and start developing.
 </Callout>
 
-## Nächste Schritte
+## Next Steps
 
-- [Projektstruktur verstehen](/docs/getting-started/structure)
-- [Erste Inhalte erstellen](/docs/guides/creating-content)
-- [Theming anpassen](/docs/guides/theming)
+- [Understand project structure](/docs/getting-started/structure)
+- [Create your first content](/docs/guides/creating-content)
+- [Customize theming](/docs/guides/theming)

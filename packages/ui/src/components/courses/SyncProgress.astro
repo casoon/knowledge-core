@@ -1,9 +1,9 @@
 ---
 /**
- * SyncProgress - Cloud-Synchronisation für Lernfortschritt
+ * SyncProgress - Cloud synchronization for learning progress
  *
- * Ermöglicht das Synchronisieren des Fortschritts zwischen Geräten
- * über einen 8-stelligen Code (30 Tage gültig).
+ * Enables syncing progress between devices
+ * via an 8-character code (valid for 30 days).
  */
 ---
 
@@ -12,27 +12,56 @@
     type="button"
     id="sync-button"
     class="flex items-center gap-2 px-3 py-2 text-sm text-text-muted bg-surface-alt border border-border rounded-lg hover:border-primary/50 hover:text-text transition-all"
-    aria-label="Fortschritt synchronisieren"
+    aria-label="Sync progress"
   >
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+      ></path>
     </svg>
     <span class="hidden sm:inline">Sync</span>
   </button>
 </div>
 
 <!-- Sync Modal -->
-<div id="sync-modal" class="fixed inset-0 z-modal hidden" role="dialog" aria-modal="true" aria-label="Fortschritt synchronisieren">
-  <div id="sync-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+<div
+  id="sync-modal"
+  class="fixed inset-0 z-modal hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Sync progress"
+>
+  <div id="sync-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm">
+  </div>
 
   <div class="relative flex items-center justify-center min-h-screen p-4">
-    <div class="w-full max-w-md bg-surface border border-border rounded-xl shadow-2xl overflow-hidden">
+    <div
+      class="w-full max-w-md bg-surface border border-border rounded-xl shadow-2xl overflow-hidden"
+    >
       <!-- Header -->
-      <div class="flex items-center justify-between px-4 py-3 border-b border-border">
-        <h2 class="text-lg font-semibold text-text">Fortschritt synchronisieren</h2>
-        <button type="button" id="sync-close" class="p-1 text-text-muted hover:text-text transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      <div
+        class="flex items-center justify-between px-4 py-3 border-b border-border"
+      >
+        <h2 class="text-lg font-semibold text-text">Sync Progress</h2>
+        <button
+          type="button"
+          id="sync-close"
+          class="p-1 text-text-muted hover:text-text transition-colors"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
       </div>
@@ -42,15 +71,28 @@
         <!-- Status: Kein Sync aktiv -->
         <div id="sync-status-none" class="space-y-4">
           <p class="text-sm text-text-muted">
-            Synchronisiere deinen Lernfortschritt zwischen verschiedenen Geräten.
+            Sync your learning progress between different devices.
           </p>
 
           <div class="grid gap-3">
-            <button type="button" id="sync-create" class="btn btn-primary w-full justify-center">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            <button
+              type="button"
+              id="sync-create"
+              class="btn btn-primary w-full justify-center"
+            >
+              <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"></path>
               </svg>
-              Neuen Sync-Code erstellen
+              Create New Sync Code
             </button>
 
             <div class="relative">
@@ -58,12 +100,14 @@
                 <div class="w-full border-t border-border"></div>
               </div>
               <div class="relative flex justify-center text-xs">
-                <span class="px-2 bg-surface text-text-muted">oder</span>
+                <span class="px-2 bg-surface text-text-muted">or</span>
               </div>
             </div>
 
             <div class="space-y-2">
-              <label for="sync-code-input" class="text-sm font-medium text-text">Code eingeben</label>
+              <label for="sync-code-input" class="text-sm font-medium text-text"
+                >Enter code</label
+              >
               <div class="flex gap-2">
                 <input
                   type="text"
@@ -76,8 +120,12 @@
                   autocapitalize="characters"
                   spellcheck="false"
                 />
-                <button type="button" id="sync-load" class="btn btn-secondary px-4">
-                  Laden
+                <button
+                  type="button"
+                  id="sync-load"
+                  class="btn btn-secondary px-4"
+                >
+                  Load
                 </button>
               </div>
             </div>
@@ -87,49 +135,102 @@
         <!-- Status: Sync aktiv -->
         <div id="sync-status-active" class="hidden space-y-4">
           <div class="p-4 bg-primary/10 border border-primary/20 rounded-lg">
-            <p class="text-xs text-text-muted mb-1">Dein Sync-Code</p>
+            <p class="text-xs text-text-muted mb-1">Your Sync Code</p>
             <div class="flex items-center justify-between">
-              <code id="sync-code-display" class="text-2xl font-mono font-bold text-primary tracking-wider"></code>
-              <button type="button" id="sync-copy" class="p-2 text-text-muted hover:text-primary transition-colors" title="Code kopieren">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              <code
+                id="sync-code-display"
+                class="text-2xl font-mono font-bold text-primary tracking-wider"
+              ></code>
+              <button
+                type="button"
+                id="sync-copy"
+                class="p-2 text-text-muted hover:text-primary transition-colors"
+                title="Copy code"
+              >
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  ></path>
                 </svg>
               </button>
             </div>
             <p class="text-xs text-text-muted mt-2">
-              Gültig für 30 Tage. Gib diesen Code auf einem anderen Gerät ein.
+              Valid for 30 days. Enter this code on another device.
             </p>
           </div>
 
           <div class="flex items-center justify-between text-sm">
-            <span class="text-text-muted">Zuletzt synchronisiert:</span>
+            <span class="text-text-muted">Last synced:</span>
             <span id="sync-last-updated" class="text-text"></span>
           </div>
 
           <div class="grid gap-2">
-            <button type="button" id="sync-save-now" class="btn btn-primary w-full justify-center">
-              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            <button
+              type="button"
+              id="sync-save-now"
+              class="btn btn-primary w-full justify-center"
+            >
+              <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                ></path>
               </svg>
-              Jetzt synchronisieren
+              Sync Now
             </button>
-            <button type="button" id="sync-disconnect" class="btn btn-ghost w-full justify-center text-red-500 hover:bg-red-500/10">
-              Sync trennen
+            <button
+              type="button"
+              id="sync-disconnect"
+              class="btn btn-ghost w-full justify-center text-red-500 hover:bg-red-500/10"
+            >
+              Disconnect Sync
             </button>
           </div>
         </div>
 
         <!-- Loading State -->
         <div id="sync-loading" class="hidden py-8 text-center">
-          <svg class="w-8 h-8 mx-auto text-primary animate-spin" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          <svg
+            class="w-8 h-8 mx-auto text-primary animate-spin"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
           </svg>
-          <p class="mt-2 text-sm text-text-muted">Wird geladen...</p>
+          <p class="mt-2 text-sm text-text-muted">Loading...</p>
         </div>
 
         <!-- Error State -->
-        <div id="sync-error" class="hidden p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+        <div
+          id="sync-error"
+          class="hidden p-4 bg-red-500/10 border border-red-500/20 rounded-lg"
+        >
           <p id="sync-error-message" class="text-sm text-red-500"></p>
         </div>
       </div>
@@ -137,249 +238,7 @@
   </div>
 </div>
 
-<script is:inline>
-(function() {
-  const STORAGE_KEY = 'sync-code';
-
-  // Elements
-  const modal = document.getElementById('sync-modal');
-  const backdrop = document.getElementById('sync-backdrop');
-  const syncButton = document.getElementById('sync-button');
-  const closeButton = document.getElementById('sync-close');
-
-  const statusNone = document.getElementById('sync-status-none');
-  const statusActive = document.getElementById('sync-status-active');
-  const loadingState = document.getElementById('sync-loading');
-  const errorState = document.getElementById('sync-error');
-  const errorMessage = document.getElementById('sync-error-message');
-
-  const createButton = document.getElementById('sync-create');
-  const loadButton = document.getElementById('sync-load');
-  const codeInput = document.getElementById('sync-code-input');
-  const codeDisplay = document.getElementById('sync-code-display');
-  const copyButton = document.getElementById('sync-copy');
-  const saveNowButton = document.getElementById('sync-save-now');
-  const disconnectButton = document.getElementById('sync-disconnect');
-  const lastUpdatedSpan = document.getElementById('sync-last-updated');
-
-  if (!modal || !syncButton) return;
-
-  // Helpers
-  function safeGetItem(key) {
-    try { return localStorage.getItem(key); } catch { return null; }
-  }
-
-  function safeSetItem(key, value) {
-    try { localStorage.setItem(key, value); } catch {}
-  }
-
-  function safeRemoveItem(key) {
-    try { localStorage.removeItem(key); } catch {}
-  }
-
-  function getAllProgress() {
-    const progress = {};
-    try {
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith('course-progress-')) {
-          progress[key] = JSON.parse(localStorage.getItem(key) || '{}');
-        }
-      }
-    } catch {}
-    return progress;
-  }
-
-  function setAllProgress(progress) {
-    try {
-      for (const [key, value] of Object.entries(progress)) {
-        localStorage.setItem(key, JSON.stringify(value));
-      }
-    } catch {}
-  }
-
-  function formatDate(isoString) {
-    const date = new Date(isoString);
-    return date.toLocaleString('de-DE', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  }
-
-  function showState(state) {
-    statusNone.classList.add('hidden');
-    statusActive.classList.add('hidden');
-    loadingState.classList.add('hidden');
-    errorState.classList.add('hidden');
-
-    if (state === 'none') statusNone.classList.remove('hidden');
-    else if (state === 'active') statusActive.classList.remove('hidden');
-    else if (state === 'loading') loadingState.classList.remove('hidden');
-  }
-
-  function showError(message) {
-    errorState.classList.remove('hidden');
-    errorMessage.textContent = message;
-  }
-
-  function hideError() {
-    errorState.classList.add('hidden');
-  }
-
-  // Modal
-  function openModal() {
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    hideError();
-
-    const savedCode = safeGetItem(STORAGE_KEY);
-    if (savedCode) {
-      codeDisplay.textContent = savedCode;
-      showState('active');
-    } else {
-      showState('none');
-    }
-  }
-
-  function closeModal() {
-    modal.classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  syncButton.addEventListener('click', openModal);
-  closeButton?.addEventListener('click', closeModal);
-  backdrop?.addEventListener('click', closeModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeModal();
-    }
-  });
-
-  // Create new sync
-  createButton?.addEventListener('click', async () => {
-    showState('loading');
-    hideError();
-
-    try {
-      const response = await fetch('/api/sync/create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ progress: getAllProgress() })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Fehler beim Erstellen');
-      }
-
-      safeSetItem(STORAGE_KEY, data.code);
-      safeSetItem(STORAGE_KEY + '-updated', new Date().toISOString());
-      codeDisplay.textContent = data.code;
-      lastUpdatedSpan.textContent = formatDate(new Date().toISOString());
-      showState('active');
-    } catch (error) {
-      showState('none');
-      showError(error.message);
-    }
-  });
-
-  // Load existing sync
-  loadButton?.addEventListener('click', async () => {
-    const code = codeInput.value.toUpperCase().trim();
-    if (code.length !== 8) {
-      showError('Bitte gib einen 8-stelligen Code ein.');
-      return;
-    }
-
-    showState('loading');
-    hideError();
-
-    try {
-      const response = await fetch(`/api/sync/${code}`);
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Code nicht gefunden');
-      }
-
-      setAllProgress(data.progress);
-      safeSetItem(STORAGE_KEY, code);
-      safeSetItem(STORAGE_KEY + '-updated', data.updatedAt);
-      codeDisplay.textContent = code;
-      lastUpdatedSpan.textContent = formatDate(data.updatedAt);
-      showState('active');
-
-      // Seite neu laden um Fortschritt anzuzeigen
-      setTimeout(() => window.location.reload(), 500);
-    } catch (error) {
-      showState('none');
-      showError(error.message);
-    }
-  });
-
-  // Save now
-  saveNowButton?.addEventListener('click', async () => {
-    const code = safeGetItem(STORAGE_KEY);
-    if (!code) return;
-
-    showState('loading');
-    hideError();
-
-    try {
-      const response = await fetch('/api/sync/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, progress: getAllProgress() })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Fehler beim Speichern');
-      }
-
-      safeSetItem(STORAGE_KEY + '-updated', data.updatedAt);
-      lastUpdatedSpan.textContent = formatDate(data.updatedAt);
-      showState('active');
-    } catch (error) {
-      showState('active');
-      showError(error.message);
-    }
-  });
-
-  // Copy code
-  copyButton?.addEventListener('click', () => {
-    const code = codeDisplay.textContent;
-    navigator.clipboard.writeText(code).then(() => {
-      copyButton.innerHTML = '<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
-      setTimeout(() => {
-        copyButton.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>';
-      }, 2000);
-    });
-  });
-
-  // Disconnect
-  disconnectButton?.addEventListener('click', () => {
-    safeRemoveItem(STORAGE_KEY);
-    safeRemoveItem(STORAGE_KEY + '-updated');
-    codeInput.value = '';
-    showState('none');
-  });
-
-  // Format code input
-  codeInput?.addEventListener('input', (e) => {
-    e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-  });
-
-  // Load last updated on modal open
-  const savedUpdated = safeGetItem(STORAGE_KEY + '-updated');
-  if (savedUpdated && lastUpdatedSpan) {
-    lastUpdatedSpan.textContent = formatDate(savedUpdated);
-  }
-})();
+<script>
+  import { initSyncManager } from "../../scripts/sync-manager";
+  initSyncManager();
 </script>

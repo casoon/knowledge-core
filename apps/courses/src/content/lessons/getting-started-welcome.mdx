@@ -1,97 +1,97 @@
 ---
 courseSlug: getting-started
-title: Willkommen
-module: Einführung
+title: Welcome
+module: Introduction
 orderInModule: 1
 estimatedMinutes: 10
 requiresExperience: false
 type: text
 goals:
-  - Verstehe die Struktur von Knowledge Core
-  - Lerne die verfügbaren Features kennen
-  - Erkunde die interaktiven Komponenten
+  - Understand the structure of Knowledge Core
+  - Learn about available features
+  - Explore the interactive components
 ---
 
 import { Callout, Hint } from '@knowledge-core/ui';
 
-# Willkommen bei Knowledge Core
+# Welcome to Knowledge Core
 
-Dies ist eine Beispiel-Lektion, die dir zeigt, wie Kurse in Knowledge Core funktionieren.
+This is a sample lesson that shows you how courses work in Knowledge Core.
 
-## Was ist Knowledge Core?
+## What is Knowledge Core?
 
-Knowledge Core ist ein **Monorepo-Template** für:
+Knowledge Core is a **monorepo template** for:
 
-- 📚 **Technische Dokumentation** - API-Docs, Guides, Tutorials
-- 🎓 **Kursplattformen** - Interaktive Lernstrecken
-- 💡 **Knowledge Bases** - Interne Wissensdatenbanken
+- 📚 **Technical Documentation** - API docs, guides, tutorials
+- 🎓 **Course Platforms** - Interactive learning paths
+- 💡 **Knowledge Bases** - Internal knowledge databases
 
-<Callout type="info" title="Tipp für Template-Nutzer">
-Dies ist Beispiel-Content! Du kannst ihn anpassen oder durch eigene Inhalte ersetzen.
-Im SETUP.md findest du Anleitungen dazu.
+<Callout type="info" title="Tip for Template Users">
+This is example content! You can customize it or replace it with your own content.
+Check SETUP.md for instructions.
 </Callout>
 
-## Features dieser Plattform
+## Platform Features
 
-### 1. MDX-basierte Inhalte
+### 1. MDX-based Content
 
-Alle Inhalte werden in **MDX** geschrieben - Markdown mit React-Komponenten:
+All content is written in **MDX** - Markdown with React components:
 
 ```mdx
-# Überschrift
+# Heading
 
-Normaler Text mit **fett** und *kursiv*.
+Normal text with **bold** and *italic*.
 
 <Callout type="success">
-Interaktive Komponente!
+Interactive component!
 </Callout>
 ```
 
-### 2. Interaktive Elemente
+### 2. Interactive Elements
 
-Du kannst Komponenten wie Callouts, Quiz, Exercises und mehr verwenden.
+You can use components like Callouts, Quizzes, Exercises, and more.
 
-### 3. Fortschrittsverfolgung
+### 3. Progress Tracking
 
-Die Plattform kann deinen Lernfortschritt tracken (localStorage-basiert).
+The platform can track your learning progress (localStorage-based).
 
-<Hint title="Für Entwickler">
-Der gesamte Source-Code ist Open Source! Du kannst alles anpassen und erweitern.
-Schau dir die Komponenten in `packages/ui/src/components/` an.
+<Hint title="For Developers">
+The entire source code is open source! You can customize and extend everything.
+Check out the components in `packages/ui/src/components/`.
 </Hint>
 
-## Kursstruktur
+## Course Structure
 
-Kurse sind organisiert in:
+Courses are organized into:
 
-1. **Kurse** - Top-Level Container (JSON-Definitionen)
-2. **Module** - Thematische Gruppierungen
-3. **Lektionen** - Einzelne Lerneinheiten (MDX)
+1. **Courses** - Top-level containers (JSON definitions)
+2. **Modules** - Thematic groupings
+3. **Lessons** - Individual learning units (MDX)
 
 ```
-Kurs: "Getting Started"
-  ├── Modul: "Einführung"
-  │   ├── Lektion 1: Willkommen
-  │   └── Lektion 2: Features
-  └── Modul: "Praxis"
-      └── Lektion 3: Erste Schritte
+Course: "Getting Started"
+  ├── Module: "Introduction"
+  │   ├── Lesson 1: Welcome
+  │   └── Lesson 2: Features
+  └── Module: "Practice"
+      └── Lesson 3: First Steps
 ```
 
-## Nächste Schritte
+## Next Steps
 
-In den folgenden Lektionen lernst du:
+In the following lessons you'll learn:
 
-- Wie du interaktive Komponenten verwendest
-- Wie Quiz funktionieren
-- Wie du eigene Kurse erstellst
+- How to use interactive components
+- How quizzes work
+- How to create your own courses
 
 <Callout type="success">
-Bereit? Klicke unten auf "Weiter" um fortzufahren!
+Ready? Click "Next" below to continue!
 </Callout>
 
-## Zusammenfassung
+## Summary
 
-- Knowledge Core ist ein Template für Docs & Kurse
-- Inhalte werden in MDX geschrieben
-- Viele interaktive Komponenten verfügbar
-- Vollständig anpassbar und erweiterbar
+- Knowledge Core is a template for docs & courses
+- Content is written in MDX
+- Many interactive components available
+- Fully customizable and extensible

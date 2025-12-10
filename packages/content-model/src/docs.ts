@@ -1,8 +1,14 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const docsCategorySchema = z.enum(['getting-started', 'guides', 'api', 'cookbook']);
+export const docsCategorySchema = z.enum([
+  "getting-started",
+  "guides",
+  "api",
+  "cookbook",
+  "components",
+]);
 
-export const docsStatusSchema = z.enum(['stable', 'beta', 'deprecated']);
+export const docsStatusSchema = z.enum(["stable", "beta", "deprecated"]);
 
 export const docsFrontmatterSchema = z.object({
   title: z.string(),
@@ -11,7 +17,7 @@ export const docsFrontmatterSchema = z.object({
   order: z.number().default(0),
   sidebarGroup: z.string().optional(),
   tags: z.array(z.string()).default([]),
-  status: docsStatusSchema.default('stable'),
+  status: docsStatusSchema.default("stable"),
   lastUpdated: z.date().optional(),
   author: z.string().optional(),
 });

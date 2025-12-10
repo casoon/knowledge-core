@@ -1,9 +1,9 @@
 ---
-import { AppShell, Footer, NavBar, Card } from '@knowledge-core/ui';
-import '@knowledge-core/styles/global.css';
-import { getCollection } from 'astro:content';
+import { AppShell, Footer, NavBar } from "@knowledge-core/ui";
+import "@knowledge-core/styles/global.css";
+import { getCollection } from "astro:content";
 
-const allDocs = await getCollection('docs');
+const allDocs = await getCollection("docs");
 
 // Group by category
 const docsByCategory = allDocs.reduce(
@@ -15,7 +15,7 @@ const docsByCategory = allDocs.reduce(
     acc[category].push(doc);
     return acc;
   },
-  {} as Record<string, typeof allDocs>
+  {} as Record<string, typeof allDocs>,
 );
 
 // Sort within categories
@@ -24,45 +24,44 @@ Object.keys(docsByCategory).forEach((category) => {
 });
 
 const categoryInfo = {
-  'getting-started': {
-    title: 'Erste Schritte',
-    description: 'Schnellstart und grundlegende Konzepte',
-    icon: '🚀',
+  "getting-started": {
+    title: "Getting Started",
+    description: "Quick start and basic concepts",
+    icon: "🚀",
+  },
+  components: {
+    title: "Components",
+    description: "Reusable UI components",
+    icon: "🧩",
   },
   guides: {
-    title: 'Anleitungen',
-    description: 'How-to Guides und Tutorials',
-    icon: '📖',
+    title: "Guides",
+    description: "How-to guides and tutorials",
+    icon: "📖",
   },
   api: {
-    title: 'API-Referenz',
-    description: 'Technische Referenz und API-Dokumentation',
-    icon: '⚙️',
+    title: "API Reference",
+    description: "Technical reference and API documentation",
+    icon: "⚙️",
   },
   cookbook: {
-    title: 'Cookbook',
-    description: 'Rezepte und Best Practices',
-    icon: '👨‍🍳',
+    title: "Cookbook",
+    description: "Recipes and best practices",
+    icon: "👨‍🍳",
   },
 };
 ---
 
-<AppShell title="Dokumentation | Knowledge Core">
-  <NavBar
-    logo="Knowledge Core"
-    logoHref="/"
-    links={[
-      { text: 'Dokumentation', href: '/docs', active: true },
-      { text: 'Kurse', href: '/courses' },
-    ]}
-  />
+<AppShell title="Documentation | Knowledge Core">
+  <NavBar logo="Docs" logoHref="/" links={[]} />
 
   <main class="flex-1 mt-16">
     <section class="container-custom py-12">
       <div class="mb-12">
-        <h1 class="text-4xl font-bold text-text mb-4">Dokumentation</h1>
+        <h1 class="text-4xl font-bold text-text mb-4">Documentation</h1>
         <p class="text-lg text-text-muted">
-          Alles was du brauchst, um mit Knowledge Core zu starten und eigene Projekte zu erstellen.
+          Everything you need to get started with Knowledge Core and create your
+          own projects.
         </p>
       </div>
 
@@ -94,7 +93,9 @@ const categoryInfo = {
                             {doc.data.title}
                           </div>
                           {doc.data.description && (
-                            <p class="text-sm text-text-muted mt-1">{doc.data.description}</p>
+                            <p class="text-sm text-text-muted mt-1">
+                              {doc.data.description}
+                            </p>
                           )}
                         </div>
                         <svg

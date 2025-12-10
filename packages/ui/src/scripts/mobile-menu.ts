@@ -19,7 +19,7 @@ export function initMobileMenu(): void {
     mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
     mobileMenuButton.setAttribute(
       "aria-label",
-      isOpen ? "Menü schließen" : "Menü öffnen",
+      isOpen ? "Close menu" : "Open menu",
     );
 
     // Toggle icons
@@ -34,7 +34,7 @@ export function initMobileMenu(): void {
     if (e.key === "Escape" && !mobileMenu.classList.contains("hidden")) {
       mobileMenu.classList.add("hidden");
       mobileMenuButton.setAttribute("aria-expanded", "false");
-      mobileMenuButton.setAttribute("aria-label", "Menü öffnen");
+      mobileMenuButton.setAttribute("aria-label", "Open menu");
       if (menuIcon && closeIcon) {
         menuIcon.classList.remove("hidden");
         closeIcon.classList.add("hidden");

@@ -1,0 +1,306 @@
+---
+title: Components Overview
+description: All available UI components in the Knowledge Core project
+category: components
+order: 1
+tags: [components, ui, astro]
+status: stable
+---
+
+import { Callout, Tabs, TabPanel, Card, CodeBlock, Hint, Quiz, Exercise } from '@knowledge-core/ui';
+
+# Components Overview
+
+Knowledge Core provides an extensive collection of reusable Astro components. All components support dark mode and are designed with accessibility in mind.
+
+## Import
+
+All components are imported from the `@knowledge-core/ui` package:
+
+```javascript
+import { Callout, Tabs, TabPanel, Quiz, Hint } from '@knowledge-core/ui';
+```
+
+---
+
+## Callout
+
+Highlighted notice boxes for important information.
+
+### Variants
+
+<Callout type="info" title="Information">
+This is an info callout for general notes.
+</Callout>
+
+<Callout type="success" title="Success">
+This is a success callout for positive confirmations.
+</Callout>
+
+<Callout type="warning" title="Warning">
+This is a warning callout for important warnings.
+</Callout>
+
+<Callout type="error" title="Error">
+This is an error callout for critical error messages.
+</Callout>
+
+### Usage
+
+```jsx
+<Callout type="info" title="Title">
+  Callout content
+</Callout>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `type` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Visual style |
+| `title` | `string` | - | Optional heading |
+
+---
+
+## Tabs
+
+Organize content in switchable tabs.
+
+<Tabs tabs={[
+  { label: 'JavaScript', value: 'js' },
+  { label: 'TypeScript', value: 'ts' },
+  { label: 'Python', value: 'py' }
+]}>
+  <TabPanel value="js">
+    ```javascript
+    function greet(name) {
+      return `Hello, ${name}!`;
+    }
+    ```
+  </TabPanel>
+  <TabPanel value="ts">
+    ```typescript
+    function greet(name: string): string {
+      return `Hello, ${name}!`;
+    }
+    ```
+  </TabPanel>
+  <TabPanel value="py">
+    ```python
+    def greet(name):
+        return f"Hello, {name}!"
+    ```
+  </TabPanel>
+</Tabs>
+
+### Usage
+
+```jsx
+<Tabs tabs={[
+  { label: 'Tab 1', value: 'tab1' },
+  { label: 'Tab 2', value: 'tab2' }
+]}>
+  <TabPanel value="tab1">Tab 1 content</TabPanel>
+  <TabPanel value="tab2">Tab 2 content</TabPanel>
+</Tabs>
+```
+
+---
+
+## Hint
+
+Collapsible hints, ideal for tips or solutions.
+
+<Hint title="Click me for a tip">
+This content is only shown after clicking. Perfect for solution hints in exercises!
+</Hint>
+
+### Usage
+
+```jsx
+<Hint title="Show tip">
+  Hidden content here
+</Hint>
+```
+
+---
+
+## Quiz
+
+Interactive quizzes with automatic evaluation.
+
+<Quiz 
+  title="Knowledge Test: Astro"
+  questions={[
+    {
+      question: "What is Astro?",
+      options: [
+        "A JavaScript framework",
+        "A web framework for content websites",
+        "A database",
+        "A CSS framework"
+      ],
+      correctAnswer: 1,
+      explanation: "Astro is a modern web framework optimized for content-focused websites."
+    },
+    {
+      question: "What file extension do Astro components use?",
+      options: [".jsx", ".vue", ".astro", ".svelte"],
+      correctAnswer: 2,
+      explanation: "Astro components use the .astro file extension."
+    }
+  ]}
+/>
+
+### Usage
+
+```jsx
+<Quiz 
+  title="My Quiz"
+  questions={[
+    {
+      question: "Question here?",
+      options: ["Option A", "Option B", "Option C"],
+      correctAnswer: 0,
+      explanation: "Explanation of the correct answer"
+    }
+  ]}
+/>
+```
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `title` | `string` | Quiz title |
+| `questions` | `QuizQuestion[]` | Array of questions |
+
+---
+
+## Exercise
+
+Marked exercise tasks with difficulty level.
+
+<Exercise title="Create your first component" difficulty="easy">
+Create a new Astro component called `Greeting.astro` that accepts a name as a prop and displays a personalized greeting.
+
+**Requirements:**
+- The component accepts a `name` prop
+- It outputs "Hello, [Name]!"
+- Use TypeScript for the props definition
+</Exercise>
+
+<Exercise title="Implement state management" difficulty="medium">
+Implement a simple counter with vanilla JavaScript in an Astro component.
+</Exercise>
+
+<Exercise title="Create custom hook" difficulty="hard">
+Create a reusable sync mechanism for localStorage.
+</Exercise>
+
+### Usage
+
+```jsx
+<Exercise title="Exercise title" difficulty="medium">
+  Exercise description...
+</Exercise>
+```
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `title` | `string` | Exercise title |
+| `difficulty` | `'easy' \| 'medium' \| 'hard'` | Difficulty level |
+
+---
+
+## Card
+
+Flexible card component for content grouping.
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <Card title="Simple Card">
+    This is a simple card without a link.
+  </Card>
+  <Card title="Clickable Card" href="/docs/getting-started/installation">
+    This card is linked and clickable.
+  </Card>
+</div>
+
+### Usage
+
+```jsx
+<Card title="Title" href="/optional/link">
+  Card content
+</Card>
+```
+
+---
+
+## CodeBlock
+
+Code display with syntax highlighting and copy button.
+
+<CodeBlock 
+  code={`const greeting = "Hello, World!";
+console.log(greeting);`}
+  lang="javascript"
+  title="example.js"
+  showLineNumbers={true}
+/>
+
+### Usage
+
+```jsx
+<CodeBlock 
+  code="const x = 1;"
+  lang="javascript"
+  title="script.js"
+  showLineNumbers={true}
+/>
+```
+
+### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `code` | `string` | - | The code to display |
+| `lang` | `string` | `'plaintext'` | Programming language |
+| `title` | `string` | - | Optional filename |
+| `showLineNumbers` | `boolean` | `false` | Show line numbers |
+
+---
+
+## More Components
+
+### Layout Components
+
+- **AppShell** - Main layout with header and footer
+- **NavBar** - Navigation with dark mode, search, and mobile menu
+- **Footer** - Page footer with links
+- **SidebarLayout** - Two-column layout with sidebar
+
+### Course Components
+
+- **CourseCard** - Course preview with level and progress
+- **LessonNav** - Navigation between lessons
+- **ProgressBar** - Progress indicator
+- **LessonComplete** - Completion marker for lessons
+- **SyncProgress** - Cloud synchronization of progress
+- **TotalProgress** - Total progress across all courses
+
+### Utility Components
+
+- **StorageUtils** - Safe localStorage functions
+- **SearchBar** - Full-text search with Pagefind
+- **FontSizeControl** - Font size adjustment
+- **QuizToggle** - Show/hide quizzes
+
+---
+
+## Next Steps
+
+- [Create custom components](/docs/guides/creating-content)
+- [Customize theming](/docs/guides/theming)
+- [Create courses](/docs/guides/courses)

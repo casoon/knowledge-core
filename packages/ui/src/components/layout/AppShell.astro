@@ -1,4 +1,6 @@
 ---
+import StorageUtils from "../utils/StorageUtils.astro";
+
 export interface Props {
   title: string;
   description?: string;
@@ -21,30 +23,23 @@ const { title, description, showFooter = true } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <StorageUtils />
     <script is:inline>
-      // Dark mode initialization (mit Error Handling für Private Browsing)
-      (function() {
-        function safeGetItem(key) {
-          try {
-            return typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
-          } catch {
-            return null;
-          }
-        }
-
+      // Dark mode initialization
+      (function () {
         const theme = (() => {
-          const stored = safeGetItem('theme');
+          const stored = safeGetItem("theme");
           if (stored) return stored;
-          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return 'dark';
+          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
           }
-          return 'light';
+          return "light";
         })();
 
-        if (theme === 'dark') {
-          document.documentElement.classList.add('dark');
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
         } else {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.remove("dark");
         }
       })();
     </script>

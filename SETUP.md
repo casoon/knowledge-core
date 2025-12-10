@@ -1,178 +1,188 @@
 # Setup Guide
 
-Willkommen bei deinem neuen Knowledge Core Projekt! Folge diesen Schritten für eine optimale Einrichtung.
+Welcome to your new Knowledge Core project! Follow these steps for an optimal setup.
 
-## 🎯 Initiale Schritte
+## Initial Steps
 
-### 1. Dependencies installieren
+### 1. Install Dependencies
 
 ```bash
 pnpm install
 ```
 
-Dies installiert alle benötigten Pakete für beide Apps und alle Shared Packages.
+This installs all required packages for both apps and all shared packages.
 
-### 2. Projekt personalisieren
+### 2. Personalize the Project
 
-#### Package-Namen ändern
+#### Change Package Names
 
-Ersetze `@knowledge-core` mit deinem eigenen Scope (z.B. `@mein-projekt`):
+Replace `@knowledge-core` with your own scope (e.g., `@my-project`):
 
-**Betroffene Dateien:**
+**Affected files:**
 
 ```bash
-# In allen package.json Dateien:
+# In all package.json files:
 packages/ui/package.json
 packages/styles/package.json
 packages/content-model/package.json
 packages/config/package.json
 
-# Name-Feld ändern:
+# Change the name field:
 {
-  "name": "@mein-projekt/ui",  // statt @knowledge-core/ui
+  "name": "@my-project/ui",  // instead of @knowledge-core/ui
   ...
 }
 ```
 
-**Import-Statements aktualisieren:**
+**Update import statements:**
 
-In den Apps (`apps/docs/` und `apps/courses/`) alle Imports anpassen:
+In the apps (`apps/docs/` and `apps/courses/`) adjust all imports:
 
 ```typescript
-// Vorher:
+// Before:
 import { Callout } from '@knowledge-core/ui';
 import '@knowledge-core/styles/global.css';
 
-// Nachher:
-import { Callout } from '@mein-projekt/ui';
-import '@mein-projekt/styles/global.css';
+// After:
+import { Callout } from '@my-project/ui';
+import '@my-project/styles/global.css';
 ```
 
-**Schneller Weg - Mit find & replace:**
+**Quick way - With find & replace:**
 
 ```bash
 # macOS/Linux:
 find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.astro" -o -name "*.mdx" \) \
   -not -path "*/node_modules/*" \
-  -exec sed -i '' 's/@knowledge-core/@mein-projekt/g' {} +
+  -exec sed -i '' 's/@knowledge-core/@my-project/g' {} +
 
 # Windows (PowerShell):
 Get-ChildItem -Recurse -Include *.json,*.ts,*.astro,*.mdx |
   Where-Object { $_.FullName -notmatch 'node_modules' } |
-  ForEach-Object { (Get-Content $_.FullName) -replace '@knowledge-core','@mein-projekt' | Set-Content $_.FullName }
+  ForEach-Object { (Get-Content $_.FullName) -replace '@knowledge-core','@my-project' | Set-Content $_.FullName }
 ```
 
-#### Branding anpassen
+#### Customize Branding
 
-**Logo & Titel:**
+**Logo & Title:**
 
-Bearbeite `packages/ui/src/components/navigation/NavBar.astro`:
+The NavBar component accepts `logo` and `logoSrc` props. Update the pages that use NavBar:
 
-```typescript
-// Ändere den Logo-Text
-logo = 'Mein Projekt'; // statt "Knowledge Core"
+- `apps/docs/src/pages/index.astro`
+- `apps/docs/src/pages/docs/index.astro`
+- `apps/courses/src/pages/index.astro`
+- `apps/courses/src/pages/courses/index.astro`
+
+```astro
+<NavBar
+  logo="My Project"
+  logoHref="/"
+  links={navLinks}
+/>
 ```
 
 **Footer:**
 
-Bearbeite `packages/ui/src/components/layout/Footer.astro`:
+Edit `packages/ui/src/components/layout/Footer.astro`:
 
 ```typescript
-projectName = 'Mein Projekt'; // statt 'Knowledge Core'
+projectName = 'My Project'; // instead of 'Knowledge Core'
 ```
 
-**Startseiten:**
+**Landing Pages:**
 
 - `apps/docs/src/pages/index.astro`
 - `apps/courses/src/pages/index.astro`
 
-### 3. Theming anpassen
+### 3. Customize Theming
 
-#### Farben ändern
+#### Change Colors
 
-Bearbeite `packages/styles/src/tokens.css`:
+Edit `packages/styles/src/tokens.css`:
 
 ```css
 :root {
-  /* Deine Primärfarbe */
-  --color-primary: 245 90% 60%; /* HSL-Format */
+  /* Your primary color */
+  --color-primary: 245 90% 60%; /* HSL format */
 
-  /* Weitere Anpassungen... */
+  /* More customizations... */
 }
 ```
 
-**Hilfreiche Tools:**
+**Helpful Tools:**
 
 - [HSL Color Picker](https://hslpicker.com/)
 - [Tailwind Color Generator](https://uicolors.app/create)
 
-### 4. Beispiel-Content entfernen/anpassen
+### 4. Remove/Customize Example Content
 
-**Dokumentation:**
+**Documentation:**
 
 ```bash
 apps/docs/src/content/docs/
 ├── getting-started/
-│   ├── installation.mdx      # Anpassen
-│   └── structure.mdx          # Anpassen
+│   ├── installation.mdx      # Customize
+│   └── structure.mdx         # Customize
+├── components/
+│   └── overview.mdx          # Customize
 └── guides/
-    └── creating-content.mdx   # Behalten oder anpassen
+    └── creating-content.mdx  # Keep or customize
 ```
 
-**Kurse:**
+**Courses:**
 
 ```bash
 apps/courses/src/content/
 ├── courses/
-│   └── rust-basics.json       # Löschen oder ersetzen
+│   └── getting-started.json  # Delete or replace
 └── lessons/
-    └── rust-basics-*.mdx      # Löschen oder ersetzen
+    └── getting-started-*.mdx # Delete or replace
 ```
 
-### 5. Repository-Informationen aktualisieren
+### 5. Update Repository Information
 
 **package.json (Root):**
 
 ```json
 {
-  "name": "mein-projekt",
-  "description": "Deine Beschreibung",
+  "name": "my-project",
+  "description": "Your description",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dein-username/dein-projekt.git"
+    "url": "https://github.com/your-username/your-project.git"
   },
-  "author": "Dein Name"
+  "author": "Your Name"
 }
 ```
 
 **README.md:**
 
-- Ersetze alle Verweise auf "Knowledge Core"
-- Aktualisiere Repository-URLs
-- Passe Beschreibungen an
+- Replace all references to "Knowledge Core"
+- Update repository URLs
+- Adjust descriptions
 
-## 🚀 Development
+## Development
 
 ```bash
-# Beide Apps starten
+# Start both apps
 pnpm dev
 
-# Nur Dokumentation (Port 4321)
+# Documentation only (Port 4321)
 pnpm dev:docs
 
-# Nur Kurse (Port 4322)
+# Courses only (Port 4322)
 pnpm dev:courses
 ```
 
-## 🏗️ Build & Deploy
+## Build & Deploy
 
-### Lokal bauen
+### Build Locally
 
 ```bash
-# Alle Apps
+# All apps
 pnpm build
 
-# Einzelne App
+# Individual app
 pnpm build:docs
 pnpm build:courses
 ```
@@ -181,26 +191,23 @@ pnpm build:courses
 
 #### Vercel
 
-1. Pushe zu GitHub
-2. Importiere auf [Vercel](https://vercel.com)
-3. Wähle das Projekt
-4. Vercel erkennt Astro automatisch
-5. Für separate Deployments:
+1. Push to GitHub
+2. Import on [Vercel](https://vercel.com)
+3. Select the project
+4. Vercel automatically detects Astro
+5. For separate deployments:
    - **Docs**: Root Directory = `apps/docs`, Build Command = `cd ../.. && pnpm build:docs`
    - **Courses**: Root Directory = `apps/courses`, Build Command = `cd ../.. && pnpm build:courses`
 
 #### Netlify
 
-Erstelle `netlify.toml`:
+Create `netlify.toml`:
 
 ```toml
-# Für Docs
+# For Docs
 [build]
   command = "pnpm install && pnpm build:docs"
   publish = "apps/docs/dist"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 ```
 
 #### Cloudflare Pages
@@ -208,45 +215,45 @@ Erstelle `netlify.toml`:
 - Build Command: `pnpm install && pnpm build:docs`
 - Build output directory: `apps/docs/dist`
 
-## 📝 Content erstellen
+## Creating Content
 
-### Dokumentationsseite
+### Documentation Page
 
 ```bash
-# Neue Datei erstellen
-apps/docs/src/content/docs/guides/mein-guide.mdx
+# Create new file
+apps/docs/src/content/docs/guides/my-guide.mdx
 ```
 
 ```mdx
 ---
-title: Mein Guide
-description: Beschreibung
+title: My Guide
+description: Description
 category: guides
 order: 1
 tags: [tutorial]
 status: stable
 ---
 
-import { Callout } from '@mein-projekt/ui';
+import { Callout } from '@my-project/ui';
 
-# Mein Guide
+# My Guide
 
-<Callout type="info">Wichtige Information!</Callout>
+<Callout type="info">Important information!</Callout>
 ```
 
-### Kurs erstellen
+### Create a Course
 
-**1. Kurs-Definition:**
+**1. Course Definition:**
 
 ```bash
-apps/courses/src/content/courses/mein-kurs.json
+apps/courses/src/content/courses/my-course.json
 ```
 
 ```json
 {
-  "title": "Mein Kurs",
-  "slug": "mein-kurs",
-  "description": "Kursbeschreibung",
+  "title": "My Course",
+  "slug": "my-course",
+  "description": "Course description",
   "level": "beginner",
   "estimatedTotalMinutes": 120,
   "tags": ["programming"],
@@ -254,106 +261,149 @@ apps/courses/src/content/courses/mein-kurs.json
 }
 ```
 
-**2. Lektion erstellen:**
+**2. Create Lesson:**
 
 ```bash
-apps/courses/src/content/lessons/mein-kurs-lektion-1.mdx
+apps/courses/src/content/lessons/my-course-lesson-1.mdx
 ```
 
 ```mdx
 ---
-courseSlug: mein-kurs
-title: Lektion 1
-module: Grundlagen
+courseSlug: my-course
+title: Lesson 1
+module: Basics
 orderInModule: 1
 estimatedMinutes: 15
 goals:
-  - Ziel 1
-  - Ziel 2
+  - Goal 1
+  - Goal 2
 ---
 
-import { Quiz, Exercise } from '@mein-projekt/ui';
+import { Quiz, Exercise, Hint } from '@my-project/ui';
 
-# Lektion 1
+# Lesson 1
 
-<Exercise title="Übung" difficulty="easy">
-  Aufgabe hier...
+Content here...
+
+<Exercise title="Practice Exercise" difficulty="easy">
+  Task description here...
 </Exercise>
+
+<Hint>
+  Helpful hint for the exercise...
+</Hint>
+
+<Quiz
+  questions={[
+    {
+      question: "What is the answer?",
+      options: ["Option A", "Option B", "Option C"],
+      correctAnswer: 1
+    }
+  ]}
+/>
 ```
 
-## 🎨 Erweiterte Anpassungen
+## Advanced Customizations
 
-### Neue Komponenten hinzufügen
+### Add New Components
 
 ```bash
 packages/ui/src/components/
 ├── layout/
 ├── navigation/
 ├── content/
-└── custom/              # Deine eigenen Komponenten
+├── courses/
+└── custom/              # Your own components
     └── MyComponent.astro
 ```
 
-### Tailwind erweitern
+Don't forget to export new components in `packages/ui/src/index.ts`:
+
+```typescript
+export { default as MyComponent } from './components/custom/MyComponent.astro';
+```
+
+### Extend Tailwind
 
 ```javascript
 // packages/styles/tailwind.config.js
 export default {
   theme: {
     extend: {
-      // Deine Anpassungen
+      // Your customizations
     },
   },
 };
 ```
 
-## ✅ Checkliste
+### Add New Content Categories
 
-- [ ] `pnpm install` ausgeführt
-- [ ] Package-Namen geändert (@knowledge-core → @mein-projekt)
-- [ ] Branding angepasst (Logo, Titel, Footer)
-- [ ] Farben/Theming personalisiert
-- [ ] Beispiel-Content entfernt/angepasst
-- [ ] Repository-Informationen aktualisiert
-- [ ] README.md angepasst
-- [ ] Erstes `pnpm dev` getestet
-- [ ] Git initialisiert und erster Commit
+Edit `packages/content-model/src/docs.ts` to add new categories:
 
-## 🆘 Probleme?
+```typescript
+export const docsCategorySchema = z.enum([
+  'getting-started',
+  'guides',
+  'components',
+  'my-new-category', // Add here
+]);
+```
 
-### Dependencies-Fehler
+## Checklist
+
+- [ ] Ran `pnpm install`
+- [ ] Changed package names (@knowledge-core -> @my-project)
+- [ ] Customized branding (Logo, Title, Footer)
+- [ ] Personalized colors/theming
+- [ ] Removed/customized example content
+- [ ] Updated repository information
+- [ ] Customized README.md
+- [ ] Tested first `pnpm dev`
+- [ ] Initialized Git and made first commit
+
+## Troubleshooting
+
+### Dependency Errors
 
 ```bash
-# Alles löschen und neu installieren
+# Delete everything and reinstall
 pnpm clean
 rm -rf node_modules
 pnpm install
 ```
 
-### Build-Fehler
+### Build Errors
 
 ```bash
-# TypeScript-Check
+# TypeScript check
 pnpm check
 
 # Linting
 pnpm lint
 ```
 
-### Port bereits belegt
+### Port Already in Use
 
 ```bash
-# Ändere den Port in package.json:
+# Change the port in package.json:
 "dev": "astro dev --port 4323"
 ```
 
-## 📚 Weitere Ressourcen
+### Content Not Showing
 
-- [Astro Dokumentation](https://docs.astro.build)
+Make sure your content files:
+- Have valid frontmatter (YAML between `---`)
+- Use correct `courseSlug` matching the course JSON file
+- Are in the correct directory
+
+## Additional Resources
+
+- [Astro Documentation](https://docs.astro.build)
 - [Tailwind CSS Docs](https://tailwindcss.com)
-- [MDX Dokumentation](https://mdxjs.com)
+- [MDX Documentation](https://mdxjs.com)
 - [pnpm Workspaces](https://pnpm.io/workspaces)
 
 ---
 
-Viel Erfolg mit deinem Projekt! 🚀
+Good luck with your project!

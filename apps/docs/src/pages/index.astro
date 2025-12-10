@@ -1,61 +1,184 @@
 ---
-import { AppShell, Footer, NavBar, Card } from '@knowledge-core/ui';
-import '@knowledge-core/styles/global.css';
+import { AppShell, Footer, NavBar, Card } from "@knowledge-core/ui";
+import "@knowledge-core/styles/global.css";
 ---
 
-<AppShell title="Knowledge Core - Dokumentation & Kurse">
-  <NavBar
-    logo="Knowledge Core"
-    links={[
-      { text: 'Dokumentation', href: '/docs' },
-      { text: 'Kurse', href: '/courses' },
-    ]}
-  />
+<AppShell title="Knowledge Core - Documentation">
+  <NavBar logo="Docs" logoHref="/" links={[]} />
 
   <main class="flex-1 mt-16">
+    <!-- Hero Section -->
     <section class="container-custom py-20">
       <div class="text-center mb-16">
-        <h1 class="text-5xl font-bold text-text mb-6">Willkommen bei Knowledge Core</h1>
-        <p class="text-xl text-text-muted max-w-2xl mx-auto">
-          Ein modernes Monorepo-Template für Dokumentation und Kursplattformen mit Astro, MDX und
-          Tailwind CSS.
+        <h1 class="text-5xl font-bold text-text mb-6">Knowledge Core</h1>
+        <p class="text-xl text-text-muted max-w-3xl mx-auto">
+          A modern monorepo template for documentation and course platforms.
+          Built with Astro, MDX, and Tailwind CSS.
         </p>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <Card href="/docs" clickable title="📚 Dokumentation">
-          <p class="text-text-muted">
-            Technische Dokumentation mit strukturierter Navigation, Suchfunktion und dunklem Modus.
+      <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <Card href="/docs/getting-started/installation" clickable>
+          <div class="text-3xl mb-3">🚀</div>
+          <h3 class="text-lg font-semibold text-text mb-2">Quick Start</h3>
+          <p class="text-sm text-text-muted">
+            Installation and first steps in just a few minutes.
           </p>
         </Card>
 
-        <Card href="/courses" clickable title="🎓 Kurse">
-          <p class="text-text-muted">
-            Interaktive Lernplattform mit Fortschrittsverfolgung, Quiz und praktischen Übungen.
+        <Card href="/docs/getting-started/structure" clickable>
+          <div class="text-3xl mb-3">📁</div>
+          <h3 class="text-lg font-semibold text-text mb-2">
+            Project Structure
+          </h3>
+          <p class="text-sm text-text-muted">
+            Understand the monorepo layout and package organization.
+          </p>
+        </Card>
+
+        <Card href="/docs/components/overview" clickable>
+          <div class="text-3xl mb-3">🧩</div>
+          <h3 class="text-lg font-semibold text-text mb-2">Components</h3>
+          <p class="text-sm text-text-muted">
+            All UI components with examples and API documentation.
           </p>
         </Card>
       </div>
     </section>
 
+    <!-- Features Section -->
     <section class="bg-surface-alt py-16">
       <div class="container-custom">
-        <h2 class="text-3xl font-bold text-text mb-8 text-center">Features</h2>
-        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <h2 class="text-3xl font-bold text-text mb-12 text-center">Features</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
           <div class="text-center">
             <div class="text-4xl mb-4">⚡</div>
-            <h3 class="text-lg font-semibold mb-2">Schnell & Modern</h3>
-            <p class="text-sm text-text-muted">Astro + pnpm + Volta für optimale Performance</p>
+            <h3 class="text-lg font-semibold mb-2">Lightning Fast</h3>
+            <p class="text-sm text-text-muted">
+              Astro generates static HTML. Zero JavaScript when not needed.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">📝</div>
+            <h3 class="text-lg font-semibold mb-2">MDX Content</h3>
+            <p class="text-sm text-text-muted">
+              Write Markdown with embedded React/Astro components.
+            </p>
           </div>
           <div class="text-center">
             <div class="text-4xl mb-4">🎨</div>
-            <h3 class="text-lg font-semibold mb-2">Flexibles Theming</h3>
-            <p class="text-sm text-text-muted">Tailwind CSS mit Dark Mode und CSS-Variablen</p>
+            <h3 class="text-lg font-semibold mb-2">Dark Mode</h3>
+            <p class="text-sm text-text-muted">
+              Automatic dark mode with CSS variables and Tailwind.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">🔍</div>
+            <h3 class="text-lg font-semibold mb-2">Full-Text Search</h3>
+            <p class="text-sm text-text-muted">
+              Integrated search with Pagefind - client-side and fast.
+            </p>
           </div>
           <div class="text-center">
             <div class="text-4xl mb-4">📦</div>
-            <h3 class="text-lg font-semibold mb-2">Monorepo-Struktur</h3>
-            <p class="text-sm text-text-muted">Shared Components und wiederverwendbare Pakete</p>
+            <h3 class="text-lg font-semibold mb-2">Monorepo</h3>
+            <p class="text-sm text-text-muted">
+              Shared packages for UI, styles, and content models.
+            </p>
           </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">🎓</div>
+            <h3 class="text-lg font-semibold mb-2">Courses & Quizzes</h3>
+            <p class="text-sm text-text-muted">
+              Interactive learning paths with progress tracking.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">☁️</div>
+            <h3 class="text-lg font-semibold mb-2">Cloud Sync</h3>
+            <p class="text-sm text-text-muted">
+              Sync progress between devices (optional).
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl mb-4">♿</div>
+            <h3 class="text-lg font-semibold mb-2">Accessibility</h3>
+            <p class="text-sm text-text-muted">
+              Adjustable font size, keyboard navigation, ARIA labels.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="container-custom py-16">
+      <h2 class="text-3xl font-bold text-text mb-12 text-center">Tech Stack</h2>
+      <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="p-6 bg-surface border border-border rounded-xl">
+          <h3 class="text-lg font-semibold text-text mb-4">Frontend</h3>
+          <ul class="space-y-2 text-sm text-text-muted">
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> Astro 5
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> Tailwind CSS 4
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> TypeScript
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> MDX
+            </li>
+          </ul>
+        </div>
+        <div class="p-6 bg-surface border border-border rounded-xl">
+          <h3 class="text-lg font-semibold text-text mb-4">Tooling</h3>
+          <ul class="space-y-2 text-sm text-text-muted">
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> pnpm Workspaces
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> Volta
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> Pagefind
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> Prettier
+            </li>
+          </ul>
+        </div>
+        <div class="p-6 bg-surface border border-border rounded-xl">
+          <h3 class="text-lg font-semibold text-text mb-4">Packages</h3>
+          <ul class="space-y-2 text-sm text-text-muted">
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> @knowledge-core/ui
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> @knowledge-core/styles
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> @knowledge-core/config
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-primary">→</span> @knowledge-core/content-model
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-primary/5 py-16">
+      <div class="container-custom text-center">
+        <h2 class="text-2xl font-bold text-text mb-4">Ready to get started?</h2>
+        <p class="text-text-muted mb-8 max-w-xl mx-auto">
+          Start with the documentation or check out the example course to see
+          all features in action.
+        </p>
+        <div class="flex gap-4 justify-center flex-wrap">
+          <a href="/docs" class="btn btn-primary">View Documentation</a>
         </div>
       </div>
     </section>

@@ -1,35 +1,41 @@
 ---
-import { AppShell, Footer, NavBar, SidebarLayout, PageHeader } from '@knowledge-core/ui';
-import '@knowledge-core/styles/global.css';
-import '@knowledge-core/styles/prose.css';
-import { getCollection } from 'astro:content';
-import DocsSidebar from '../components/DocsSidebar.astro';
+import {
+  AppShell,
+  Footer,
+  NavBar,
+  SidebarLayout,
+  PageHeader,
+} from "@knowledge-core/ui";
+import "@knowledge-core/styles/global.css";
+import "@knowledge-core/styles/prose.css";
+import { getCollection } from "astro:content";
+import DocsSidebar from "../components/DocsSidebar.astro";
 
 export interface Props {
   frontmatter: {
     title: string;
     description?: string;
     tags?: string[];
-    status?: 'stable' | 'beta' | 'deprecated';
+    status?: "stable" | "beta" | "deprecated";
   };
 }
 
 const { frontmatter } = Astro.props;
-const allDocs = await getCollection('docs');
+const allDocs = await getCollection("docs");
 ---
 
-<AppShell title={`${frontmatter.title} | Dokumentation`} description={frontmatter.description}>
-  <NavBar
-    logo="Knowledge Core"
-    logoHref="/"
-    links={[
-      { text: 'Dokumentation', href: '/docs', active: true },
-      { text: 'Kurse', href: '/courses' },
-    ]}
-  />
+<AppShell
+  title={`${frontmatter.title} | Dokumentation`}
+  description={frontmatter.description}
+>
+  <NavBar logo="Docs" logoHref="/" links={[]} />
 
   <SidebarLayout hasSidebar={true} hasTableOfContents={false}>
-    <DocsSidebar slot="sidebar" docs={allDocs} currentPath={Astro.url.pathname} />
+    <DocsSidebar
+      slot="sidebar"
+      docs={allDocs}
+      currentPath={Astro.url.pathname}
+    />
 
     <div class="max-w-4xl">
       <PageHeader

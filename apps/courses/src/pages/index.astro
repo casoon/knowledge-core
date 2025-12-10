@@ -1,29 +1,220 @@
 ---
-import { AppShell, Footer, NavBar } from '@knowledge-core/ui';
-import '@knowledge-core/styles/global.css';
+import {
+  AppShell,
+  Footer,
+  NavBar,
+  CourseCard,
+  TotalProgress,
+} from "@knowledge-core/ui";
+import "@knowledge-core/styles/global.css";
+import { getCollection } from "astro:content";
+
+const courses = await getCollection("courses");
+const publishedCourses = courses.filter((course) => course.data.published);
+
+const lessons = await getCollection("lessons");
+const coursesWithLessonCount = publishedCourses.map((course) => ({
+  slug: course.data.slug,
+  title: course.data.title,
+  lessonCount: lessons.filter((l) => l.data.courseSlug === course.data.slug)
+    .length,
+}));
+
+const features = [
+  {
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>`,
+    title: "Progress Tracking",
+    description: "Keep track of your learning progress with automatic saving.",
+  },
+  {
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>`,
+    title: "Interactive Quizzes",
+    description: "Test your knowledge with instant feedback and explanations.",
+  },
+  {
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+    </svg>`,
+    title: "Practical Exercises",
+    description: "Learn by doing with graded difficulty levels.",
+  },
+  {
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+    </svg>`,
+    title: "Cloud Sync",
+    description: "Sync your progress across devices.",
+  },
+];
+
+const levels = [
+  {
+    key: "beginner",
+    label: "Beginner",
+    color: "bg-success",
+    description: "No prior knowledge required",
+  },
+  {
+    key: "intermediate",
+    label: "Intermediate",
+    color: "bg-warning",
+    description: "Basic knowledge recommended",
+  },
+  {
+    key: "advanced",
+    label: "Advanced",
+    color: "bg-error",
+    description: "Deep knowledge required",
+  },
+];
 ---
 
-<AppShell title="Knowledge Core - Kurse">
-  <NavBar
-    logo="Knowledge Core"
-    logoHref="/"
-    links={[
-      { text: 'Dokumentation', href: '/docs' },
-      { text: 'Kurse', href: '/courses', active: true },
-    ]}
-  />
+<AppShell title="Knowledge Core - Courses">
+  <NavBar logo="Courses" logoHref="/" links={[]} />
 
   <main class="flex-1 mt-16">
-    <section class="container-custom py-20">
-      <div class="text-center mb-16">
-        <h1 class="text-5xl font-bold text-text mb-6">Lerne mit interaktiven Kursen</h1>
-        <p class="text-xl text-text-muted max-w-2xl mx-auto">
-          Praxisnahe Kurse mit Fortschrittsverfolgung, Quiz und Übungen.
-        </p>
-      </div>
+    <!-- Hero Section -->
+    <section class="container-custom py-20 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold text-text mb-6">
+        Learn by <span class="text-primary">Doing</span>
+      </h1>
+      <p class="text-xl text-text-muted max-w-2xl mx-auto mb-8">
+        Interactive courses with progress tracking, quizzes, and practical
+        exercises. Learn at your own pace.
+      </p>
 
-      <div class="text-center">
-        <a href="/courses" class="btn btn-primary btn-lg"> Zu den Kursen </a>
+      <!-- Total Progress Component -->
+      {
+        coursesWithLessonCount.length > 0 && (
+          <div class="max-w-md mx-auto mb-12">
+            <TotalProgress courses={coursesWithLessonCount} />
+          </div>
+        )
+      }
+    </section>
+
+    <!-- Features Section -->
+    <section class="bg-surface-alt py-16">
+      <div class="container-custom">
+        <h2 class="text-2xl font-bold text-text text-center mb-12">
+          Why Our Course Platform?
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {
+            features.map((feature) => (
+              <div class="bg-surface p-6 rounded-lg border border-border text-center">
+                <div
+                  class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4 text-primary"
+                  set:html={feature.icon}
+                />
+                <h3 class="font-semibold text-text mb-2">{feature.title}</h3>
+                <p class="text-sm text-text-muted">{feature.description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Level Explanation -->
+    <section class="container-custom py-16">
+      <h2 class="text-2xl font-bold text-text text-center mb-8">
+        Difficulty Levels
+      </h2>
+      <div class="flex flex-wrap justify-center gap-6">
+        {
+          levels.map((level) => (
+            <div class="flex items-center gap-3 bg-surface-alt px-4 py-3 rounded-lg border border-border">
+              <span class={`w-3 h-3 rounded-full ${level.color}`} />
+              <div>
+                <span class="font-medium text-text">{level.label}</span>
+                <p class="text-xs text-text-muted">{level.description}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="container-custom py-16">
+      <h2 class="text-3xl font-bold text-text text-center mb-4">
+        Available Courses
+      </h2>
+      <p class="text-text-muted text-center mb-12 max-w-xl mx-auto">
+        Choose a course and start your learning journey. Your progress is saved
+        automatically.
+      </p>
+
+      {
+        publishedCourses.length === 0 ? (
+          <div class="text-center py-16 bg-surface-alt rounded-lg border border-border">
+            <svg
+              class="w-16 h-16 text-text-muted mx-auto mb-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
+            </svg>
+            <h3 class="text-xl font-semibold text-text mb-2">
+              No courses available yet
+            </h3>
+            <p class="text-text-muted mb-6">
+              Create your first course in the{" "}
+              <code class="bg-surface px-2 py-1 rounded">content/courses</code>{" "}
+              directory.
+            </p>
+            <a href="/docs/guides/courses" class="btn btn-primary">
+              Guide: Create Courses
+            </a>
+          </div>
+        ) : (
+          <div class="max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {publishedCourses.map((course) => (
+                <CourseCard
+                  title={course.data.title}
+                  description={course.data.description}
+                  level={course.data.level}
+                  estimatedMinutes={course.data.estimatedTotalMinutes}
+                  tags={course.data.tags}
+                  href={`/courses/${course.data.slug}`}
+                />
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-primary/5 py-16">
+      <div class="container-custom text-center">
+        <h2 class="text-2xl font-bold text-text mb-4">
+          Create Your Own Courses
+        </h2>
+        <p class="text-text-muted mb-8 max-w-xl mx-auto">
+          Knowledge Core makes it easy to create your own interactive courses.
+          MDX, quizzes, exercises, and progress tracking included.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/docs/getting-started/installation" class="btn btn-primary">
+            Start Project
+          </a>
+          <a href="/docs/components/overview" class="btn btn-outline">
+            View Components
+          </a>
+        </div>
       </div>
     </section>
   </main>

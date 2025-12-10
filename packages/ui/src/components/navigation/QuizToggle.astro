@@ -9,12 +9,20 @@
 
 <button
   type="button"
-  class="quiz-toggle inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full border transition-colors"
+  class="quiz-toggle inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded-full border transition-colors"
   aria-label="Quizze ein-/ausblenden"
   title="Quizze ein-/ausblenden"
   aria-pressed="true"
 >
-  <span class="quiz-label">Quiz</span>
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+    ></path>
+  </svg>
+  <span class="quiz-label hidden md:inline">Quiz</span>
 </button>
 
 <style is:global>
@@ -47,73 +55,72 @@
 </style>
 
 <script is:inline>
-(function() {
-  const STORAGE_KEY = 'quiz-enabled';
-  let currentState = null;
+  // safeGetItem, safeSetItem sind global via StorageUtils
+  (function () {
+    const STORAGE_KEY = "quiz-enabled";
+    let currentState = null;
 
-  function safeGetItem(key) {
-    try { return localStorage.getItem(key); } catch { return null; }
-  }
-
-  function safeSetItem(key, value) {
-    try { localStorage.setItem(key, value); } catch {}
-  }
-
-  function isQuizEnabled() {
-    if (currentState !== null) return currentState;
-    const stored = safeGetItem(STORAGE_KEY);
-    currentState = stored !== 'false';
-    return currentState;
-  }
-
-  function setQuizEnabled(enabled) {
-    currentState = enabled;
-    safeSetItem(STORAGE_KEY, enabled.toString());
-  }
-
-  function applyState(enabled) {
-    if (enabled) {
-      document.documentElement.classList.remove('quiz-hidden');
-    } else {
-      document.documentElement.classList.add('quiz-hidden');
+    function isQuizEnabled() {
+      if (currentState !== null) return currentState;
+      const stored = safeGetItem(STORAGE_KEY);
+      currentState = stored !== "false";
+      return currentState;
     }
-    setQuizEnabled(enabled);
 
-    // Alle Toggle-Buttons aktualisieren (immer frisch suchen)
-    document.querySelectorAll('.quiz-toggle').forEach(btn => {
-      btn.setAttribute('aria-pressed', enabled.toString());
-      btn.setAttribute('title', enabled ? 'Quizze ausblenden' : 'Quizze einblenden');
-      btn.setAttribute('aria-label', enabled ? 'Quizze ausblenden' : 'Quizze einblenden');
+    function setQuizEnabled(enabled) {
+      currentState = enabled;
+      safeSetItem(STORAGE_KEY, enabled.toString());
+    }
 
-      btn.classList.remove('quiz-on', 'quiz-off');
-      btn.classList.add(enabled ? 'quiz-on' : 'quiz-off');
-    });
-  }
-
-  function handleClick(e) {
-    e.preventDefault();
-    const newState = !isQuizEnabled();
-    applyState(newState);
-  }
-
-  function init() {
-    // Initial state anwenden
-    applyState(isQuizEnabled());
-
-    // Event Listeners mit Event Delegation
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.quiz-toggle');
-      if (btn) {
-        handleClick(e);
+    function applyState(enabled) {
+      if (enabled) {
+        document.documentElement.classList.remove("quiz-hidden");
+      } else {
+        document.documentElement.classList.add("quiz-hidden");
       }
-    });
-  }
+      setQuizEnabled(enabled);
 
-  // Init
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
+      // Alle Toggle-Buttons aktualisieren (immer frisch suchen)
+      document.querySelectorAll(".quiz-toggle").forEach((btn) => {
+        btn.setAttribute("aria-pressed", enabled.toString());
+        btn.setAttribute(
+          "title",
+          enabled ? "Quizze ausblenden" : "Quizze einblenden",
+        );
+        btn.setAttribute(
+          "aria-label",
+          enabled ? "Quizze ausblenden" : "Quizze einblenden",
+        );
+
+        btn.classList.remove("quiz-on", "quiz-off");
+        btn.classList.add(enabled ? "quiz-on" : "quiz-off");
+      });
+    }
+
+    function handleClick(e) {
+      e.preventDefault();
+      const newState = !isQuizEnabled();
+      applyState(newState);
+    }
+
+    function init() {
+      // Initial state anwenden
+      applyState(isQuizEnabled());
+
+      // Event Listeners mit Event Delegation
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest(".quiz-toggle");
+        if (btn) {
+          handleClick(e);
+        }
+      });
+    }
+
+    // Init
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
 </script>

@@ -8,26 +8,27 @@
 
 A production-ready template based on **Astro**, **MDX**, **Tailwind CSS**, and **pnpm Workspaces** - optimized for creating technical documentation and interactive learning platforms.
 
-## ✨ Features
+## Features
 
-- 🚀 **Astro 5** - Fast, modern frontend framework
-- 📝 **MDX** - Markdown with React components
-- 🎨 **Tailwind CSS** - Utility-first CSS with dark mode
-- 📦 **pnpm Workspaces** - Monorepo structure
-- ⚡ **Volta** - Automatic Node version management
-- 🧩 **Shared Components** - Reusable UI components
-- 🎓 **Interactive Courses** - Quiz, exercises, progress tracking
-- 🌙 **Dark Mode** - With theme persistence
-- 🔍 **Type-Safe** - TypeScript + Zod schemas
+- **Astro 5** - Fast, modern frontend framework
+- **MDX** - Markdown with React components
+- **Tailwind CSS** - Utility-first CSS with dark mode
+- **pnpm Workspaces** - Monorepo structure
+- **Volta** - Automatic Node version management
+- **Shared Components** - Reusable UI components
+- **Interactive Courses** - Quiz, exercises, progress tracking
+- **Dark Mode** - With theme persistence
+- **Cloud Sync** - Sync learning progress across devices
+- **Type-Safe** - TypeScript + Zod schemas
 
-## 🎯 Use Cases
+## Use Cases
 
 - **Technical Documentation** - API references, guides, tutorials
 - **Course Platforms** - Interactive learning paths with quizzes and exercises
 - **Knowledge Bases** - Internal documentation for teams
 - **Developer Portals** - Developer resources and guides
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -77,11 +78,11 @@ pnpm dev
 
 # Documentation only
 pnpm dev:docs
-# → http://localhost:4321
+# -> http://localhost:4321
 
 # Courses only
 pnpm dev:courses
-# → http://localhost:4322
+# -> http://localhost:4322
 ```
 
 ### Build
@@ -95,7 +96,7 @@ pnpm build:docs
 pnpm build:courses
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 knowledge-core/
@@ -126,7 +127,7 @@ knowledge-core/
 └── pnpm-workspace.yaml
 ```
 
-## 📝 Creating Content
+## Creating Content
 
 ### Documentation Page
 
@@ -188,15 +189,17 @@ import { Quiz, Exercise } from '@knowledge-core/ui';
 </Exercise>
 
 <Quiz
-  questions={
-    [
-      /* ... */
-    ]
-  }
+  questions={[
+    {
+      question: "What is 2 + 2?",
+      options: ["3", "4", "5"],
+      correctAnswer: 1
+    }
+  ]}
 />
 ```
 
-## 🧩 Available Components
+## Available Components
 
 ### Content Components
 
@@ -208,12 +211,23 @@ import { Quiz, Exercise } from '@knowledge-core/ui';
 ### Course Components
 
 - **Quiz** - Interactive quizzes with feedback
-- **Exercise** - Exercise blocks
+- **Exercise** - Exercise blocks with difficulty levels
 - **Hint** - Collapsible hints
 - **ProgressBar** - Progress indicator
 - **CourseCard** - Course overview cards
+- **LessonNav** - Lesson navigation sidebar
+- **LessonComplete** - Mark lessons as complete
+- **TotalProgress** - Overall progress display
+- **SyncProgress** - Cloud sync for progress
 
-## 🎨 Theming
+### Navigation Components
+
+- **NavBar** - Main navigation with mobile support
+- **SearchBar** - Full-text search (Pagefind)
+- **FontSizeControl** - Accessibility font size control
+- **QuizToggle** - Show/hide quizzes
+
+## Theming
 
 ### Customize CSS Variables
 
@@ -248,7 +262,7 @@ export default {
 };
 ```
 
-## 🔧 Scripts
+## Scripts
 
 ```bash
 # Development
@@ -275,7 +289,7 @@ pnpm check              # TypeScript + Astro check
 pnpm clean              # Remove all build artifacts
 ```
 
-## 🚢 Deployment
+## Deployment
 
 ### Vercel (recommended)
 
@@ -299,20 +313,20 @@ pnpm clean              # Remove all build artifacts
 1. Build Command: `pnpm build:docs`
 2. Build output directory: `apps/docs/dist`
 
-## 📖 Documentation
+## Documentation
 
 - **[SETUP.md](SETUP.md)** - Detailed setup guide and customization
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE)
 
-## 🙏 Credits
+## Credits
 
 Built with:
 
@@ -323,4 +337,4 @@ Built with:
 
 ---
 
-**Made with ❤️ for developers and educators**
+**Made with care for developers and educators**

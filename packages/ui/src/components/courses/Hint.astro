@@ -3,7 +3,7 @@ export interface Props {
   title?: string;
 }
 
-const { title = 'Hinweis' } = Astro.props;
+const { title = "Hint" } = Astro.props;
 const hintId = `hint-${Math.random().toString(36).substring(7)}`;
 ---
 
@@ -20,7 +20,11 @@ const hintId = `hint-${Math.random().toString(36).substring(7)}`;
       stroke="currentColor"
       viewBox="0 0 24 24"
     >
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 5l7 7-7 7"></path>
     </svg>
     <span class="font-medium">{title}</span>
   </button>
@@ -52,19 +56,19 @@ const hintId = `hint-${Math.random().toString(36).substring(7)}`;
 <script define:vars={{ hintId }}>
   const toggle = document.querySelector(`[data-hint-toggle="${hintId}"]`);
   const content = document.querySelector(`[data-hint-content="${hintId}"]`);
-  const icon = toggle?.querySelector('.hint-icon');
+  const icon = toggle?.querySelector(".hint-icon");
 
-  toggle?.addEventListener('click', () => {
-    const isHidden = content?.classList.contains('hidden');
+  toggle?.addEventListener("click", () => {
+    const isHidden = content?.classList.contains("hidden");
 
     if (isHidden) {
-      content?.classList.remove('hidden');
-      toggle.setAttribute('aria-expanded', 'true');
-      icon?.classList.add('rotate-90');
+      content?.classList.remove("hidden");
+      toggle.setAttribute("aria-expanded", "true");
+      icon?.classList.add("rotate-90");
     } else {
-      content?.classList.add('hidden');
-      toggle.setAttribute('aria-expanded', 'false');
-      icon?.classList.remove('rotate-90');
+      content?.classList.add("hidden");
+      toggle.setAttribute("aria-expanded", "false");
+      icon?.classList.remove("rotate-90");
     }
   });
 </script>

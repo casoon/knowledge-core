@@ -1,34 +1,34 @@
 ---
-title: Projektstruktur
-description: Verstehe die Struktur des Knowledge Core Monorepos
+title: Project Structure
+description: Understand the structure of the Knowledge Core monorepo
 category: getting-started
 order: 2
-tags: [struktur, monorepo]
+tags: [structure, monorepo]
 status: stable
 ---
 
 import { Callout } from '@knowledge-core/ui';
 
-# Projektstruktur
+# Project Structure
 
-Knowledge Core ist als **pnpm Monorepo** organisiert. Hier ist eine Übersicht:
+Knowledge Core is organized as a **pnpm monorepo**. Here's an overview:
 
-## Hauptverzeichnisse
+## Main Directories
 
 ```
 knowledge-core/
-├── apps/               # Anwendungen
-│   ├── docs/          # Dokumentations-App
-│   └── courses/       # Kursplattform-App
+├── apps/               # Applications
+│   ├── docs/          # Documentation app
+│   └── courses/       # Course platform app
 │
-├── packages/          # Shared Packages
-│   ├── ui/           # UI-Komponenten
-│   ├── styles/       # Tailwind & Theming
-│   ├── content-model/# Type Definitions
-│   └── config/       # Shared Configs
+├── packages/          # Shared packages
+│   ├── ui/           # UI components
+│   ├── styles/       # Tailwind & theming
+│   ├── content-model/# Type definitions
+│   └── config/       # Shared configs
 │
-├── .github/          # GitHub Workflows
-├── package.json      # Root Package
+├── .github/          # GitHub workflows
+├── package.json      # Root package
 └── pnpm-workspace.yaml
 ```
 
@@ -36,82 +36,82 @@ knowledge-core/
 
 ### `/apps/docs`
 
-Die Dokumentations-App enthält:
+The documentation app contains:
 
-- **Content Collections** für strukturierte Docs
-- **Kategorien**: Getting Started, Guides, API, Cookbook
+- **Content Collections** for structured docs
+- **Categories**: Getting Started, Guides, API, Cookbook
 - **Features**: Navigation, Search, Dark Mode
 
 ### `/apps/courses`
 
-Die Kursplattform enthält:
+The course platform contains:
 
-- **Kurse** und **Lektionen** als Content Collections
-- **Fortschrittsverfolgung** via localStorage
-- **Interaktive Komponenten**: Quiz, Übungen, Hints
+- **Courses** and **Lessons** as Content Collections
+- **Progress tracking** via localStorage
+- **Interactive components**: Quiz, Exercises, Hints
 
 <Callout type="info">
-Beide Apps teilen sich UI-Komponenten und Styles aus den Packages.
+Both apps share UI components and styles from the packages.
 </Callout>
 
 ## Packages
 
 ### `@knowledge-core/ui`
 
-Enthält alle wiederverwendbaren UI-Komponenten:
+Contains all reusable UI components:
 
-- Layout-Komponenten (AppShell, Header, Footer)
+- Layout components (AppShell, Header, Footer)
 - Navigation (NavBar, Sidebar)
-- Content-Komponenten (Callout, CodeBlock, Card)
-- Spezielle Komponenten für Docs und Kurse
+- Content components (Callout, CodeBlock, Card)
+- Special components for docs and courses
 
 ### `@knowledge-core/styles`
 
-Das zentrale Theming-System:
+The central theming system:
 
-- **tokens.css**: CSS-Variablen für Colors, Spacing, etc.
-- **tailwind.config.js**: Tailwind-Konfiguration
-- **global.css**: Globale Styles
-- **prose.css**: MDX/Markdown-Styling
+- **tokens.css**: CSS variables for colors, spacing, etc.
+- **tailwind.config.js**: Tailwind configuration
+- **global.css**: Global styles
+- **prose.css**: MDX/Markdown styling
 
 ### `@knowledge-core/content-model`
 
-Type-Definitionen für Content:
+Type definitions for content:
 
-- Zod-Schemas für Frontmatter-Validierung
-- TypeScript-Interfaces für Docs und Kurse
-- Shared Types für Progress Tracking
+- Zod schemas for frontmatter validation
+- TypeScript interfaces for docs and courses
+- Shared types for progress tracking
 
 ### `@knowledge-core/config`
 
-Gemeinsame Konfigurationen:
+Shared configurations:
 
 - TypeScript Config
 - ESLint Config
-- Prettier Config (im Root)
+- Prettier Config (in root)
 
 ## Workflows
 
 ### Development
 
 ```bash
-# Alle Apps starten
+# Start all apps
 pnpm dev
 
-# Nur Docs
+# Only Docs
 pnpm dev:docs
 
-# Nur Courses
+# Only Courses
 pnpm dev:courses
 ```
 
 ### Build
 
 ```bash
-# Alle Apps bauen
+# Build all apps
 pnpm build
 
-# Nur Docs
+# Only Docs
 pnpm build:docs
 ```
 
@@ -123,5 +123,5 @@ pnpm format
 ```
 
 <Callout type="success">
-Die Monorepo-Struktur ermöglicht es, Code zwischen Apps zu teilen und trotzdem unabhängig zu deployen.
+The monorepo structure allows sharing code between apps while still deploying independently.
 </Callout>
