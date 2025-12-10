@@ -68,7 +68,7 @@
 
   /* Card */
   .card {
-    @apply rounded-lg border border-border bg-surface p-6 shadow-sm;
+    @apply rounded-lg border border-border bg-surface p-4 sm:p-6 shadow-sm overflow-hidden;
   }
 
   /* Input */

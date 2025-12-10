@@ -1,34 +1,37 @@
 ---
+import { LEVEL_COLORS, LEVEL_LABELS, type Level } from '../../constants';
+
 export interface Props {
+  /** Course title */
   title: string;
+  /** Short course description */
   description: string;
-  level: 'beginner' | 'intermediate' | 'advanced';
+  /** Difficulty level (beginner, intermediate, advanced) */
+  level: Level;
+  /** Estimated course duration in minutes */
   estimatedMinutes: number;
+  /** Tags for categorization */
   tags: string[];
+  /** Link to course page */
   href: string;
+  /** Optional completion percentage (0-100) */
   progress?: number;
 }
 
 const { title, description, level, estimatedMinutes, tags, href, progress } = Astro.props;
-
-const levelColors = {
-  beginner: 'badge-success',
-  intermediate: 'badge-warning',
-  advanced: 'badge-error',
-};
 ---
 
-<a href={href} class="card cursor-pointer hover:shadow-lg transition-all group">
-  <div class="flex items-start justify-between mb-3">
-    <h3 class="text-xl font-bold text-text group-hover:text-primary transition-colors">
+<a href={href} class="card cursor-pointer hover:shadow-lg transition-all group min-w-0">
+  <div class="flex items-start justify-between gap-2 mb-3">
+    <h3 class="text-lg sm:text-xl font-bold text-text group-hover:text-primary transition-colors break-words min-w-0">
       {title}
     </h3>
-    <span class:list={['badge', levelColors[level]]}>{level}</span>
+    <span class:list={['badge flex-shrink-0', LEVEL_COLORS[level]]}>{LEVEL_LABELS[level]}</span>
   </div>
 
-  <p class="text-text-muted mb-4 line-clamp-2">{description}</p>
+  <p class="text-text-muted mb-4 line-clamp-2 text-sm sm:text-base">{description}</p>
 
-  <div class="flex flex-wrap gap-2 mb-4">
+  <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
     {tags.map((tag) => <span class="badge badge-primary text-xs">{tag}</span>)}
   </div>
 

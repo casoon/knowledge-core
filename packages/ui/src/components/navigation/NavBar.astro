@@ -2,6 +2,7 @@
 import SearchBar from './SearchBar.astro';
 import SyncProgress from '../courses/SyncProgress.astro';
 import FontSizeControl from './FontSizeControl.astro';
+import QuizToggle from './QuizToggle.astro';
 
 export interface NavLink {
   text: string;
@@ -25,6 +26,7 @@ export interface Props {
   showSearch?: boolean;
   showSync?: boolean;
   showFontSize?: boolean;
+  showQuizToggle?: boolean;
   courseNav?: {
     courseTitle: string;
     courseSlug: string;
@@ -33,18 +35,19 @@ export interface Props {
   };
 }
 
-const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle = true, showSearch = true, showSync = true, showFontSize = true, courseNav } = Astro.props;
+const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle = true, showSearch = true, showSync = true, showFontSize = true, showQuizToggle = true, courseNav } = Astro.props;
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-fixed backdrop-blur-md border-b border-border bg-white/80 dark:bg-gray-900/80">
   <div class="container-custom">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a href={logoHref} class="flex items-center gap-2 text-text hover:text-primary transition-colors">
-        {logoSrc ? (
+      <a href={logoHref} class="flex items-center gap-2 text-text hover:text-primary transition-colors flex-shrink-0">
+        {logoSrc && (
           <img src={logoSrc} alt={logoAlt} class="h-8 w-auto" />
-        ) : (
-          <span class="text-xl font-bold">{logo}</span>
+        )}
+        {logo && (
+          <span class="text-xl font-bold hidden md:inline">{logo}</span>
         )}
       </a>
 
@@ -70,7 +73,8 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
       <!-- Right side -->
       <div class="flex items-center gap-2 md:gap-4">
         {showSearch && <SearchBar />}
-        {showSync && <SyncProgress />}
+        {showSync && <div class="hidden md:block"><SyncProgress /></div>}
+        {showQuizToggle && <div class="hidden md:block"><QuizToggle /></div>}
         {showFontSize && <div class="hidden md:block"><FontSizeControl /></div>}
         {showThemeToggle && <div id="theme-toggle-container"></div>}
 
@@ -157,6 +161,12 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
               <FontSizeControl />
             </div>
           )}
+          {showQuizToggle && (
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-text-muted">Quizze anzeigen</span>
+              <QuizToggle />
+            </div>
+          )}
         </div>
       )}
 
@@ -206,10 +216,20 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
                 });
               })()}
             </nav>
-            {showFontSize && (
-              <div class="flex items-center justify-between mt-4 pt-4 border-t border-border">
-                <span class="text-sm text-text-muted">Schriftgröße</span>
-                <FontSizeControl />
+            {(showFontSize || showQuizToggle) && (
+              <div class="mt-4 pt-4 border-t border-border space-y-3">
+                {showFontSize && (
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-text-muted">Schriftgröße</span>
+                    <FontSizeControl />
+                  </div>
+                )}
+                {showQuizToggle && (
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-text-muted">Quizze anzeigen</span>
+                    <QuizToggle />
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -219,12 +239,43 @@ const { logo, logoSrc, logoAlt = 'Logo', logoHref = '/', links, showThemeToggle 
   </div>
 </nav>
 
-<script>
-  import { initMobileMenu } from '../../scripts/mobile-menu';
-  initMobileMenu();
-</script>
-
 <script is:inline>
+  // Mobile menu toggle
+  (function() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (!mobileMenuButton || !mobileMenu) return;
+
+    const menuIcon = mobileMenuButton.querySelector('.menu-icon');
+    const closeIcon = mobileMenuButton.querySelector('.close-icon');
+
+    mobileMenuButton.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.toggle('hidden');
+      const isOpen = !isHidden;
+
+      mobileMenuButton.setAttribute('aria-expanded', String(isOpen));
+      mobileMenuButton.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+
+      if (menuIcon && closeIcon) {
+        menuIcon.classList.toggle('hidden', isOpen);
+        closeIcon.classList.toggle('hidden', !isOpen);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        mobileMenuButton.setAttribute('aria-label', 'Menü öffnen');
+        if (menuIcon && closeIcon) {
+          menuIcon.classList.remove('hidden');
+          closeIcon.classList.add('hidden');
+        }
+      }
+    });
+  })();
+
   // Mobile menu triggers for search and sync
   (function() {
     const mobileSearchTrigger = document.getElementById('mobile-search-trigger');

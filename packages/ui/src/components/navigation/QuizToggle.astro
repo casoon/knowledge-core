@@ -1,0 +1,119 @@
+---
+/**
+ * QuizToggle - Schaltet Quizze global ein/aus
+ *
+ * Speichert die Einstellung in localStorage.
+ * Quizze werden per CSS ausgeblendet wenn deaktiviert.
+ */
+---
+
+<button
+  type="button"
+  class="quiz-toggle inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-full border transition-colors"
+  aria-label="Quizze ein-/ausblenden"
+  title="Quizze ein-/ausblenden"
+  aria-pressed="true"
+>
+  <span class="quiz-label">Quiz</span>
+</button>
+
+<style is:global>
+  html.quiz-hidden .quiz-container {
+    display: none !important;
+  }
+</style>
+
+<style>
+  .quiz-toggle.quiz-on {
+    background-color: hsl(var(--color-primary) / 0.1);
+    color: hsl(var(--color-primary));
+    border-color: hsl(var(--color-primary) / 0.3);
+  }
+
+  .quiz-toggle.quiz-on:hover {
+    background-color: hsl(var(--color-primary) / 0.2);
+  }
+
+  .quiz-toggle.quiz-off {
+    background-color: hsl(var(--color-surface-alt));
+    color: hsl(var(--color-text-muted));
+    border-color: hsl(var(--color-border));
+  }
+
+  .quiz-toggle.quiz-off:hover {
+    background-color: hsl(var(--color-surface));
+    color: hsl(var(--color-text));
+  }
+</style>
+
+<script is:inline>
+(function() {
+  const STORAGE_KEY = 'quiz-enabled';
+  let currentState = null;
+
+  function safeGetItem(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
+  }
+
+  function safeSetItem(key, value) {
+    try { localStorage.setItem(key, value); } catch {}
+  }
+
+  function isQuizEnabled() {
+    if (currentState !== null) return currentState;
+    const stored = safeGetItem(STORAGE_KEY);
+    currentState = stored !== 'false';
+    return currentState;
+  }
+
+  function setQuizEnabled(enabled) {
+    currentState = enabled;
+    safeSetItem(STORAGE_KEY, enabled.toString());
+  }
+
+  function applyState(enabled) {
+    if (enabled) {
+      document.documentElement.classList.remove('quiz-hidden');
+    } else {
+      document.documentElement.classList.add('quiz-hidden');
+    }
+    setQuizEnabled(enabled);
+
+    // Alle Toggle-Buttons aktualisieren (immer frisch suchen)
+    document.querySelectorAll('.quiz-toggle').forEach(btn => {
+      btn.setAttribute('aria-pressed', enabled.toString());
+      btn.setAttribute('title', enabled ? 'Quizze ausblenden' : 'Quizze einblenden');
+      btn.setAttribute('aria-label', enabled ? 'Quizze ausblenden' : 'Quizze einblenden');
+
+      btn.classList.remove('quiz-on', 'quiz-off');
+      btn.classList.add(enabled ? 'quiz-on' : 'quiz-off');
+    });
+  }
+
+  function handleClick(e) {
+    e.preventDefault();
+    const newState = !isQuizEnabled();
+    applyState(newState);
+  }
+
+  function init() {
+    // Initial state anwenden
+    applyState(isQuizEnabled());
+
+    // Event Listeners mit Event Delegation
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.quiz-toggle');
+      if (btn) {
+        handleClick(e);
+      }
+    });
+  }
+
+  // Init
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

@@ -1,3 +1,6 @@
+// Constants & Types
+export * from "./constants";
+
 // Layout Components
 export { default as AppShell } from "./components/layout/AppShell.astro";
 export { default as PageHeader } from "./components/layout/PageHeader.astro";
@@ -8,6 +11,7 @@ export { default as SidebarLayout } from "./components/layout/SidebarLayout.astr
 export { default as NavBar } from "./components/navigation/NavBar.astro";
 export { default as SearchBar } from "./components/navigation/SearchBar.astro";
 export { default as FontSizeControl } from "./components/navigation/FontSizeControl.astro";
+export { default as QuizToggle } from "./components/navigation/QuizToggle.astro";
 
 // Content Components
 export { default as Callout } from "./components/content/Callout.astro";
