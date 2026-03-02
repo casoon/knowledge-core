@@ -39,6 +39,7 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
                 name={`${quizId}-q${qIndex}`}
                 value={oIndex}
                 class="mt-1 text-primary focus:ring-primary"
+                aria-label={option}
               />
               <span class="text-text">{option}</span>
             </label>

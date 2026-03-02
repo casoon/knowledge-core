@@ -27,9 +27,9 @@ Object.keys(docsByCategory).forEach((category) => {
 });
 
 const categoryTitles = {
-  'getting-started': 'Erste Schritte',
-  guides: 'Anleitungen',
-  api: 'API-Referenz',
+  'getting-started': 'Getting Started',
+  guides: 'Guides',
+  api: 'API Reference',
   cookbook: 'Cookbook',
 };
 
@@ -43,7 +43,7 @@ const categories: Array<keyof typeof categoryTitles> = [
 
 <nav class="p-6">
   <div class="mb-6">
-    <input type="search" placeholder="Suche..." class="input w-full" id="docs-search" />
+    <input type="search" placeholder="Search..." class="input w-full" id="docs-search" aria-label="Search documentation" />
   </div>
 
   <div class="space-y-6">

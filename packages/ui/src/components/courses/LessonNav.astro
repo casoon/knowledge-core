@@ -1,6 +1,6 @@
 ---
 export interface Lesson {
-  slug: string;
+  id: string;
   data: {
     title: string;
     module: string;
@@ -19,7 +19,7 @@ export interface Props {
 
 const { courseTitle, courseSlug, lessons, currentLessonSlug, lessonsByModule } = Astro.props;
 
-const currentIndex = lessons.findIndex((l) => l.slug === currentLessonSlug);
+const currentIndex = lessons.findIndex((l) => l.id === currentLessonSlug);
 const progress = Math.round(((currentIndex + 1) / lessons.length) * 100);
 ---
 
@@ -68,15 +68,15 @@ const progress = Math.round(((currentIndex + 1) / lessons.length) * 100);
             <h4 class="module-title">{module}</h4>
             <ul class="lesson-list">
               {moduleLessons.map((lesson, idx) => {
-                const isActive = lesson.slug === currentLessonSlug;
+                const isActive = lesson.id === currentLessonSlug;
                 const lessonIndex = lessons.findIndex(
-                  (l) => l.slug === lesson.slug,
+                  (l) => l.id === lesson.id,
                 );
                 const isCompleted = lessonIndex < currentIndex;
                 return (
                   <li>
                     <a
-                      href={`/courses/${courseSlug}/${lesson.slug}`}
+                      href={`/courses/${courseSlug}/${lesson.id}`}
                       class:list={[
                         "lesson-link",
                         { active: isActive },

@@ -11,7 +11,7 @@ export interface NavLink {
 }
 
 export interface LessonNavItem {
-  slug: string;
+  id: string;
   title: string;
   module: string;
 }
@@ -246,7 +246,7 @@ const {
               </a>
               <span class="text-xs text-text-muted">
                 {courseNav.lessons.findIndex(
-                  (l) => l.slug === courseNav.currentLessonSlug,
+                  (l) => l.id === courseNav.currentLessonSlug,
                 ) + 1}{" "}
                 / {courseNav.lessons.length}
               </span>
@@ -270,10 +270,10 @@ const {
                       </h4>
                       {moduleLessons.map((lesson) => {
                         const isActive =
-                          lesson.slug === courseNav.currentLessonSlug;
+                          lesson.id === courseNav.currentLessonSlug;
                         return (
                           <a
-                            href={`/courses/${courseNav.courseSlug}/${lesson.slug}`}
+                            href={`/courses/${courseNav.courseSlug}/${lesson.id}`}
                             class:list={[
                               "block py-1.5 pl-3 text-sm transition-colors border-l-2 rounded-r",
                               isActive

@@ -60,7 +60,7 @@ const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentInde
       courseTitle: course?.data.title || "Course",
       courseSlug: courseSlug,
       lessons: allLessons.map((l) => ({
-        slug: l.id,
+        id: l.id,
         title: l.data.title,
         module: l.data.module,
       })),
