@@ -20,7 +20,6 @@ catalog:
 
   # Tailwind v4
   tailwindcss: ^4.2.1
-  '@tailwindcss/typography': ^0.5.16
   '@tailwindcss/vite': ^4.2.1
 
   # Svelte 5

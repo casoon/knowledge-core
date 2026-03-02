@@ -6,11 +6,9 @@
   "exports": {
     "./global.css": "./src/global.css",
     "./tokens.css": "./src/tokens.css",
-    "./prose.css": "./src/prose.css",
-    "./tailwind.config": "./tailwind.config.js"
+    "./prose.css": "./src/prose.css"
   },
   "dependencies": {
-    "@tailwindcss/typography": "catalog:",
     "tailwindcss": "catalog:"
   }
 }
