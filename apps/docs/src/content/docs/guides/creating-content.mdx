@@ -1,0 +1,218 @@
+---
+title: Creating Content
+description: Learn how to create new documentation pages and courses
+category: guides
+order: 1
+tags: [content, mdx, docs, courses]
+status: stable
+---
+
+import { Callout, CodeBlock, Tabs, TabPanel } from '@knowledge-core/ui';
+
+# Creating Content
+
+Knowledge Core uses **MDX** for all content - both documentation and courses. MDX combines Markdown with React components.
+
+## Creating Documentation Pages
+
+### 1. Create a New MDX File
+
+Create a file in `apps/docs/src/content/docs/`:
+
+```bash
+apps/docs/src/content/docs/
+├── getting-started/
+│   └── my-page.mdx
+├── guides/
+│   └── advanced-guide.mdx
+└── api/
+    └── reference.mdx
+```
+
+### 2. Add Frontmatter
+
+Every page needs frontmatter:
+
+```mdx
+---
+title: My New Page
+description: A short description
+category: guides
+order: 10
+tags: [example, tutorial]
+status: stable
+---
+
+# My New Page
+
+Your content here...
+```
+
+<Callout type="info" title="Frontmatter Fields">
+- **title** (required): Page title
+- **description** (optional): Meta description
+- **category** (required): `getting-started`, `guides`, `api`, `cookbook`
+- **order** (default: 0): Sort order in sidebar
+- **tags** (optional): Tags for search
+- **status** (default: stable): `stable`, `beta`, `deprecated`
+</Callout>
+
+### 3. Write Content
+
+Use Markdown + components:
+
+```mdx
+# Heading
+
+Normal text with **bold** and *italic*.
+
+## Code Examples
+
+\`\`\`typescript
+const greeting = "Hello, World!";
+console.log(greeting);
+\`\`\`
+
+## Using Components
+
+<Callout type="warning">
+Important notice for users!
+</Callout>
+```
+
+### Available Components
+
+In MDX you can import and use these components:
+
+```mdx
+import { Callout, CodeBlock, Tabs, TabPanel, Card } from '@knowledge-core/ui';
+
+<Callout type="info" title="Information">
+Important info here
+</Callout>
+
+<Tabs tabs={[
+  { label: 'JavaScript', value: 'js' },
+  { label: 'TypeScript', value: 'ts' }
+]}>
+  <TabPanel value="js">
+    JavaScript code here
+  </TabPanel>
+  <TabPanel value="ts">
+    TypeScript code here
+  </TabPanel>
+</Tabs>
+```
+
+## Creating Courses
+
+### 1. Course Definition
+
+Create a JSON file in `apps/courses/src/content/courses/`:
+
+```json
+{
+  "title": "My Course",
+  "slug": "my-course",
+  "description": "Short course description",
+  "level": "beginner",
+  "estimatedTotalMinutes": 120,
+  "tags": ["programming", "basics"],
+  "published": true
+}
+```
+
+### 2. Create Lessons
+
+Create MDX files in `apps/courses/src/content/lessons/`:
+
+```mdx
+---
+courseSlug: my-course
+title: Lesson 1 - Introduction
+module: Basics
+orderInModule: 1
+estimatedMinutes: 15
+type: text
+goals:
+  - Understand concept A
+  - Learn technique B
+---
+
+import { Callout, Exercise, Quiz, Hint } from '@knowledge-core/ui';
+
+# Lesson 1 - Introduction
+
+Your lesson content...
+
+<Exercise title="Exercise 1" difficulty="easy">
+Try the following...
+</Exercise>
+
+<Quiz
+  questions={[
+    {
+      question: "What is 2 + 2?",
+      options: ["3", "4", "5"],
+      correctAnswer: 1,
+      explanation: "2 + 2 = 4"
+    }
+  ]}
+/>
+```
+
+### Course Components
+
+Additional interactive components are available for courses:
+
+#### Quiz
+
+```mdx
+<Quiz
+  title="Knowledge Test"
+  questions={[
+    {
+      question: "Question here",
+      options: ["Option 1", "Option 2", "Option 3"],
+      correctAnswer: 1,
+      explanation: "Explanation of the correct answer"
+    }
+  ]}
+/>
+```
+
+#### Exercises
+
+```mdx
+<Exercise title="Practical Exercise" difficulty="medium">
+Task description...
+</Exercise>
+```
+
+#### Hints
+
+```mdx
+<Hint title="Tip">
+Hidden hint for learners
+</Hint>
+```
+
+## Best Practices
+
+### Documentation
+
+1. **Clear Structure**: Use descriptive headings
+2. **Code Examples**: Show practical applications
+3. **Callouts**: Highlight important information
+4. **Links**: Reference related pages
+
+### Courses
+
+1. **Learning Goals**: Define clear `goals` in frontmatter
+2. **Interactivity**: Use quizzes and exercises
+3. **Step by Step**: Build knowledge progressively
+4. **Resources**: Link to further material
+
+<Callout type="success">
+You're now ready to create your own content! Start with a simple page and experiment with the components.
+</Callout>

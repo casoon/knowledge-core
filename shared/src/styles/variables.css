@@ -1,0 +1,153 @@
+/* ========================================
+   Astro v6 Design System - CSS Variables
+   Modern OKLCH Color System
+   ======================================== */
+
+:root {
+  /* ========================================
+     OKLCH Color Palette - Light Mode
+     ======================================== */
+
+  /* Neutral Colors */
+  --color-neutral-50: oklch(98% 0 0);
+  --color-neutral-100: oklch(96% 0 0);
+  --color-neutral-200: oklch(92% 0 0);
+  --color-neutral-300: oklch(86% 0 0);
+  --color-neutral-400: oklch(72% 0 0);
+  --color-neutral-500: oklch(58% 0 0);
+  --color-neutral-600: oklch(44% 0 0);
+  --color-neutral-700: oklch(36% 0 0);
+  --color-neutral-800: oklch(26% 0 0);
+  --color-neutral-900: oklch(18% 0 0);
+  --color-neutral-950: oklch(10% 0 0);
+
+  /* Primary Colors (Cyan/Blue) */
+  --color-primary-50: oklch(96% 0.02 220);
+  --color-primary-100: oklch(92% 0.04 220);
+  --color-primary-200: oklch(86% 0.08 220);
+  --color-primary-300: oklch(78% 0.12 220);
+  --color-primary-400: oklch(68% 0.16 220);
+  --color-primary-500: oklch(58% 0.18 220);
+  --color-primary-600: oklch(48% 0.16 220);
+  --color-primary-700: oklch(38% 0.12 220);
+  --color-primary-800: oklch(28% 0.08 220);
+  --color-primary-900: oklch(20% 0.04 220);
+
+  /* Semantic Colors */
+  --color-success: oklch(68% 0.16 145);
+  --color-warning: oklch(75% 0.14 85);
+  --color-error: oklch(62% 0.22 25);
+  --color-info: oklch(68% 0.16 250);
+
+  /* ========================================
+     Semantic Tokens (Light Mode)
+     ======================================== */
+
+  --color-bg: var(--color-neutral-50);
+  --color-bg-secondary: var(--color-neutral-100);
+  --color-surface: oklch(100% 0 0 / 0.95);
+
+  --color-text: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-inverse: var(--color-neutral-50);
+
+  --color-border: var(--color-neutral-200);
+  --color-border-secondary: var(--color-neutral-300);
+
+  --color-accent: var(--color-primary-600);
+  --color-accent-hover: var(--color-primary-700);
+
+  /* ========================================
+     Typography
+     ======================================== */
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Lora", ui-serif, Georgia, Cambria, serif;
+  --font-mono: "Fira Code", ui-monospace, "Cascadia Code", Menlo, Consolas, monospace;
+
+  /* ========================================
+     Spacing
+     ======================================== */
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  /* ========================================
+     Border Radius
+     ======================================== */
+
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+
+  /* ========================================
+     Shadows (OKLCH)
+     ======================================== */
+
+  --shadow-sm: 0 1px 2px 0 oklch(0% 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px oklch(0% 0 0 / 0.1), 0 2px 4px -2px oklch(0% 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px oklch(0% 0 0 / 0.1), 0 4px 6px -4px oklch(0% 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px oklch(0% 0 0 / 0.1), 0 8px 10px -6px oklch(0% 0 0 / 0.1);
+
+  /* ========================================
+     Transitions
+     ======================================== */
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ========================================
+     Z-index
+     ======================================== */
+
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-fixed: 30;
+  --z-modal-backdrop: 40;
+  --z-modal: 50;
+  --z-popover: 60;
+  --z-tooltip: 70;
+
+  /* ========================================
+     Component Tokens
+     ======================================== */
+
+  --nav-height: 4rem;
+  --card-radius: var(--radius-xl);
+  --button-radius: var(--radius-md);
+  --input-radius: var(--radius-md);
+}
+
+/* ========================================
+   Dark Mode (OKLCH)
+   ======================================== */
+
+.dark {
+  --color-bg: var(--color-neutral-950);
+  --color-bg-secondary: var(--color-neutral-900);
+  --color-surface: oklch(18% 0 0 / 0.95);
+
+  --color-text: var(--color-neutral-50);
+  --color-text-secondary: var(--color-neutral-400);
+  --color-text-inverse: var(--color-neutral-900);
+
+  --color-border: var(--color-neutral-800);
+  --color-border-secondary: var(--color-neutral-700);
+
+  --color-accent: var(--color-primary-400);
+  --color-accent-hover: var(--color-primary-300);
+
+  --shadow-sm: 0 1px 2px 0 oklch(0% 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px oklch(0% 0 0 / 0.4), 0 2px 4px -2px oklch(0% 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px oklch(0% 0 0 / 0.4), 0 4px 6px -4px oklch(0% 0 0 / 0.4);
+  --shadow-xl: 0 20px 25px -5px oklch(0% 0 0 / 0.4), 0 8px 10px -6px oklch(0% 0 0 / 0.4);
+}

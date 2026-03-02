@@ -1,0 +1,56 @@
+---
+export interface NavLink {
+  href: string;
+  label: string;
+}
+
+export interface Props {
+  siteName: string;
+  links?: NavLink[];
+}
+
+const { siteName, links = [] } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+function normalizePath(path: string): string {
+  if (path === '/') return '/';
+  return path.endsWith('/') ? path.slice(0, -1) : path;
+}
+---
+
+<nav
+  class="sticky top-0 z-[var(--z-sticky)] h-[var(--nav-height)] border-b border-border bg-[var(--color-surface)] backdrop-blur-[12px]"
+  aria-label="Main navigation"
+>
+  <div class="relative mx-auto flex h-full max-w-[72rem] items-center px-[var(--space-lg)]">
+    <a href="/" class="text-lg font-bold text-text no-underline">{siteName}</a>
+
+    {links.length > 0 && (
+      <ul class="absolute inset-x-0 flex justify-center gap-[var(--space-md)] list-none p-0 pointer-events-none" role="list">
+        {links.map((link) => (
+          <li class="pointer-events-auto">
+            <a
+              href={link.href}
+              class:list={[
+                'text-sm font-medium text-text-secondary no-underline px-3 py-1.5 rounded-[var(--radius-lg)] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-text hover:bg-bg-secondary hover:shadow-sm',
+                {
+                  'text-text bg-bg-secondary shadow-sm':
+                    normalizePath(currentPath) === normalizePath(link.href),
+                },
+              ]}
+              aria-current={
+                normalizePath(currentPath) === normalizePath(link.href) ? 'page' : undefined
+              }
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <div class="ml-auto flex items-center gap-[var(--space-sm)]">
+      <slot />
+    </div>
+  </div>
+</nav>

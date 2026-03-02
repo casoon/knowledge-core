@@ -1,0 +1,202 @@
+# Knowledge Core - Reference for web-casoon/packages/knowledge
+
+This file contains information from the knowledge-core project that may be useful
+for implementing /Users/jseidel/GitHub/web-casoon/packages/knowledge/src/pages/index.astro
+
+================================================================================
+## AVAILABLE COMPONENTS (@knowledge-core/ui)
+================================================================================
+
+### Layout Components
+- AppShell          - Main page wrapper with slots for header/footer
+- PageHeader        - Page title with optional meta info
+- Footer            - Site footer
+- SidebarLayout     - Layout with optional sidebar and table of contents
+
+### Navigation Components
+- NavBar            - Main navigation with mobile support, theme toggle
+  Props: logo, logoSrc, logoAlt, logoHref, links[], showThemeToggle, showSearch,
+         showSync, showFontSize, showQuizToggle, courseNav
+- SearchBar         - Full-text search with Pagefind (Cmd+K)
+- FontSizeControl   - Accessibility font size +/- buttons
+- QuizToggle        - Show/hide quizzes toggle
+
+### Content Components
+- Callout           - Info/Warning/Error/Success boxes
+- CodeBlock         - Syntax highlighting with copy button
+- CodeExample       - Code with live preview
+- Card              - Content cards (clickable with href prop)
+- Tabs / TabPanel   - Tab navigation
+
+### Course Components
+- CourseCard        - Course overview card with level, duration, tags
+  Props: title, description, level, estimatedMinutes, tags[], href
+- ProgressBar       - Progress indicator bar
+  Props: current, total, showLabel
+- TotalProgress     - Overall progress across all courses
+  Props: courses[] (each with slug, title, lessonCount)
+- LessonComplete    - Mark lesson complete button
+- Quiz              - Interactive quiz with feedback
+  Props: questions[] (each with question, options[], correctAnswer, explanation?)
+- Exercise          - Exercise block with difficulty
+  Props: title, difficulty (easy/medium/hard)
+- Hint              - Collapsible hint section
+  Props: title (default: "Hint")
+- LessonNav         - Lesson sidebar navigation
+- SyncProgress      - Cloud sync modal for progress
+
+================================================================================
+## CONSTANTS (@knowledge-core/ui -> constants.ts)
+================================================================================
+
+### Storage Keys
+- STORAGE_PREFIX = "course-progress-"
+- THEME_STORAGE_KEY = "theme"
+- FONT_SIZE_STORAGE_KEY = "fontSize"
+
+### Difficulty and Level Styling
+DIFFICULTY_COLORS = { easy: "badge-success", medium: "badge-warning", hard: "badge-error" }
+DIFFICULTY_LABELS = { easy: "Easy", medium: "Medium", hard: "Hard" }
+LEVEL_COLORS = { beginner: "badge-success", intermediate: "badge-warning", advanced: "badge-error" }
+LEVEL_LABELS = { beginner: "Beginner", intermediate: "Intermediate", advanced: "Advanced" }
+
+### Quiz Thresholds
+QUIZ_THRESHOLDS = { excellent: 80, passing: 60 }
+
+### Sync Settings
+SYNC_CODE_TTL_DAYS = 30
+SYNC_CODE_LENGTH = 8
+
+### Types
+- Difficulty = "easy" | "medium" | "hard"
+- Level = "beginner" | "intermediate" | "advanced"
+
+================================================================================
+## CONTENT MODEL (@knowledge-core/content-model)
+================================================================================
+
+### Course Schema (courses.ts)
+courseFrontmatterSchema = {
+  title: string,
+  slug: string,
+  description: string,
+  level: "beginner" | "intermediate" | "advanced",
+  estimatedTotalMinutes: number,
+  tags: string[],
+  track?: string,
+  prerequisites?: string[],
+  thumbnail?: string,
+  published: boolean
+}
+
+### Lesson Schema
+lessonFrontmatterSchema = {
+  courseSlug: string,
+  title: string,
+  module: string,
+  orderInModule: number,
+  estimatedMinutes: number,
+  requiresExperience?: boolean,
+  type?: "video" | "text" | "quiz" | "project",
+  goals?: string[],
+  resources?: { title: string, url: string }[]
+}
+
+### Quiz Question Interface
+interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctAnswer: number;  // 0-based index
+  explanation?: string;
+}
+
+### Docs Schema (docs.ts)
+docsFrontmatterSchema = {
+  title: string,
+  description?: string,
+  category: "getting-started" | "guides" | "api" | "cookbook" | "components",
+  order?: number,
+  sidebarGroup?: string,
+  tags?: string[],
+  status?: "stable" | "beta" | "deprecated",
+  lastUpdated?: Date,
+  author?: string
+}
+
+================================================================================
+## CSS CLASSES (Tailwind + Custom)
+================================================================================
+
+### Container and Layout
+- container-custom    - Centered container with padding
+- flex-1              - Flex grow
+- mt-16               - Margin top for navbar offset
+
+### Colors (CSS Variables)
+- text-text           - Primary text color
+- text-text-muted     - Secondary/muted text
+- text-primary        - Primary brand color
+- bg-surface          - Surface background
+- bg-surface-alt      - Alternate surface (sections)
+- bg-primary/5        - Primary with 5% opacity
+- border-border       - Border color
+
+### Buttons
+- btn                 - Base button
+- btn-primary         - Primary button
+- btn-secondary       - Secondary button
+- btn-outline         - Outline button
+- btn-ghost           - Ghost/transparent button
+
+### Badges
+- badge               - Base badge
+- badge-success       - Green badge
+- badge-warning       - Yellow/orange badge
+- badge-error         - Red badge
+
+================================================================================
+## FEATURES LIST (for landing pages)
+================================================================================
+
+1. Progress Tracking - Automatic saving of learning progress
+2. Interactive Quizzes - Instant feedback with explanations
+3. Practical Exercises - Graded difficulty levels (Easy/Medium/Hard)
+4. Cloud Sync - Sync progress across devices (8-char code, 30 days)
+5. Dark Mode - Automatic with CSS variables
+6. Full-Text Search - Pagefind integration (Cmd+K)
+7. Accessibility - Font size control, keyboard nav, ARIA labels
+8. MDX Content - Markdown with embedded components
+9. Monorepo Structure - Shared packages (ui, styles, content-model)
+10. Type-Safe - TypeScript + Zod schemas
+
+================================================================================
+## IMPORTS SUMMARY
+================================================================================
+
+// Styles
+import "@knowledge-core/styles/global.css";
+
+// Components
+import {
+  // Layout
+  AppShell, PageHeader, Footer, SidebarLayout,
+  // Navigation
+  NavBar, SearchBar, FontSizeControl, QuizToggle,
+  // Content
+  Callout, CodeBlock, CodeExample, Card, Tabs, TabPanel,
+  // Courses
+  CourseCard, ProgressBar, TotalProgress, LessonComplete,
+  Quiz, Exercise, Hint, LessonNav, SyncProgress,
+  // Constants
+  DIFFICULTY_LABELS, LEVEL_LABELS, DIFFICULTY_COLORS, LEVEL_COLORS,
+} from "@knowledge-core/ui";
+
+// Content Model Types
+import type {
+  CourseFrontmatter, LessonFrontmatter, CourseLevel, LessonType,
+  DocsFrontmatter, DocsCategory, DocsStatus,
+  QuizQuestion, Quiz,
+} from "@knowledge-core/content-model";
+
+// Astro Content Collections
+import { getCollection } from "astro:content";

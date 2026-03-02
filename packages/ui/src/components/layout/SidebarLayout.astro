@@ -1,0 +1,32 @@
+---
+export interface Props {
+  hasSidebar?: boolean;
+  hasTableOfContents?: boolean;
+}
+
+const { hasSidebar = true, hasTableOfContents = false } = Astro.props;
+---
+
+<div class="flex min-h-screen">
+  {
+    hasSidebar && (
+      <aside class="hidden lg:block w-64 flex-shrink-0 border-r border-border sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto mt-16">
+        <slot name="sidebar" />
+      </aside>
+    )
+  }
+
+  <main class="flex-1 min-w-0 mt-16">
+    <div class="container-custom py-8">
+      <slot />
+    </div>
+  </main>
+
+  {
+    hasTableOfContents && (
+      <aside class="hidden xl:block w-64 flex-shrink-0 border-l border-border sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto">
+        <slot name="toc" />
+      </aside>
+    )
+  }
+</div>

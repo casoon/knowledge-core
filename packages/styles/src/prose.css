@@ -1,0 +1,233 @@
+/* MDX/Prose Styling */
+@reference "@knowledge-core/styles/global.css";
+
+@layer components {
+  .prose {
+    max-width: none;
+    color: var(--color-text);
+    line-height: 1.625;
+  }
+
+  .prose h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    color: var(--color-text);
+  }
+
+  .prose h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    margin-top: 1.5rem;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.5rem;
+  }
+
+  .prose h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 1.25rem;
+    color: var(--color-text);
+  }
+
+  .prose h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    color: var(--color-text);
+  }
+
+  .prose h5 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 0.75rem;
+    color: var(--color-text);
+  }
+
+  .prose h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 0.75rem;
+    color: var(--color-text);
+  }
+
+  .prose p {
+    margin-bottom: 1rem;
+    color: var(--color-text);
+  }
+
+  .prose a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-color: hsl(245 90% 60% / 0.3);
+    text-underline-offset: 2px;
+    transition: color var(--transition-fast);
+  }
+
+  .prose a:hover {
+    text-decoration-color: var(--color-primary);
+  }
+
+  .prose strong {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .prose em {
+    font-style: italic;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose ul > * + * {
+    margin-top: 0.5rem;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose ol > * + * {
+    margin-top: 0.5rem;
+  }
+
+  .prose li {
+    color: var(--color-text);
+  }
+
+  .prose li::marker {
+    color: var(--color-text-muted);
+  }
+
+  .prose blockquote {
+    border-left: 4px solid var(--color-primary);
+    padding-left: 1rem;
+    font-style: italic;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .prose code {
+    background-color: var(--color-surface-alt);
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    color: var(--color-primary);
+  }
+
+  .prose code::before,
+  .prose code::after {
+    content: "";
+  }
+
+  .prose pre:not(.astro-code) {
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    font-family: var(--font-mono);
+  }
+
+  .prose pre:not(.astro-code) code {
+    background-color: transparent;
+    padding: 0;
+    color: var(--color-text);
+  }
+
+  /* Astro/Shiki code blocks */
+  .prose pre.astro-code {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    font-family: var(--font-mono);
+  }
+
+  .prose pre.astro-code code {
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+  }
+
+  .prose pre.astro-code span {
+    color: inherit;
+  }
+
+  .prose img {
+    border-radius: var(--radius-lg);
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+  }
+
+  .prose hr {
+    border-color: var(--color-border);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+
+  .prose thead {
+    background-color: var(--color-surface-alt);
+  }
+
+  .prose th {
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .prose td {
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 1rem;
+  }
+
+  .prose tbody tr:hover {
+    background-color: var(--color-surface-alt);
+  }
+
+  /* Headings with anchor links */
+  .prose .heading-link {
+    opacity: 0;
+    margin-left: 0.5rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+  }
+
+  .prose .heading-link:hover {
+    color: var(--color-primary);
+  }
+
+  .prose h2:hover .heading-link,
+  .prose h3:hover .heading-link,
+  .prose h4:hover .heading-link {
+    opacity: 1;
+  }
+}

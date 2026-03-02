@@ -1,0 +1,12 @@
+{
+  "name": "@knowledge-core/config",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig.json": "./tsconfig.json"
+  },
+  "scripts": {
+    "lint": "echo 'No linting configured for config'"
+  }
+}

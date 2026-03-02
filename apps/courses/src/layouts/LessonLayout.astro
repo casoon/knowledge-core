@@ -1,0 +1,237 @@
+---
+import { AppShell, Footer, LessonNav, NavBar, PageHeader, SidebarLayout } from '@knowledge-core/ui';
+import '@knowledge-core/styles/global.css';
+import '@knowledge-core/styles/prose.css';
+import { getCollection } from 'astro:content';
+import type { LessonFrontmatter } from '@knowledge-core/content-model';
+
+export interface Props {
+  frontmatter: LessonFrontmatter;
+  courseSlug: string;
+  lessonSlug: string;
+}
+
+const { frontmatter, courseSlug, lessonSlug } = Astro.props;
+
+const course = await getCollection('courses').then((courses) =>
+  courses.find((c) => c.data.slug === courseSlug)
+);
+
+const allLessons = await getCollection('lessons', ({ data }) => {
+  return data.courseSlug === courseSlug;
+});
+
+// Sort lessons by module and orderInModule
+allLessons.sort((a, b) => {
+  if (a.data.module !== b.data.module) {
+    return a.data.module.localeCompare(b.data.module);
+  }
+  return a.data.orderInModule - b.data.orderInModule;
+});
+
+// Group lessons by module
+const lessonsByModule = allLessons.reduce(
+  (acc, lesson) => {
+    const module = lesson.data.module;
+    if (!acc[module]) {
+      acc[module] = [];
+    }
+    acc[module].push(lesson);
+    return acc;
+  },
+  {} as Record<string, typeof allLessons>
+);
+
+// Find current lesson index
+const currentIndex = allLessons.findIndex((l) => l.id === lessonSlug);
+const prevLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
+const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
+---
+
+<AppShell
+  title={`${frontmatter.title} | ${course?.data.title || "Course"}`}
+  description={frontmatter.goals?.join(", ")}
+>
+  <NavBar
+    logo="Courses"
+    logoHref="/"
+    links={[]}
+    courseNav={{
+      courseTitle: course?.data.title || "Course",
+      courseSlug: courseSlug,
+      lessons: allLessons.map((l) => ({
+        slug: l.id,
+        title: l.data.title,
+        module: l.data.module,
+      })),
+      currentLessonSlug: lessonSlug,
+    }}
+  />
+
+  <SidebarLayout hasSidebar={false} hasTableOfContents={false}>
+    <div class="max-w-4xl mx-auto">
+      <!-- Breadcrumb -->
+      <nav class="text-sm text-text-muted mb-6">
+        <a href="/courses" class="hover:text-primary">Courses</a>
+        <span class="mx-2">/</span>
+        <a href={`/courses/${courseSlug}`} class="hover:text-primary">
+          {course?.data.title}
+        </a>
+        <span class="mx-2">/</span>
+        <span class="text-text">{frontmatter.title}</span>
+      </nav>
+
+      <PageHeader
+        title={frontmatter.title}
+        meta={{
+          estimatedMinutes: frontmatter.estimatedMinutes,
+        }}
+      />
+
+      {
+        frontmatter.goals && frontmatter.goals.length > 0 && (
+          <div class="mb-8 p-4 bg-surface-alt rounded-lg border border-border">
+            <h2 class="text-sm font-semibold text-text mb-2">Learning Goals</h2>
+            <ul class="space-y-1">
+              {frontmatter.goals.map((goal) => (
+                <li class="text-sm text-text-muted flex items-start gap-2">
+                  <svg
+                    class="w-4 h-4 mt-0.5 text-success flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>{goal}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <article class="prose mb-12">
+        <slot />
+      </article>
+
+      {
+        frontmatter.resources && frontmatter.resources.length > 0 && (
+          <div class="mb-12 p-6 bg-surface-alt rounded-lg border border-border">
+            <h2 class="text-lg font-semibold text-text mb-4">
+              Additional Resources
+            </h2>
+            <ul class="space-y-2">
+              {frontmatter.resources.map((resource) => (
+                <li>
+                  <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-primary hover:underline flex items-center gap-2"
+                  >
+                    <span>{resource.title}</span>
+                    <svg
+                      class="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      <!-- Navigation -->
+      <div
+        class="flex items-center justify-between pt-8 border-t border-border"
+      >
+        {
+          prevLesson ? (
+            <a
+              href={`/courses/${courseSlug}/${prevLesson.id}`}
+              class="btn btn-secondary flex items-center gap-2"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <span>Back</span>
+            </a>
+          ) : (
+            <div />
+          )
+        }
+
+        <a
+          href={`/courses/${courseSlug}`}
+          class="text-sm text-text-muted hover:text-primary"
+        >
+          Back to Course
+        </a>
+
+        {
+          nextLesson ? (
+            <a
+              href={`/courses/${courseSlug}/${nextLesson.id}`}
+              class="btn btn-primary flex items-center gap-2"
+            >
+              <span>Next</span>
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </a>
+          ) : (
+            <a href={`/courses/${courseSlug}`} class="btn btn-primary">
+              Complete Course
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </SidebarLayout>
+
+  <LessonNav
+    courseTitle={course?.data.title || "Course"}
+    courseSlug={courseSlug}
+    lessons={allLessons}
+    currentLessonSlug={lessonSlug}
+    lessonsByModule={lessonsByModule}
+  />
+
+  <Footer slot="footer" />
+</AppShell>

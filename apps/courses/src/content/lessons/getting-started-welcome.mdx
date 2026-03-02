@@ -1,0 +1,97 @@
+---
+courseSlug: getting-started
+title: Welcome
+module: Introduction
+orderInModule: 1
+estimatedMinutes: 10
+requiresExperience: false
+type: text
+goals:
+  - Understand the structure of Knowledge Core
+  - Learn about available features
+  - Explore the interactive components
+---
+
+import { Callout, Hint } from '@knowledge-core/ui';
+
+# Welcome to Knowledge Core
+
+This is a sample lesson that shows you how courses work in Knowledge Core.
+
+## What is Knowledge Core?
+
+Knowledge Core is a **monorepo template** for:
+
+- 📚 **Technical Documentation** - API docs, guides, tutorials
+- 🎓 **Course Platforms** - Interactive learning paths
+- 💡 **Knowledge Bases** - Internal knowledge databases
+
+<Callout type="info" title="Tip for Template Users">
+This is example content! You can customize it or replace it with your own content.
+Check SETUP.md for instructions.
+</Callout>
+
+## Platform Features
+
+### 1. MDX-based Content
+
+All content is written in **MDX** - Markdown with React components:
+
+```mdx
+# Heading
+
+Normal text with **bold** and *italic*.
+
+<Callout type="success">
+Interactive component!
+</Callout>
+```
+
+### 2. Interactive Elements
+
+You can use components like Callouts, Quizzes, Exercises, and more.
+
+### 3. Progress Tracking
+
+The platform can track your learning progress (localStorage-based).
+
+<Hint title="For Developers">
+The entire source code is open source! You can customize and extend everything.
+Check out the components in `packages/ui/src/components/`.
+</Hint>
+
+## Course Structure
+
+Courses are organized into:
+
+1. **Courses** - Top-level containers (JSON definitions)
+2. **Modules** - Thematic groupings
+3. **Lessons** - Individual learning units (MDX)
+
+```
+Course: "Getting Started"
+  ├── Module: "Introduction"
+  │   ├── Lesson 1: Welcome
+  │   └── Lesson 2: Features
+  └── Module: "Practice"
+      └── Lesson 3: First Steps
+```
+
+## Next Steps
+
+In the following lessons you'll learn:
+
+- How to use interactive components
+- How quizzes work
+- How to create your own courses
+
+<Callout type="success">
+Ready? Click "Next" below to continue!
+</Callout>
+
+## Summary
+
+- Knowledge Core is a template for docs & courses
+- Content is written in MDX
+- Many interactive components available
+- Fully customizable and extensible

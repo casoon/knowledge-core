@@ -1,0 +1,126 @@
+---
+export interface Lesson {
+  slug: string;
+  data: {
+    title: string;
+    module: string;
+    orderInModule: number;
+    estimatedMinutes: number;
+  };
+}
+
+export interface Props {
+  courseTitle: string;
+  courseSlug: string;
+  lessons: Lesson[];
+  currentLessonSlug: string;
+  lessonsByModule: Record<string, Lesson[]>;
+}
+
+const { courseTitle, courseSlug, lessons, currentLessonSlug, lessonsByModule } = Astro.props;
+
+const currentIndex = lessons.findIndex((l) => l.slug === currentLessonSlug);
+const progress = Math.round(((currentIndex + 1) / lessons.length) * 100);
+---
+
+<div id="lesson-nav" class="lesson-nav">
+  <button
+    id="lesson-nav-toggle"
+    class="lesson-nav-toggle"
+    aria-label="Toggle course navigation"
+    aria-expanded="false"
+  >
+    <svg
+      class="toggle-icon"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M15 18l-6-6 6-6"></path>
+    </svg>
+  </button>
+  <div class="lesson-nav-panel">
+    <div class="lesson-nav-header">
+      <a
+        href={`/courses/${courseSlug}`}
+        class="course-title"
+        title="Go to course overview"
+      >
+        {courseTitle}
+      </a>
+      <div class="progress-info">
+        <span class="progress-text"
+          >{currentIndex + 1} of {lessons.length} lessons</span
+        >
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style={`width: ${progress}%`}></div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="lesson-nav-content">
+      {
+        Object.entries(lessonsByModule).map(([module, moduleLessons]) => (
+          <div class="module-group">
+            <h4 class="module-title">{module}</h4>
+            <ul class="lesson-list">
+              {moduleLessons.map((lesson, idx) => {
+                const isActive = lesson.slug === currentLessonSlug;
+                const lessonIndex = lessons.findIndex(
+                  (l) => l.slug === lesson.slug,
+                );
+                const isCompleted = lessonIndex < currentIndex;
+                return (
+                  <li>
+                    <a
+                      href={`/courses/${courseSlug}/${lesson.slug}`}
+                      class:list={[
+                        "lesson-link",
+                        { active: isActive },
+                        { completed: isCompleted },
+                      ]}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      <span class="lesson-number">
+                        {isCompleted ? (
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="3"
+                          >
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        ) : (
+                          idx + 1
+                        )}
+                      </span>
+                      <span class="lesson-title">{lesson.data.title}</span>
+                      <span class="lesson-time">
+                        {lesson.data.estimatedMinutes}m
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))
+      }
+    </nav>
+  </div>
+</div>
+
+<style>
+  @import "../../styles/components/lesson-nav.css";
+</style>
+
+<script>
+  // Nutzt das externe lesson-nav.ts Script (initialisiert sich selbst)
+  import "../../scripts/lesson-nav";
+</script>

@@ -1,0 +1,47 @@
+{
+  "name": "knowledge-core",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Monorepo template for documentation and course platforms",
+  "author": "casoon",
+  "license": "MIT",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=9.0.0"
+  },
+  "volta": {
+    "node": "24.11.0",
+    "pnpm": "9.15.4"
+  },
+  "scripts": {
+    "dev": "pnpm --filter \"./apps/**\" --parallel dev",
+    "dev:docs": "pnpm --filter docs dev",
+    "dev:courses": "pnpm --filter courses dev",
+    "build": "pnpm build:docs && pnpm build:courses",
+    "build:docs": "pnpm --filter docs build",
+    "build:courses": "pnpm --filter courses build",
+    "preview": "pnpm --filter \"./apps/**\" preview",
+    "preview:docs": "pnpm --filter docs preview",
+    "preview:courses": "pnpm --filter courses preview",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "lint": "biome lint .",
+    "type-check": "pnpm --filter docs type-check && pnpm --filter courses type-check",
+    "clean": "pnpm -r clean && rm -rf node_modules",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,mjs,cjs,ts,tsx,json,astro,svelte,css}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "husky": "catalog:",
+    "lint-staged": "catalog:",
+    "sharp": "catalog:",
+    "typescript": "catalog:"
+  }
+}

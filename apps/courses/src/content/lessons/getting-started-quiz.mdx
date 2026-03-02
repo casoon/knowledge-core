@@ -1,0 +1,166 @@
+---
+courseSlug: getting-started
+title: Quizzes & Interactivity
+module: Introduction
+orderInModule: 3
+estimatedMinutes: 20
+requiresExperience: false
+type: quiz
+goals:
+  - Learn how quizzes work
+  - Understand the Quiz component
+  - Test your knowledge about Knowledge Core
+---
+
+import { Callout, Quiz, Exercise, Hint } from '@knowledge-core/ui';
+
+# Quizzes & Interactivity
+
+One of the most powerful features for learning platforms are interactive quizzes!
+
+## How Quizzes Work
+
+Quizzes consist of:
+- **Questions** with multiple options
+- **Correct answer** (0-based index)
+- **Explanations** for the solution (optional)
+- **Feedback** after checking
+
+<Callout type="info">
+Users can check their answers and receive instant feedback with explanations.
+</Callout>
+
+## Example Quiz
+
+Test your knowledge about Knowledge Core:
+
+<Quiz
+  title="Knowledge Test: Knowledge Core Basics"
+  questions={[
+    {
+      question: "Which framework is used for the frontend apps?",
+      options: [
+        "Next.js",
+        "Astro",
+        "SvelteKit",
+        "Nuxt"
+      ],
+      correctAnswer: 1,
+      explanation: "Knowledge Core uses Astro for optimal performance and developer experience."
+    },
+    {
+      question: "In what format is content written?",
+      options: [
+        "Markdown only",
+        "HTML",
+        "MDX (Markdown + JSX)",
+        "reStructuredText"
+      ],
+      correctAnswer: 2,
+      explanation: "MDX combines Markdown with React components, enabling interactive content."
+    },
+    {
+      question: "Which package manager is used?",
+      options: [
+        "npm",
+        "yarn",
+        "pnpm",
+        "bun"
+      ],
+      correctAnswer: 2,
+      explanation: "pnpm is used for its efficiency and native monorepo support."
+    },
+    {
+      question: "Where are shared components defined?",
+      options: [
+        "In each app separately",
+        "In the packages/ui package",
+        "In a CDN",
+        "In node_modules"
+      ],
+      correctAnswer: 1,
+      explanation: "Shared components live in packages/ui and are imported by both apps."
+    }
+  ]}
+/>
+
+## Using Quizzes in Your Courses
+
+Here's how to add a quiz:
+
+```mdx
+import { Quiz } from '@knowledge-core/ui';
+
+<Quiz
+  title="My Quiz"
+  questions={[
+    {
+      question: "Your question?",
+      options: ["Option 1", "Option 2", "Option 3"],
+      correctAnswer: 1,
+      explanation: "Explanation of the correct answer"
+    }
+  ]}
+/>
+```
+
+<Hint title="Quiz Best Practices">
+- **Clear questions**: Ask unambiguous questions
+- **Plausible options**: All options should seem reasonable
+- **Helpful explanations**: Explain why the answer is correct
+- **Appropriate difficulty**: Match your target audience
+</Hint>
+
+## Exercise
+
+<Exercise title="Create your own quiz" difficulty="medium">
+Try the following:
+
+1. Create a new lesson
+2. Add a quiz with at least 3 questions
+3. Test the quiz in the browser
+4. Experiment with different explanations
+
+**Bonus:** Combine quizzes with other components like Callouts or Hints!
+</Exercise>
+
+## More Possibilities
+
+### Multiple Quizzes per Lesson
+
+You can have multiple quizzes in one lesson:
+
+<Quiz
+  title="Bonus Quiz: MDX & Components"
+  questions={[
+    {
+      question: "What is an advantage of MDX over regular Markdown?",
+      options: [
+        "Faster load times",
+        "Embed interactive components",
+        "Better SEO",
+        "Smaller file size"
+      ],
+      correctAnswer: 1,
+      explanation: "MDX allows embedding React components directly in Markdown."
+    }
+  ]}
+/>
+
+## Summary
+
+You learned:
+- How quizzes are structured
+- How to embed quizzes in lessons
+- Best practices for good quiz questions
+- How quizzes can be combined with other components
+
+<Callout type="success" title="Course completed!">
+Congratulations! You now know the key features of Knowledge Core.
+
+**Next steps:**
+- Create your own course
+- Customize the theming
+- Read SETUP.md for details
+- Check out the Rust course example in `.github/example-content/`
+</Callout>

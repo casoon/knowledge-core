@@ -1,0 +1,11 @@
+---
+export interface Props {
+  value: string;
+}
+
+const { value } = Astro.props;
+---
+
+<div data-tab-panel={value} class="hidden">
+  <slot />
+</div>

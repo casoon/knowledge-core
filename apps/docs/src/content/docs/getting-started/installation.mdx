@@ -1,0 +1,90 @@
+---
+title: Installation
+description: Install Knowledge Core and start your first project
+category: getting-started
+order: 1
+tags: [setup, installation]
+status: stable
+---
+
+import { Callout, CodeBlock } from '@knowledge-core/ui';
+
+# Installation
+
+Welcome! This guide walks you through installing Knowledge Core.
+
+## Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+- **Node.js 24** or higher
+- **pnpm 9** or higher
+- **Volta** (recommended for version management)
+
+<Callout type="info" title="Tip">
+Volta automatically manages the correct Node and pnpm versions for this project.
+</Callout>
+
+## Installing Volta
+
+If you haven't installed Volta yet:
+
+```bash
+curl https://get.volta.sh | bash
+```
+
+After installation, Volta will automatically use the correct versions.
+
+## Using the Template
+
+### Option 1: GitHub Template
+
+1. Click "Use this template" on GitHub
+2. Clone your new repository
+3. Install dependencies:
+
+```bash
+pnpm install
+```
+
+### Option 2: Manual Clone
+
+```bash
+git clone https://github.com/yourusername/knowledge-core.git
+cd knowledge-core
+pnpm install
+```
+
+## Starting the Project
+
+### Start Documentation
+
+```bash
+pnpm dev:docs
+```
+
+The documentation will run at `http://localhost:4321`
+
+### Start Course Platform
+
+```bash
+pnpm dev:courses
+```
+
+The course platform runs at `http://localhost:4322`
+
+### Both Apps Simultaneously
+
+```bash
+pnpm dev
+```
+
+<Callout type="success" title="Done!">
+Your project is now running locally. Open your browser and start developing.
+</Callout>
+
+## Next Steps
+
+- [Understand project structure](/docs/getting-started/structure)
+- [Create your first content](/docs/guides/creating-content)
+- [Customize theming](/docs/guides/theming)

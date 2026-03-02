@@ -1,0 +1,28 @@
+{
+  "name": "docs",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "type-check": "astro check",
+    "clean": "rm -rf dist .astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "catalog:",
+    "@astrojs/mdx": "catalog:",
+    "@knowledge-core/content-model": "workspace:*",
+    "@knowledge-core/styles": "workspace:*",
+    "@knowledge-core/ui": "workspace:*",
+    "astro": "catalog:",
+    "sharp": "catalog:",
+    "tailwindcss": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "catalog:",
+    "typescript": "catalog:"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@knowledge-core/shared",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./styles/*": "./src/styles/*",
+    "./layouts/*": "./src/layouts/*",
+    "./components/*": "./src/components/*",
+    "./seo/*": "./src/seo/*",
+    ".": "./src/utils/index.ts",
+    "./utils": "./src/utils/index.ts",
+    "./utils/*": "./src/utils/*"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "clsx": "catalog:",
+    "satori": "^0.19.2",
+    "tailwind-merge": "catalog:",
+    "zod": "catalog:"
+  },
+  "peerDependencies": {
+    "astro": "catalog:"
+  }
+}

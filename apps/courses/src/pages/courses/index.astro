@@ -1,0 +1,48 @@
+---
+import { AppShell, CourseCard, Footer, NavBar } from '@knowledge-core/ui';
+import '@knowledge-core/styles/global.css';
+import { getCollection } from 'astro:content';
+
+const courses = await getCollection('courses');
+const publishedCourses = courses.filter((course) => course.data.published);
+---
+
+<AppShell title="Courses | Knowledge Core">
+  <NavBar logo="Courses" logoHref="/" links={[]} />
+
+  <main class="flex-1 mt-16">
+    <section class="container-custom py-12">
+      <div class="mb-12">
+        <h1 class="text-4xl font-bold text-text mb-4">Courses</h1>
+        <p class="text-lg text-text-muted">
+          Choose a course and start your learning journey
+        </p>
+      </div>
+
+      {
+        publishedCourses.length === 0 ? (
+          <div class="text-center py-16">
+            <p class="text-text-muted text-lg">
+              No courses available yet. Create your first course!
+            </p>
+          </div>
+        ) : (
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {publishedCourses.map((course) => (
+              <CourseCard
+                title={course.data.title}
+                description={course.data.description}
+                level={course.data.level}
+                estimatedMinutes={course.data.estimatedTotalMinutes}
+                tags={course.data.tags}
+                href={`/courses/${course.data.slug}`}
+              />
+            ))}
+          </div>
+        )
+      }
+    </section>
+  </main>
+
+  <Footer slot="footer" />
+</AppShell>

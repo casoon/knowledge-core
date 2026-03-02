@@ -1,0 +1,11 @@
+{
+  "title": "Getting Started with Knowledge Core",
+  "slug": "getting-started",
+  "description": "Learn how to work with Knowledge Core and create your own courses. Discover all interactive components and features.",
+  "level": "beginner",
+  "estimatedTotalMinutes": 70,
+  "tags": ["tutorial", "basics", "getting-started", "components"],
+  "track": "beginner",
+  "prerequisites": [],
+  "published": true
+}

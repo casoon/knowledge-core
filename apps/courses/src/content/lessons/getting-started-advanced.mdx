@@ -1,0 +1,245 @@
+---
+courseSlug: getting-started
+title: Advanced Features
+module: Practice
+orderInModule: 1
+estimatedMinutes: 25
+requiresExperience: true
+type: text
+goals:
+  - Discover all available components
+  - Learn advanced patterns
+  - Create professional course content
+resources:
+  - title: Astro Documentation
+    url: https://docs.astro.build
+  - title: Tailwind CSS
+    url: https://tailwindcss.com/docs
+---
+
+import { Callout, Tabs, TabPanel, Exercise, Hint, Quiz } from '@knowledge-core/ui';
+
+# Advanced Features
+
+In this lesson we show all available features and how to combine them.
+
+## Dark Mode Support
+
+All components automatically support dark mode. Users can switch between light and dark mode via the icon in the navigation.
+
+<Callout type="info" title="CSS Variables">
+Colors are defined via CSS variables. You can find them in `packages/styles/src/tokens.css`.
+</Callout>
+
+## Responsive Design
+
+The entire layout is developed mobile-first:
+
+<Tabs tabs={[
+  { label: 'Mobile', value: 'mobile' },
+  { label: 'Tablet', value: 'tablet' },
+  { label: 'Desktop', value: 'desktop' }
+]}>
+  <TabPanel value="mobile">
+    ### Mobile (< 768px)
+    
+    - Hamburger menu for navigation
+    - Stacked layouts
+    - Touch-optimized buttons
+    - Adjustable font size
+  </TabPanel>
+  
+  <TabPanel value="tablet">
+    ### Tablet (768px - 1024px)
+    
+    - Optional sidebar display
+    - 2-column grids
+    - More space for content
+  </TabPanel>
+  
+  <TabPanel value="desktop">
+    ### Desktop (> 1024px)
+    
+    - Full sidebar visible
+    - 3-column layouts possible
+    - Keyboard navigation
+    - Hover effects
+  </TabPanel>
+</Tabs>
+
+## Nested Components
+
+Components can be nested arbitrarily:
+
+<Callout type="warning" title="Important Note">
+<Hint title="Hidden tip in a callout">
+You can nest components! This enables complex, interactive content.
+
+```javascript
+// Even code blocks work here
+const nested = true;
+```
+</Hint>
+</Callout>
+
+## Difficulty Levels for Exercises
+
+<Exercise title="Easy Exercise" difficulty="easy">
+**Goal:** Create a simple callout component.
+
+Add the following code to an MDX file:
+
+```mdx
+<Callout type="success">
+  My first callout!
+</Callout>
+```
+</Exercise>
+
+<Exercise title="Medium Exercise" difficulty="medium">
+**Goal:** Combine tabs with code examples.
+
+Create tabs that show the same code in different programming languages:
+- JavaScript
+- TypeScript  
+- Python
+
+Use the `Tabs` and `TabPanel` components.
+</Exercise>
+
+<Exercise title="Hard Exercise" difficulty="hard">
+**Goal:** Create a complete course.
+
+1. Create a new course definition in `content/courses/`
+2. Add at least 3 lessons
+3. Use all component types:
+   - Callouts (all 4 types)
+   - Tabs with code examples
+   - Quiz with 5+ questions
+   - Exercises in all difficulty levels
+   - Hints for tips
+4. Test the progress tracking
+</Exercise>
+
+## Cloud Sync Feature
+
+<Callout type="info" title="Sync Progress">
+Learning progress can be synchronized across different devices. Click the cloud icon in the navigation to open the sync dialog.
+
+**How it works:**
+1. Export your progress as a code
+2. Import the code on another device
+3. Your progress is restored
+</Callout>
+
+## Full-Text Search
+
+The integrated search is based on **Pagefind** and indexes all content automatically:
+
+- Searches documentation and courses
+- Finds headings, text, and code
+- Keyboard shortcut: `Ctrl/Cmd + K`
+- Works completely client-side
+
+<Hint title="Optimize Search">
+Pagefind indexes automatically on build. For best results:
+- Use descriptive headings
+- Use semantic HTML
+- Add keywords to the frontmatter
+</Hint>
+
+## Accessibility
+
+All components are accessible:
+
+| Feature | Support |
+|---------|---------|
+| Keyboard Navigation | Full |
+| Screen Reader | ARIA labels |
+| Focus Management | Visible focus rings |
+| Contrast | WCAG AA compliant |
+| Reduced Motion | `prefers-reduced-motion` |
+
+## Final Quiz
+
+<Quiz
+  title="Test: Advanced Features"
+  questions={[
+    {
+      question: "How are colors defined in dark mode?",
+      options: [
+        "Inline styles",
+        "CSS variables in tokens.css",
+        "Tailwind config",
+        "JavaScript theme provider"
+      ],
+      correctAnswer: 1,
+      explanation: "Colors are defined via CSS variables in packages/styles/src/tokens.css and automatically switched for dark mode."
+    },
+    {
+      question: "Which search technology is used?",
+      options: [
+        "Algolia",
+        "Elasticsearch",
+        "Pagefind",
+        "Lunr.js"
+      ],
+      correctAnswer: 2,
+      explanation: "Pagefind is a static search that indexes at build time and works completely client-side."
+    },
+    {
+      question: "What difficulty levels are available for exercises?",
+      options: [
+        "Only easy and hard",
+        "easy, medium, hard",
+        "beginner, intermediate, advanced",
+        "1, 2, 3, 4, 5"
+      ],
+      correctAnswer: 1,
+      explanation: "The Exercise component supports three difficulty levels: easy (green), medium (yellow), hard (red)."
+    },
+    {
+      question: "How is progress saved?",
+      options: [
+        "In a database",
+        "In localStorage with optional cloud sync",
+        "In cookies",
+        "Not at all"
+      ],
+      correctAnswer: 1,
+      explanation: "Progress is stored in localStorage and can optionally be synchronized via a code-based cloud sync."
+    },
+    {
+      question: "Can components be nested?",
+      options: [
+        "No, never",
+        "Only certain combinations",
+        "Yes, arbitrarily",
+        "Only in tabs"
+      ],
+      correctAnswer: 2,
+      explanation: "Components can be nested arbitrarily, e.g., hints in callouts or code blocks in tabs."
+    }
+  ]}
+/>
+
+## Summary
+
+You've now learned all the advanced features:
+
+- Dark mode and theming
+- Responsive design for all devices
+- Nested components
+- Different difficulty levels
+- Cloud sync for progress
+- Full-text search with Pagefind
+- Accessibility
+
+<Callout type="success" title="Congratulations!">
+You're now ready to create your own professional courses and documentation!
+
+**Further resources:**
+- Check out the component source code
+- Read the Astro documentation
+- Experiment with your own content
+</Callout>

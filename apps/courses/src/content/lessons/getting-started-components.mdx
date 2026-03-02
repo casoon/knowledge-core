@@ -1,0 +1,149 @@
+---
+courseSlug: getting-started
+title: Interactive Components
+module: Introduction
+orderInModule: 2
+estimatedMinutes: 15
+requiresExperience: false
+type: text
+goals:
+  - Learn about the different components
+  - Understand how callouts are used
+  - Experiment with tabs and code blocks
+resources:
+  - title: MDX Documentation
+    url: https://mdxjs.com
+  - title: Astro Components
+    url: https://docs.astro.build/en/core-concepts/astro-components/
+---
+
+import { Callout, Tabs, TabPanel, Exercise, Hint } from '@knowledge-core/ui';
+
+# Interactive Components
+
+Knowledge Core provides various components for interactive content.
+
+## Callouts
+
+Callouts highlight important information:
+
+<Callout type="info" title="Information">
+This is an info callout for general notes.
+</Callout>
+
+<Callout type="success" title="Success">
+Shows positive confirmations or completed steps.
+</Callout>
+
+<Callout type="warning" title="Warning">
+Important warnings that users should note.
+</Callout>
+
+<Callout type="error" title="Error">
+Critical information or common errors.
+</Callout>
+
+## Tabs
+
+Tabs are great for alternative views or multi-platform instructions:
+
+<Tabs tabs={[
+  { label: 'Option A', value: 'a' },
+  { label: 'Option B', value: 'b' },
+  { label: 'Option C', value: 'c' }
+]}>
+  <TabPanel value="a">
+    ### Option A
+
+    This is the content for Option A. Here you can:
+    - Write text
+    - Show code examples
+    - Use more components
+  </TabPanel>
+  
+  <TabPanel value="b">
+    ### Option B
+
+    Different content for Option B.
+
+    ```javascript
+    const example = "Code example in Tab B";
+    console.log(example);
+    ```
+  </TabPanel>
+  
+  <TabPanel value="c">
+    ### Option C
+
+    <Callout type="info">
+    You can even nest callouts inside tabs!
+    </Callout>
+  </TabPanel>
+</Tabs>
+
+## Code Blocks
+
+Syntax-highlighted code with different languages:
+
+**JavaScript:**
+```javascript
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet('World'));
+```
+
+**TypeScript:**
+```typescript
+interface User {
+  name: string;
+  age: number;
+}
+
+const user: User = {
+  name: 'Alice',
+  age: 30
+};
+```
+
+**Python:**
+```python
+def greet(name):
+    return f"Hello, {name}!"
+
+print(greet("World"))
+```
+
+## Exercises
+
+<Exercise title="Try it yourself" difficulty="easy">
+Create your own lesson in `apps/courses/src/content/lessons/`:
+
+1. Copy this file
+2. Change the frontmatter (title, slug, etc.)
+3. Customize the content
+4. Test with `pnpm dev:courses`
+</Exercise>
+
+## Hints
+
+<Hint title="Developer Tip">
+You can find all components in `packages/ui/src/components/`.
+You can add your own components or customize existing ones!
+</Hint>
+
+<Hint title="Styling Tip">
+Theming is done via CSS variables in `packages/styles/src/tokens.css`.
+Customize the colors to match your brand!
+</Hint>
+
+## Summary
+
+You learned:
+- How callouts represent different information types
+- How tabs show alternative content
+- How code examples are embedded
+- How exercises and hints work
+
+Ready for the next lesson? There you'll learn about quizzes!
