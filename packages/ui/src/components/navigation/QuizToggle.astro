@@ -33,24 +33,24 @@
 
 <style>
   .quiz-toggle.quiz-on {
-    background-color: hsl(var(--color-primary) / 0.1);
-    color: hsl(var(--color-primary));
-    border-color: hsl(var(--color-primary) / 0.3);
+    background-color: color-mix(in oklab, var(--color-primary) 10%, transparent);
+    color: var(--color-primary);
+    border-color: color-mix(in oklab, var(--color-primary) 30%, transparent);
   }
 
   .quiz-toggle.quiz-on:hover {
-    background-color: hsl(var(--color-primary) / 0.2);
+    background-color: color-mix(in oklab, var(--color-primary) 20%, transparent);
   }
 
   .quiz-toggle.quiz-off {
-    background-color: hsl(var(--color-surface-alt));
-    color: hsl(var(--color-text-muted));
-    border-color: hsl(var(--color-border));
+    background-color: var(--color-surface-alt);
+    color: var(--color-text-muted);
+    border-color: var(--color-border);
   }
 
   .quiz-toggle.quiz-off:hover {
-    background-color: hsl(var(--color-surface));
-    color: hsl(var(--color-text));
+    background-color: var(--color-surface);
+    color: var(--color-text);
   }
 </style>
 

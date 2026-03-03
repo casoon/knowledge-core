@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "./tokens.css";
 
+/* Scan monorepo packages for Tailwind classes (excluded by default via .gitignore/node_modules) */
+@source "../../ui/src";
+@source "../../../shared/src";
+@source "../../../apps/docs/src";
+@source "../../../apps/courses/src";
+
 /*
   Register design tokens as Tailwind theme variables.
   Light mode defaults — dark mode overrides happen via .dark class
