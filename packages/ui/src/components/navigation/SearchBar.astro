@@ -126,7 +126,9 @@ const { placeholder = 'Search... (⌘K)' } = Astro.props;
 
 <script>
   import { initSearchManager } from "../../scripts/search-manager";
-  initSearchManager();
+  document.addEventListener("astro:page-load", () => {
+    initSearchManager();
+  });
 </script>
 
 <style>

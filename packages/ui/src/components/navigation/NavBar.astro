@@ -321,13 +321,13 @@ const {
     initThemeToggle,
   } from "../../scripts/navbar-manager";
 
-  initMobileMenu();
-  initMobileTriggers();
+  document.addEventListener("astro:page-load", () => {
+    initMobileMenu();
+    initMobileTriggers();
 
-  // Theme Toggle wird nur initialisiert wenn showThemeToggle true ist
-  // Das wird über data-attribute gesteuert
-  const nav = document.querySelector("nav");
-  if (nav?.dataset.showThemeToggle !== "false") {
-    initThemeToggle();
-  }
+    const nav = document.querySelector("nav");
+    if (nav?.dataset.showThemeToggle !== "false") {
+      initThemeToggle();
+    }
+  });
 </script>

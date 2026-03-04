@@ -46,54 +46,51 @@
   </button>
 </div>
 
-<script is:inline>
-  // safeGetItem, safeSetItem sind global via StorageUtils
-  (function () {
-    const STORAGE_KEY = "font-size";
-    const MIN_SIZE = 80;
-    const MAX_SIZE = 150;
-    const STEP = 10;
-    const DEFAULT_SIZE = 100;
+<script>
+  import { safeGetItem, safeSetItem } from "../../scripts/storage";
 
-    const decreaseBtn = document.getElementById("font-size-decrease");
-    const increaseBtn = document.getElementById("font-size-increase");
+  const STORAGE_KEY = "font-size";
+  const MIN_SIZE = 80;
+  const MAX_SIZE = 150;
+  const STEP = 10;
+  const DEFAULT_SIZE = 100;
+
+  function getCurrentSize(): number {
+    const stored = safeGetItem(STORAGE_KEY);
+    return stored ? parseInt(stored, 10) : DEFAULT_SIZE;
+  }
+
+  function applySize(size: number): void {
+    document.documentElement.style.fontSize = size + "%";
     const indicator = document.getElementById("font-size-indicator");
+    const decreaseBtn = document.getElementById("font-size-decrease") as HTMLButtonElement | null;
+    const increaseBtn = document.getElementById("font-size-increase") as HTMLButtonElement | null;
 
-    if (!decreaseBtn || !increaseBtn || !indicator) return;
-
-    function getCurrentSize() {
-      const stored = safeGetItem(STORAGE_KEY);
-      return stored ? parseInt(stored, 10) : DEFAULT_SIZE;
-    }
-
-    function applySize(size) {
-      document.documentElement.style.fontSize = size + "%";
-      indicator.textContent = size + "%";
-      safeSetItem(STORAGE_KEY, size.toString());
-
-      // Update button states
+    if (indicator) indicator.textContent = size + "%";
+    if (decreaseBtn) {
       decreaseBtn.disabled = size <= MIN_SIZE;
-      increaseBtn.disabled = size >= MAX_SIZE;
       decreaseBtn.classList.toggle("opacity-30", size <= MIN_SIZE);
+    }
+    if (increaseBtn) {
+      increaseBtn.disabled = size >= MAX_SIZE;
       increaseBtn.classList.toggle("opacity-30", size >= MAX_SIZE);
     }
+    safeSetItem(STORAGE_KEY, size.toString());
+  }
 
-    // Initial load
-    const initialSize = getCurrentSize();
-    applySize(initialSize);
+  function initFontSizeControl(): void {
+    applySize(getCurrentSize());
 
-    decreaseBtn.addEventListener("click", () => {
+    document.getElementById("font-size-decrease")?.addEventListener("click", () => {
       const current = getCurrentSize();
-      if (current > MIN_SIZE) {
-        applySize(current - STEP);
-      }
+      if (current > MIN_SIZE) applySize(current - STEP);
     });
 
-    increaseBtn.addEventListener("click", () => {
+    document.getElementById("font-size-increase")?.addEventListener("click", () => {
       const current = getCurrentSize();
-      if (current < MAX_SIZE) {
-        applySize(current + STEP);
-      }
+      if (current < MAX_SIZE) applySize(current + STEP);
     });
-  })();
+  }
+
+  document.addEventListener("astro:page-load", initFontSizeControl);
 </script>

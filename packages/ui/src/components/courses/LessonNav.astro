@@ -121,6 +121,8 @@ const progress = Math.round(((currentIndex + 1) / lessons.length) * 100);
 </style>
 
 <script>
-  // Nutzt das externe lesson-nav.ts Script (initialisiert sich selbst)
-  import "../../scripts/lesson-nav";
+  import { initLessonNav } from "../../scripts/lesson-nav";
+  document.addEventListener("astro:page-load", () => {
+    initLessonNav();
+  });
 </script>

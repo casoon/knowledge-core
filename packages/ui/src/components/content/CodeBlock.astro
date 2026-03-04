@@ -50,5 +50,5 @@ const { code, lang = 'plaintext', title, showLineNumbers = false } = Astro.props
 
 <script>
   import { initCopyButtons } from "../../scripts/copy-code";
-  initCopyButtons();
+  document.addEventListener("astro:page-load", initCopyButtons);
 </script>

@@ -170,10 +170,6 @@ const { courseSlug, lessonSlug, nextLessonHref, courseOverviewHref } = Astro.pro
     });
   }
 
-  // Initialize
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initLessonComplete);
-  } else {
-    initLessonComplete();
-  }
+  // Initialize on every page load (ClientRouter compatible)
+  document.addEventListener("astro:page-load", initLessonComplete);
 </script>

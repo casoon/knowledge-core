@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import StorageUtils from '../utils/StorageUtils.astro';
 
 export interface Props {
@@ -28,23 +29,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       rel="stylesheet"
     />
     <StorageUtils />
+    <ClientRouter />
     <script is:inline>
-      // Dark mode initialization
+      // Dark mode initialization — runs on first load
       (function () {
-        const theme = (() => {
+        function applyTheme() {
           const stored = safeGetItem("theme");
-          if (stored) return stored;
-          if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            return "dark";
-          }
-          return "light";
-        })();
-
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
+          const theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          document.documentElement.classList.toggle("dark", theme === "dark");
         }
+        applyTheme();
+        // Re-apply after ClientRouter navigation (DOM swap)
+        document.addEventListener("astro:after-swap", applyTheme);
       })();
     </script>
   </head>

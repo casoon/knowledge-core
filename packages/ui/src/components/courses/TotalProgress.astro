@@ -157,10 +157,6 @@ const totalLessons = courses.reduce((sum, c) => sum + c.lessonCount, 0);
     }
   }
 
-  // Initialize
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initTotalProgress);
-  } else {
-    initTotalProgress();
-  }
+  // Initialize on every page load (ClientRouter compatible)
+  document.addEventListener("astro:page-load", initTotalProgress);
 </script>

@@ -37,9 +37,4 @@ export function initCopyButtons(): void {
   });
 }
 
-// Auto-initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initCopyButtons);
-} else {
-  initCopyButtons();
-}
+// No auto-init — call initCopyButtons() from astro:page-load

@@ -40,9 +40,4 @@ export function initMobileMenu(): void {
   });
 }
 
-// Auto-initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initMobileMenu);
-} else {
-  initMobileMenu();
-}
+// No auto-init — called via navbar-manager with astro:page-load

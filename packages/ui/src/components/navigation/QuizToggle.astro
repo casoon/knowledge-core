@@ -80,8 +80,7 @@
       }
       setQuizEnabled(enabled);
 
-      // Alle Toggle-Buttons aktualisieren (immer frisch suchen)
-      document.querySelectorAll(".quiz-toggle").forEach((btn) => {
+      document.querySelectorAll(".quiz-toggle").forEach(function (btn) {
         btn.setAttribute("aria-pressed", enabled.toString());
         btn.setAttribute(
           "title",
@@ -103,24 +102,24 @@
       applyState(newState);
     }
 
-    function init() {
-      // Initial state anwenden
-      applyState(isQuizEnabled());
+    // Apply initial state
+    applyState(isQuizEnabled());
 
-      // Event Listeners mit Event Delegation
-      document.addEventListener("click", (e) => {
-        const btn = e.target.closest(".quiz-toggle");
+    // Register click delegation only once (guard prevents accumulation)
+    if (!window.__quizToggleInit) {
+      window.__quizToggleInit = true;
+      document.addEventListener("click", function (e) {
+        var btn = e.target.closest(".quiz-toggle");
         if (btn) {
           handleClick(e);
         }
       });
     }
 
-    // Init
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", init);
-    } else {
-      init();
-    }
+    // Re-apply state after ClientRouter navigation
+    document.addEventListener("astro:after-swap", function () {
+      currentState = null;
+      applyState(isQuizEnabled());
+    });
   })();
 </script>

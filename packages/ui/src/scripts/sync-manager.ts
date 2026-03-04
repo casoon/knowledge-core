@@ -133,7 +133,13 @@ function safeRemoveItem(key: string): void {
   }
 }
 
+let syncController: AbortController | null = null;
+
 export function initSyncManager(): void {
+  syncController?.abort();
+  syncController = new AbortController();
+  const { signal } = syncController;
+
   const elements = getElements();
   if (!elements) return;
 
@@ -173,15 +179,19 @@ export function initSyncManager(): void {
   }
 
   // Event listeners
-  syncButton.addEventListener('click', openModal);
-  closeButton?.addEventListener('click', closeModal);
-  backdrop?.addEventListener('click', closeModal);
+  syncButton.addEventListener('click', openModal, { signal });
+  closeButton?.addEventListener('click', closeModal, { signal });
+  backdrop?.addEventListener('click', closeModal, { signal });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeModal();
-    }
-  });
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    },
+    { signal }
+  );
 
   // Create new sync
   createButton?.addEventListener('click', async () => {

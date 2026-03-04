@@ -1,11 +1,18 @@
 /**
  * Lesson navigation sidebar toggle functionality
+ * Uses AbortController to prevent listener accumulation on ClientRouter navigation.
  */
 
 import { getCourseProgress } from './progress';
 import { safeGetItem, safeSetItem } from './storage';
 
+let lessonNavController: AbortController | null = null;
+
 export function initLessonNav(): void {
+  lessonNavController?.abort();
+  lessonNavController = new AbortController();
+  const { signal } = lessonNavController;
+
   const nav = document.getElementById('lesson-nav');
   const toggle = document.getElementById('lesson-nav-toggle');
 
@@ -18,11 +25,15 @@ export function initLessonNav(): void {
     toggle.setAttribute('aria-expanded', 'true');
   }
 
-  toggle.addEventListener('click', () => {
-    const nowOpen = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(nowOpen));
-    safeSetItem('lessonNavOpen', String(nowOpen));
-  });
+  toggle.addEventListener(
+    'click',
+    () => {
+      const nowOpen = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(nowOpen));
+      safeSetItem('lessonNavOpen', String(nowOpen));
+    },
+    { signal }
+  );
 
   // Scroll active lesson into view
   const activeLink = nav.querySelector('.lesson-link.active');
@@ -36,9 +47,13 @@ export function initLessonNav(): void {
   updateCompletionStatus(nav);
 
   // Listen for lesson completion events
-  window.addEventListener('lesson-completed', () => {
-    updateCompletionStatus(nav);
-  });
+  window.addEventListener(
+    'lesson-completed',
+    () => {
+      updateCompletionStatus(nav);
+    },
+    { signal }
+  );
 }
 
 function updateCompletionStatus(nav: HTMLElement): void {
@@ -83,11 +98,4 @@ function updateCompletionStatus(nav: HTMLElement): void {
   if (progressText) {
     progressText.textContent = `${completedCount} von ${allLessons} erledigt`;
   }
-}
-
-// Auto-initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initLessonNav);
-} else {
-  initLessonNav();
 }

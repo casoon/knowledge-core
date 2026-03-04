@@ -111,7 +111,13 @@ async function performSearch(query: string, resultsContainer: HTMLElement): Prom
   updateSelection(resultsContainer);
 }
 
+let searchController: AbortController | null = null;
+
 export function initSearchManager(): void {
+  searchController?.abort();
+  searchController = new AbortController();
+  const { signal } = searchController;
+
   const modal = document.getElementById('search-modal');
   const backdrop = document.getElementById('search-backdrop');
   const input = document.getElementById('search-input') as HTMLInputElement | null;
@@ -139,54 +145,62 @@ export function initSearchManager(): void {
   }
 
   // Event Listeners
-  searchButton?.addEventListener('click', openModal);
-  searchButtonMobile?.addEventListener('click', openModal);
-  backdrop?.addEventListener('click', closeModal);
+  searchButton?.addEventListener('click', openModal, { signal });
+  searchButtonMobile?.addEventListener('click', openModal, { signal });
+  backdrop?.addEventListener('click', closeModal, { signal });
 
   // Keyboard shortcuts
-  document.addEventListener('keydown', (e) => {
-    // Cmd/Ctrl + K to open
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      if (modal.classList.contains('hidden')) {
-        openModal();
-      } else {
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      // Cmd/Ctrl + K to open
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (modal.classList.contains('hidden')) {
+          openModal();
+        } else {
+          closeModal();
+        }
+      }
+
+      // ESC to close
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
         closeModal();
       }
-    }
 
-    // ESC to close
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeModal();
-    }
-
-    // Arrow navigation in results
-    if (!modal.classList.contains('hidden')) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (selectedIndex < results.length - 1) {
-          selectedIndex++;
-          updateSelection(resultsContainer);
+      // Arrow navigation in results
+      if (!modal.classList.contains('hidden')) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (selectedIndex < results.length - 1) {
+            selectedIndex++;
+            updateSelection(resultsContainer);
+          }
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (selectedIndex > 0) {
+            selectedIndex--;
+            updateSelection(resultsContainer);
+          }
+        } else if (e.key === 'Enter' && selectedIndex >= 0) {
+          e.preventDefault();
+          navigateToSelected();
         }
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (selectedIndex > 0) {
-          selectedIndex--;
-          updateSelection(resultsContainer);
-        }
-      } else if (e.key === 'Enter' && selectedIndex >= 0) {
-        e.preventDefault();
-        navigateToSelected();
       }
-    }
-  });
+    },
+    { signal }
+  );
 
   // Search input with debounce
   let debounceTimeout: ReturnType<typeof setTimeout>;
-  input.addEventListener('input', (e) => {
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => {
-      performSearch((e.target as HTMLInputElement).value, resultsContainer);
-    }, 200);
-  });
+  input.addEventListener(
+    'input',
+    (e) => {
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        performSearch((e.target as HTMLInputElement).value, resultsContainer);
+      }, 200);
+    },
+    { signal }
+  );
 }

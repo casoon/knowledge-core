@@ -242,5 +242,7 @@
 
 <script>
   import { initSyncManager } from "../../scripts/sync-manager";
-  initSyncManager();
+  document.addEventListener("astro:page-load", () => {
+    initSyncManager();
+  });
 </script>
