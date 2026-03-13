@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
+  "main": "./src/global.css",
   "exports": {
     "./global.css": "./src/global.css",
     "./tokens.css": "./src/tokens.css",

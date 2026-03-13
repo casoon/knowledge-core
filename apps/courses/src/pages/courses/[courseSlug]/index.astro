@@ -31,9 +31,9 @@ const lessonsByModule = allLessons.reduce(
 );
 
 // Sort lessons within each module
-Object.keys(lessonsByModule).forEach((module) => {
-  lessonsByModule[module].sort((a, b) => a.data.orderInModule - b.data.orderInModule);
-});
+for (const mod of Object.keys(lessonsByModule)) {
+  lessonsByModule[mod].sort((a, b) => a.data.orderInModule - b.data.orderInModule);
+}
 
 const levelColors = {
   beginner: 'badge-success',

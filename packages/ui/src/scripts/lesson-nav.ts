@@ -66,7 +66,7 @@ function updateCompletionStatus(nav: HTMLElement): void {
   const completedLessons = progress.completedLessons;
 
   // Update each lesson link
-  nav.querySelectorAll('.lesson-link').forEach((link) => {
+  for (const link of nav.querySelectorAll('.lesson-link')) {
     const href = link.getAttribute('href') || '';
     const lessonSlug = href.split('/').pop();
 
@@ -81,7 +81,7 @@ function updateCompletionStatus(nav: HTMLElement): void {
         </svg>`;
       }
     }
-  });
+  }
 
   // Update progress bar
   const allLessons = nav.querySelectorAll('.lesson-link').length;

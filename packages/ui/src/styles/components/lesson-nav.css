@@ -152,11 +152,6 @@
   color: var(--color-primary);
 }
 
-.lesson-nav .lesson-link.completed .lesson-number {
-  background: var(--color-success);
-  color: white;
-}
-
 .lesson-nav .lesson-number {
   flex-shrink: 0;
   width: 1.5rem;
@@ -169,6 +164,11 @@
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--color-text-muted);
+}
+
+.lesson-nav .lesson-link.completed .lesson-number {
+  background: var(--color-success);
+  color: white;
 }
 
 .lesson-nav .lesson-link.active .lesson-number {

@@ -19,9 +19,9 @@ const docsByCategory = allDocs.reduce(
 );
 
 // Sort within categories
-Object.keys(docsByCategory).forEach((category) => {
+for (const category of Object.keys(docsByCategory)) {
   docsByCategory[category].sort((a, b) => a.data.order - b.data.order);
-});
+}
 
 const categoryInfo = {
   'getting-started': {

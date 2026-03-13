@@ -34,7 +34,7 @@ async function loadPagefind(): Promise<Pagefind | null> {
       'return import("/pagefind/pagefind.js")'
     ) as () => Promise<Pagefind>;
     pagefind = await importPagefind();
-    await pagefind!.init();
+    await pagefind.init();
     return pagefind;
   } catch (e) {
     console.warn('Pagefind not available:', e);
@@ -127,18 +127,22 @@ export function initSearchManager(): void {
 
   if (!modal || !input || !resultsContainer) return;
 
+  const searchModal = modal;
+  const searchInput = input;
+  const searchResults = resultsContainer;
+
   function openModal(): void {
-    modal!.classList.remove('hidden');
+    searchModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
-    input!.focus();
+    searchInput.focus();
     loadPagefind();
   }
 
   function closeModal(): void {
-    modal!.classList.add('hidden');
+    searchModal.classList.add('hidden');
     document.body.style.overflow = '';
-    input!.value = '';
-    resultsContainer!.innerHTML =
+    searchInput.value = '';
+    searchResults.innerHTML =
       '<div class="text-center py-8 text-text-muted text-sm">Start typing to search...</div>';
     selectedIndex = -1;
     results = [];
@@ -149,56 +153,60 @@ export function initSearchManager(): void {
   searchButtonMobile?.addEventListener('click', openModal, { signal });
   backdrop?.addEventListener('click', closeModal, { signal });
 
+  // Arrow/Enter navigation in search results
+  function handleResultNavigation(e: KeyboardEvent): void {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (selectedIndex < results.length - 1) {
+        selectedIndex++;
+        updateSelection(searchResults);
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (selectedIndex > 0) {
+        selectedIndex--;
+        updateSelection(searchResults);
+      }
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+      e.preventDefault();
+      navigateToSelected();
+    }
+  }
+
   // Keyboard shortcuts
-  document.addEventListener(
-    'keydown',
-    (e) => {
-      // Cmd/Ctrl + K to open
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        if (modal.classList.contains('hidden')) {
-          openModal();
-        } else {
-          closeModal();
-        }
-      }
+  function handleKeyDown(e: KeyboardEvent): void {
+    const isOpen = !searchModal.classList.contains('hidden');
 
-      // ESC to close
-      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (isOpen) {
         closeModal();
+      } else {
+        openModal();
       }
+      return;
+    }
 
-      // Arrow navigation in results
-      if (!modal.classList.contains('hidden')) {
-        if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          if (selectedIndex < results.length - 1) {
-            selectedIndex++;
-            updateSelection(resultsContainer);
-          }
-        } else if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          if (selectedIndex > 0) {
-            selectedIndex--;
-            updateSelection(resultsContainer);
-          }
-        } else if (e.key === 'Enter' && selectedIndex >= 0) {
-          e.preventDefault();
-          navigateToSelected();
-        }
-      }
-    },
-    { signal }
-  );
+    if (!isOpen) return;
+
+    if (e.key === 'Escape') {
+      closeModal();
+      return;
+    }
+
+    handleResultNavigation(e);
+  }
+
+  document.addEventListener('keydown', handleKeyDown, { signal });
 
   // Search input with debounce
   let debounceTimeout: ReturnType<typeof setTimeout>;
-  input.addEventListener(
+  searchInput.addEventListener(
     'input',
     (e) => {
       clearTimeout(debounceTimeout);
       debounceTimeout = setTimeout(() => {
-        performSearch((e.target as HTMLInputElement).value, resultsContainer);
+        performSearch((e.target as HTMLInputElement).value, searchResults);
       }, 200);
     },
     { signal }

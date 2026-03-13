@@ -2,6 +2,8 @@
   "name": "@knowledge-core/shared",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "main": "./src/utils/index.ts",
   "exports": {
     "./styles/*": "./src/styles/*",
     "./layouts/*": "./src/layouts/*",

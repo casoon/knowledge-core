@@ -13,19 +13,27 @@ A production-ready template based on **Astro v6**, **MDX**, **Tailwind CSS v4**,
 - **Docs App:** [kc-docs.casoon.dev](https://kc-docs.casoon.dev)
 - **Courses App:** [kc-courses.casoon.dev](https://kc-courses.casoon.dev)
 
+## Tech Stack
+
+| Technology | Version | Purpose |
+|---|---|---|
+| [Astro](https://astro.build) | 6.0 | Framework — Vite Environment API, Content Collections, ClientRouter |
+| [MDX](https://mdxjs.com) | 5.0 | Markdown with interactive components |
+| [Tailwind CSS](https://tailwindcss.com) | 4.2 | CSS-first config, Vite plugin, design tokens |
+| [Biome](https://biomejs.dev) | 2.4 | Linting, formatting, a11y, security & complexity checks |
+| [Zod](https://zod.dev) | 4.x | Runtime validation for content schemas |
+| [TypeScript](https://www.typescriptlang.org) | 5.9 | Strict mode throughout |
+| [pnpm](https://pnpm.io) | 9.x | Workspaces with catalog for centralized dependency management |
+| Node.js | >= 22.12 | Runtime |
+
 ## Features
 
-- **Astro v6** — Vite Environment API, Content Collections Loader API, ClientRouter
-- **MDX** — Markdown with interactive components
-- **Tailwind CSS v4** — CSS-first config, Vite plugin, design tokens
-- **Biome** — Single tool for linting + formatting (replaces ESLint + Prettier)
-- **pnpm Workspaces** — Monorepo with catalog for centralized dependency management
-- **Zod v4** — Runtime validation for content schemas
 - **Shared Components** — Reusable UI components across apps
 - **Interactive Courses** — Quiz, exercises, progress tracking
 - **Dark Mode** — With theme persistence via ClientRouter
 - **Cloud Sync** — Sync learning progress across devices
-- **Type-Safe** — TypeScript strict mode throughout
+- **Pre-Commit Hooks** — Husky + lint-staged with Biome auto-fix
+- **Post-Build Audit** — SEO & a11y checks via @casoon/astro-post-audit
 
 ## Use Cases
 
@@ -127,7 +135,7 @@ knowledge-core/
 │   ├── ui/                # Shared UI components
 │   ├── styles/            # Tailwind v4 + design tokens
 │   ├── content-model/     # Zod v4 content schemas
-│   └── config/            # Shared configs
+│   └── config/            # Shared configs (TypeScript, Biome)
 │
 ├── shared/                # Shared layouts, SEO, utilities
 ├── package.json           # Root package
@@ -270,6 +278,36 @@ Tailwind v4 uses CSS-first configuration in `packages/styles/src/global.css`:
 @custom-variant dark (&:where(.dark, .dark *));
 ```
 
+## Code Quality
+
+Biome handles linting, formatting, and code analysis in a single tool. The base configuration lives in `packages/config/biome.base.json` and is extended by the root `biome.json`.
+
+### Enabled Rule Groups
+
+| Group | Scope |
+|---|---|
+| **correctness** | Unused variables/imports, exhaustive deps |
+| **suspicious** | No `any`, no `var`, no `==`, no assignment in expressions |
+| **style** | `const` required, template literals, no non-null assertions |
+| **complexity** | Cognitive complexity limit, `for...of` over `forEach`, `flatMap` |
+| **performance** | No accumulating spread, no `delete` |
+| **security** | No `dangerouslySetInnerHTML` |
+| **a11y** | ARIA, alt text, button types, valid anchors |
+
+### Commands
+
+```bash
+pnpm check               # Biome lint + format check
+pnpm check:fix           # Biome auto-fix
+pnpm format              # Format all files
+pnpm lint                # Lint only
+pnpm type-check          # TypeScript check
+```
+
+### Pre-Commit Hook
+
+Husky + lint-staged runs `biome check --write` on staged files automatically.
+
 ## Scripts
 
 ```bash
@@ -287,12 +325,6 @@ pnpm build:courses       # Courses only
 pnpm preview             # All apps
 pnpm preview:docs        # Docs only
 pnpm preview:courses     # Courses only
-
-# Code Quality
-pnpm check               # Biome lint + format check
-pnpm check:fix           # Biome auto-fix
-pnpm format              # Format all files
-pnpm type-check          # TypeScript check
 
 # Clean
 pnpm clean               # Remove all build artifacts
@@ -337,13 +369,7 @@ MIT License - see [LICENSE](LICENSE)
 
 ## Credits
 
-Built with:
-
-- [Astro v6](https://astro.build)
-- [Tailwind CSS v4](https://tailwindcss.com)
-- [MDX](https://mdxjs.com)
-- [Biome](https://biomejs.dev)
-- [pnpm](https://pnpm.io)
+Built with [Astro](https://astro.build), [Tailwind CSS](https://tailwindcss.com), [MDX](https://mdxjs.com), [Biome](https://biomejs.dev), and [pnpm](https://pnpm.io).
 
 ---
 

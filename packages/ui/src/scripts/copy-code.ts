@@ -3,7 +3,7 @@
  */
 
 export function initCopyButtons(): void {
-  document.querySelectorAll('[data-copy-button]').forEach((button) => {
+  for (const button of document.querySelectorAll('[data-copy-button]')) {
     button.addEventListener('click', async () => {
       const codeBlock = button.closest('.code-block')?.querySelector('code');
       if (!codeBlock) return;
@@ -34,7 +34,7 @@ export function initCopyButtons(): void {
         }, 2000);
       }
     });
-  });
+  }
 }
 
 // No auto-init — call initCopyButtons() from astro:page-load

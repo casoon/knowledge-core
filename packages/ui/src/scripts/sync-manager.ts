@@ -56,7 +56,7 @@ function getAllProgress(): Record<string, unknown> {
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith('course-progress-')) {
+      if (key?.startsWith('course-progress-')) {
         progress[key] = JSON.parse(localStorage.getItem(key) || '{}');
       }
     }
@@ -212,7 +212,7 @@ export function initSyncManager(): void {
       }
 
       safeSetItem(STORAGE_KEY, data.code);
-      safeSetItem(STORAGE_KEY + '-updated', new Date().toISOString());
+      safeSetItem(`${STORAGE_KEY}-updated`, new Date().toISOString());
       if (codeDisplay) codeDisplay.textContent = data.code;
       if (lastUpdatedSpan) lastUpdatedSpan.textContent = formatDate(new Date().toISOString());
       showState(elements, 'active');
@@ -243,7 +243,7 @@ export function initSyncManager(): void {
 
       setAllProgress(data.progress);
       safeSetItem(STORAGE_KEY, code);
-      safeSetItem(STORAGE_KEY + '-updated', data.updatedAt);
+      safeSetItem(`${STORAGE_KEY}-updated`, data.updatedAt);
       if (codeDisplay) codeDisplay.textContent = code;
       if (lastUpdatedSpan) lastUpdatedSpan.textContent = formatDate(data.updatedAt);
       showState(elements, 'active');
@@ -277,7 +277,7 @@ export function initSyncManager(): void {
         throw new Error(data.error || 'Error saving');
       }
 
-      safeSetItem(STORAGE_KEY + '-updated', data.updatedAt);
+      safeSetItem(`${STORAGE_KEY}-updated`, data.updatedAt);
       if (lastUpdatedSpan) lastUpdatedSpan.textContent = formatDate(data.updatedAt);
       showState(elements, 'active');
     } catch (error) {
@@ -304,7 +304,7 @@ export function initSyncManager(): void {
   // Disconnect
   disconnectButton?.addEventListener('click', () => {
     safeRemoveItem(STORAGE_KEY);
-    safeRemoveItem(STORAGE_KEY + '-updated');
+    safeRemoveItem(`${STORAGE_KEY}-updated`);
     if (codeInput) codeInput.value = '';
     showState(elements, 'none');
   });
@@ -316,7 +316,7 @@ export function initSyncManager(): void {
   });
 
   // Load last updated
-  const savedUpdated = safeGetItem(STORAGE_KEY + '-updated');
+  const savedUpdated = safeGetItem(`${STORAGE_KEY}-updated`);
   if (savedUpdated && lastUpdatedSpan) {
     lastUpdatedSpan.textContent = formatDate(savedUpdated);
   }
