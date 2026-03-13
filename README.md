@@ -1,5 +1,6 @@
 # Knowledge Core
 
+[![CI](https://github.com/casoon/knowledge-core/actions/workflows/ci.yml/badge.svg)](https://github.com/casoon/knowledge-core/actions/workflows/ci.yml)
 [![GitHub Template](https://img.shields.io/badge/GitHub-Template-blue?logo=github)](https://github.com/casoon/knowledge-core/generate)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
