@@ -8,7 +8,27 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://courses.knowledge-core.dev',
 
-  integrations: [mdx(), sitemap(), speedMeasure(), postAudit()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    speedMeasure(),
+    postAudit({
+      rules: {
+        filters: { exclude: ['404.html'] },
+        canonical: { self_reference: true },
+        headings: { no_skip: true },
+        html_basics: { meta_description_required: true },
+        opengraph: {
+          require_og_title: true,
+          require_og_description: true,
+          require_og_image: true,
+        },
+        a11y: { require_skip_link: true },
+        links: { check_fragments: true },
+        sitemap: { require: true },
+      },
+    }),
+  ],
 
   markdown: {
     shikiConfig: {

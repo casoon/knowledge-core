@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "webspire": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://api.webspire.de/mcp"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "cloudflare": {
+      "command": "npx",
+      "args": ["-y", "@cloudflare/mcp-server-cloudflare"]
+    }
+  }
+}

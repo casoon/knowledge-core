@@ -28,7 +28,7 @@ shared/           # v6 template shared library (layouts, SEO, utils)
 
 ## Tech Stack
 
-- **Astro v6** (Beta) - Vite Environment API, Live Collections, CSP
+- **Astro v6** (Stable) - Vite Environment API, Live Collections, CSP
 - **Node >= 22.12.0** - Required for Astro v6
 - **Tailwind v4** - CSS-first, Vite plugin (`@tailwindcss/vite`)
 - **Zod v4** - `z.optional(z.string())` instead of `z.string().optional()`, `z.coerce.date()`
@@ -56,7 +56,7 @@ shared/           # v6 template shared library (layouts, SEO, utils)
 ### Components
 - PascalCase for file names
 - Semantic HTML (nav, main, article, section)
-- WCAG 2.1 Level AA compliance
+- WCAG 2.2 Level AA compliance
 - Mobile-first, dark mode support
 
 ### Styling
@@ -73,8 +73,15 @@ shared/           # v6 template shared library (layouts, SEO, utils)
 Detailed development guidelines are available as skills under `.claude/skills/`:
 
 - **astro-v6** — Astro v6 API, Content Collections, Zod v4, component patterns
+- **client-scripts** — `<script>` vs `is:inline`, bundling, FOUC prevention, SPA events
 - **tailwind-v4** — Tailwind v4 syntax, design tokens, dark mode, CSS-first config
+- **svelte-5** — Runes API ($state, $derived, $effect), event handlers, props
 - **cloudflare** — Workers deploy, wrangler, KV bindings
 - **biome** — Lint/format config, pre-commit hooks
 - **mdx-content** — Content Collections, Loader API, blog posts
 - **seo** — OG images, PageSEO component, sitemap, JSON-LD
+- **local-business-seo** — LocalBusiness JSON-LD, geo meta tags, areaServed, regionale Keywords
+- **wcag-a11y** — WCAG 2.2 AA patterns: landmarks, forms, focus, contrast, ARIA, motion, dialogs, checklists
+- **i18n** — Translations, locale routing, adding pages/locales
+- **playwright** — E2E test patterns, axe-core a11y, multi-project config
+- **post-audit** — Post-build SEO/a11y audit integration

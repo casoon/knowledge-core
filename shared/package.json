@@ -14,7 +14,7 @@
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "clsx": "catalog:",
-    "satori": "^0.19.2",
+    "satori": "^0.25.0",
     "tailwind-merge": "catalog:",
     "zod": "catalog:"
   },
