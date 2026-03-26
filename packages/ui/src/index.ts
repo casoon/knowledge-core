@@ -24,6 +24,7 @@ export { default as PageHeader } from './components/layout/PageHeader.astro';
 export { default as SidebarLayout } from './components/layout/SidebarLayout.astro';
 export { default as FontSizeControl } from './components/navigation/FontSizeControl.astro';
 // Navigation Components
+export { default as LanguageSelect } from './components/navigation/LanguageSelect.astro';
 export { default as NavBar } from './components/navigation/NavBar.astro';
 export { default as QuizToggle } from './components/navigation/QuizToggle.astro';
 export { default as SearchBar } from './components/navigation/SearchBar.astro';

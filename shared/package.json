@@ -11,7 +11,8 @@
     "./seo/*": "./src/seo/*",
     ".": "./src/utils/index.ts",
     "./utils": "./src/utils/index.ts",
-    "./utils/*": "./src/utils/*"
+    "./utils/*": "./src/utils/*",
+    "./i18n": "./src/i18n/index.ts"
   },
   "scripts": {
     "test": "vitest run",

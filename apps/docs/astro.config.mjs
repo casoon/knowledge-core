@@ -58,6 +58,14 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'de'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   build: {
     inlineStylesheets: 'auto',
   },

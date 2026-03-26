@@ -101,6 +101,9 @@ importers:
       '@knowledge-core/content-model':
         specifier: workspace:*
         version: link:../../packages/content-model
+      '@knowledge-core/shared':
+        specifier: workspace:*
+        version: link:../../shared
       '@knowledge-core/styles':
         specifier: workspace:*
         version: link:../../packages/styles
@@ -147,6 +150,9 @@ importers:
       '@knowledge-core/content-model':
         specifier: workspace:*
         version: link:../../packages/content-model
+      '@knowledge-core/shared':
+        specifier: workspace:*
+        version: link:../../shared
       '@knowledge-core/styles':
         specifier: workspace:*
         version: link:../../packages/styles

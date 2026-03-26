@@ -4,6 +4,7 @@ import '@knowledge-core/styles/global.css';
 import '@knowledge-core/styles/prose.css';
 import { getCollection } from 'astro:content';
 import type { LessonFrontmatter } from '@knowledge-core/content-model';
+import { getTranslations, locales, switchLocalePath } from '@knowledge-core/shared/i18n';
 
 export interface Props {
   frontmatter: LessonFrontmatter;
@@ -12,6 +13,16 @@ export interface Props {
 }
 
 const { frontmatter, courseSlug, lessonSlug } = Astro.props;
+
+const locale = Astro.currentLocale ?? 'en';
+const t = getTranslations(locale);
+const pathname = Astro.url.pathname;
+const langs = locales.map((l) => ({
+  locale: l,
+  label: l === 'en' ? 'English' : 'Deutsch',
+  href: switchLocalePath(pathname, l),
+  current: l === locale,
+}));
 
 const course = await getCollection('courses').then((courses) =>
   courses.find((c) => c.data.slug === courseSlug)
@@ -56,6 +67,7 @@ const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentInde
     logo="Courses"
     logoHref="/"
     links={[]}
+    langs={langs}
     courseNav={{
       courseTitle: course?.data.title || "Course",
       courseSlug: courseSlug,
@@ -91,7 +103,7 @@ const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentInde
       {
         frontmatter.goals && frontmatter.goals.length > 0 && (
           <div class="mb-8 p-4 bg-surface-alt rounded-lg border border-border">
-            <h2 class="text-sm font-semibold text-text mb-2">Learning Goals</h2>
+            <h2 class="text-sm font-semibold text-text mb-2">{t('course.content')}</h2>
             <ul class="space-y-1">
               {frontmatter.goals.map((goal) => (
                 <li class="text-sm text-text-muted flex items-start gap-2">
@@ -180,7 +192,7 @@ const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentInde
                   d="M15 19l-7-7 7-7"
                 />
               </svg>
-              <span>Back</span>
+              <span>{t('pagination.prev')}</span>
             </a>
           ) : (
             <div />
@@ -200,7 +212,7 @@ const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentInde
               href={`/courses/${courseSlug}/${nextLesson.id}`}
               class="btn btn-primary flex items-center gap-2"
             >
-              <span>Next</span>
+              <span>{t('pagination.next')}</span>
               <svg
                 class="w-5 h-5"
                 fill="none"

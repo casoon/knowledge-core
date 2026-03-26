@@ -18,6 +18,7 @@
     "@casoon/astro-post-audit": "catalog:",
     "@casoon/astro-speed-measure": "catalog:",
     "@knowledge-core/content-model": "workspace:*",
+    "@knowledge-core/shared": "workspace:*",
     "@knowledge-core/styles": "workspace:*",
     "@knowledge-core/ui": "workspace:*",
     "astro": "catalog:",

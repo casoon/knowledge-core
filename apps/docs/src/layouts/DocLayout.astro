@@ -3,6 +3,7 @@ import { AppShell, Footer, NavBar, PageHeader, SidebarLayout } from '@knowledge-
 import '@knowledge-core/styles/global.css';
 import '@knowledge-core/styles/prose.css';
 import { getCollection } from 'astro:content';
+import { getTranslations, locales, switchLocalePath } from '@knowledge-core/shared/i18n';
 import DocsSidebar from '../components/DocsSidebar.astro';
 
 export interface Props {
@@ -21,6 +22,16 @@ export interface Props {
 const { frontmatter } = Astro.props;
 const allDocs = await getCollection('docs', ({ data }) => !data.draft);
 
+const locale = Astro.currentLocale ?? 'en';
+const t = getTranslations(locale);
+const pathname = Astro.url.pathname;
+const langs = locales.map((l) => ({
+  locale: l,
+  label: l === 'en' ? 'English' : 'Deutsch',
+  href: switchLocalePath(pathname, l),
+  current: l === locale,
+}));
+
 type PrevNext = boolean | { link: string; label: string } | undefined;
 function resolvePrevNext(val: PrevNext): { link: string; label: string } | null {
   if (!val || val === true) return null;
@@ -34,7 +45,7 @@ const nextLink = resolvePrevNext(frontmatter.next);
   title={`${frontmatter.title} | Dokumentation`}
   description={frontmatter.description}
 >
-  <NavBar logo="Docs" logoHref="/" links={[]} />
+  <NavBar logo="Docs" logoHref="/" links={[]} langs={langs} />
 
   <SidebarLayout hasSidebar={true} hasTableOfContents={false}>
     <DocsSidebar
@@ -43,7 +54,7 @@ const nextLink = resolvePrevNext(frontmatter.next);
       currentPath={Astro.url.pathname}
     />
 
-    <div class="max-w-4xl">
+    <div class="max-w-4xl mx-auto">
       <PageHeader
         title={frontmatter.title}
         description={frontmatter.description}
@@ -69,7 +80,7 @@ const nextLink = resolvePrevNext(frontmatter.next);
           <div class="flex items-center gap-4">
             {frontmatter.editUrl && (
               <a href={frontmatter.editUrl} class="text-text-muted hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
-                Diese Seite bearbeiten
+                {t('page.edit')}
               </a>
             )}
             {nextLink && (

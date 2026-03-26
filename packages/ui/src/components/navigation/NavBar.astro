@@ -1,8 +1,11 @@
 ---
 import SyncProgress from '../courses/SyncProgress.astro';
 import FontSizeControl from './FontSizeControl.astro';
+import LanguageSelect, { type LangOption } from './LanguageSelect.astro';
 import QuizToggle from './QuizToggle.astro';
 import SearchBar from './SearchBar.astro';
+
+export type { LangOption };
 
 export interface NavLink {
   text: string;
@@ -22,6 +25,7 @@ export interface Props {
   logoAlt?: string;
   logoHref?: string;
   links: NavLink[];
+  langs?: LangOption[];
   showThemeToggle?: boolean;
   showSearch?: boolean;
   showSync?: boolean;
@@ -41,6 +45,7 @@ const {
   logoAlt = 'Logo',
   logoHref = '/',
   links,
+  langs,
   showThemeToggle = true,
   showSearch = true,
   showSync = true,
@@ -109,6 +114,7 @@ const {
             </div>
           )
         }
+        {langs && langs.length > 1 && <LanguageSelect langs={langs} />}
         {showThemeToggle && <div id="theme-toggle-container" />}
 
         <!-- Mobile menu button -->

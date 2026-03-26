@@ -1,0 +1,78 @@
+---
+export interface LangOption {
+  locale: string;
+  label: string;
+  href: string;
+  current: boolean;
+}
+
+export interface Props {
+  langs: LangOption[];
+}
+
+const { langs } = Astro.props;
+---
+
+<div class="relative" id="lang-select">
+  <button
+    type="button"
+    class="flex items-center gap-1.5 px-2 py-1.5 text-sm text-text-muted hover:text-text transition-colors rounded-md hover:bg-surface-alt"
+    aria-label="Select language"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    id="lang-select-btn"
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+    </svg>
+    <span>{langs.find((l) => l.current)?.label ?? langs[0]?.label}</span>
+    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <ul
+    role="listbox"
+    aria-label="Select language"
+    class="absolute right-0 top-full mt-1 min-w-[8rem] bg-surface border border-border rounded-lg shadow-md py-1 hidden z-dropdown"
+    id="lang-select-menu"
+  >
+    {langs.map((lang) => (
+      <li role="option" aria-selected={lang.current}>
+        <a
+          href={lang.href}
+          class:list={[
+            'block px-3 py-2 text-sm transition-colors',
+            lang.current
+              ? 'text-primary font-medium bg-primary/5'
+              : 'text-text-muted hover:text-text hover:bg-surface-alt',
+          ]}
+          hreflang={lang.locale}
+        >
+          {lang.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const btn = document.getElementById('lang-select-btn');
+    const menu = document.getElementById('lang-select-menu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!btn.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
