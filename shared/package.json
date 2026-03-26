@@ -1,6 +1,6 @@
 {
   "name": "@knowledge-core/shared",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "main": "./src/utils/index.ts",
@@ -13,12 +13,19 @@
     "./utils": "./src/utils/index.ts",
     "./utils/*": "./src/utils/*"
   },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "clsx": "catalog:",
     "satori": "^0.25.0",
     "tailwind-merge": "catalog:",
     "zod": "catalog:"
+  },
+  "devDependencies": {
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "astro": "catalog:"

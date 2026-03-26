@@ -1,5 +1,10 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import {
+  type ResolvedSidebarEntry,
+  resolveSidebar,
+} from '@knowledge-core/content-model/sidebar-utils';
+import { sidebar as sidebarConfig } from '../config/sidebar';
 
 export interface Props {
   docs: CollectionEntry<'docs'>[];
@@ -7,78 +12,61 @@ export interface Props {
 }
 
 const { docs, currentPath } = Astro.props;
+const resolved = resolveSidebar(sidebarConfig, docs, currentPath, '/docs');
 
-// Group docs by category
-const docsByCategory = docs.reduce(
-  (acc, doc) => {
-    const category = doc.data.category;
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(doc);
-    return acc;
-  },
-  {} as Record<string, CollectionEntry<'docs'>[]>
-);
-
-// Sort within each category by order
-for (const category of Object.keys(docsByCategory)) {
-  docsByCategory[category].sort((a, b) => a.data.order - b.data.order);
+function badgeClass(variant: string): string {
+  const map: Record<string, string> = {
+    note: 'badge',
+    tip: 'badge badge-success',
+    danger: 'badge badge-error',
+    caution: 'badge badge-warning',
+    success: 'badge badge-success',
+  };
+  return map[variant] ?? 'badge';
 }
-
-const categoryTitles = {
-  'getting-started': 'Getting Started',
-  guides: 'Guides',
-  api: 'API Reference',
-  cookbook: 'Cookbook',
-};
-
-const categories: Array<keyof typeof categoryTitles> = [
-  'getting-started',
-  'guides',
-  'api',
-  'cookbook',
-];
 ---
 
-<nav class="p-6">
+<nav class="p-6" aria-label="Dokumentation">
   <div class="mb-6">
-    <input type="search" placeholder="Search..." class="input w-full" id="docs-search" aria-label="Search documentation" />
+    <input
+      type="search"
+      placeholder="Search..."
+      class="input w-full"
+      id="docs-search"
+      aria-label="Search documentation"
+    />
   </div>
 
   <div class="space-y-6">
-    {
-      categories.map((category) => {
-        const categoryDocs = docsByCategory[category] || [];
-        if (categoryDocs.length === 0) return null;
-
+    {resolved.map((entry) => {
+      if (entry.type === 'group') {
+        const group = entry as Extract<ResolvedSidebarEntry, { type: 'group' }>;
+        if (group.items.length === 0) return null;
         return (
           <div>
             <h3 class="text-sm font-semibold text-text mb-2 uppercase tracking-wider">
-              {categoryTitles[category]}
+              {group.label}
             </h3>
             <ul class="space-y-1">
-              {categoryDocs.map((doc) => {
-                const href = `/docs/${doc.id}`;
-                const isActive = currentPath === href || currentPath.startsWith(href + '/');
-
+              {group.items.map((item) => {
+                if (item.type !== 'link') return null;
                 return (
                   <li>
                     <a
-                      href={href}
+                      href={item.href}
                       class:list={[
-                        'block py-1.5 px-3 rounded text-sm transition-colors',
-                        isActive
+                        'flex items-center justify-between py-1.5 px-3 rounded text-sm transition-colors',
+                        item.active
                           ? 'bg-primary/10 text-primary font-medium'
                           : 'text-text-muted hover:text-text hover:bg-surface-alt',
                       ]}
+                      aria-current={item.active ? 'page' : undefined}
                     >
-                      {doc.data.title}
-                      {doc.data.status === 'beta' && (
-                        <span class="ml-2 badge badge-warning text-xs">Beta</span>
-                      )}
-                      {doc.data.status === 'deprecated' && (
-                        <span class="ml-2 badge badge-error text-xs">Veraltet</span>
+                      <span>{item.label}</span>
+                      {item.badge && (
+                        <span class={`ml-2 text-xs ${badgeClass(item.badge.variant)}`}>
+                          {item.badge.text}
+                        </span>
                       )}
                     </a>
                   </li>
@@ -87,7 +75,29 @@ const categories: Array<keyof typeof categoryTitles> = [
             </ul>
           </div>
         );
-      })
-    }
+      }
+      if (entry.type === 'link') {
+        return (
+          <a
+            href={entry.href}
+            class:list={[
+              'flex items-center justify-between py-1.5 px-3 rounded text-sm transition-colors',
+              entry.active
+                ? 'bg-primary/10 text-primary font-medium'
+                : 'text-text-muted hover:text-text hover:bg-surface-alt',
+            ]}
+            aria-current={entry.active ? 'page' : undefined}
+          >
+            <span>{entry.label}</span>
+            {entry.badge && (
+              <span class={`ml-2 text-xs ${badgeClass(entry.badge.variant)}`}>
+                {entry.badge.text}
+              </span>
+            )}
+          </a>
+        );
+      }
+      return null;
+    })}
   </div>
 </nav>

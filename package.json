@@ -1,6 +1,6 @@
 {
   "name": "knowledge-core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Monorepo template for documentation and course platforms",
   "author": "casoon",
@@ -28,7 +28,10 @@
     "check:fix": "biome check --write .",
     "format": "biome format --write .",
     "lint": "biome lint .",
+    "test": "pnpm --filter @knowledge-core/content-model test && pnpm --filter @knowledge-core/shared test",
+    "test:watch": "pnpm -r --filter @knowledge-core/content-model --filter @knowledge-core/shared test:watch",
     "type-check": "pnpm --filter docs type-check && pnpm --filter courses type-check",
+    "linkcheck": "pnpm --filter docs linkcheck",
     "clean": "pnpm -r clean && rm -rf node_modules",
     "prepare": "husky"
   },

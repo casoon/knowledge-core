@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "type-check": "astro check",
-    "clean": "rm -rf dist .astro"
+    "clean": "rm -rf dist .astro",
+    "linkcheck": "astro build && check-html-links dist"
   },
   "dependencies": {
     "@astrojs/check": "catalog:",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "catalog:",
+    "check-html-links": "catalog:",
     "typescript": "catalog:"
   }
 }

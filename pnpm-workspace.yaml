@@ -33,3 +33,7 @@ catalog:
 
   # Fonts
   '@fontsource/inter': ^5.2.8
+
+  # Testing
+  vitest: ^3.0.0
+  check-html-links: ^0.2.4

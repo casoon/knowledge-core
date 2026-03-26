@@ -11,11 +11,23 @@ export interface Props {
     description?: string;
     tags?: string[];
     status?: 'stable' | 'beta' | 'deprecated';
+    editUrl?: string;
+    pagefind?: boolean;
+    prev?: boolean | { link: string; label: string };
+    next?: boolean | { link: string; label: string };
   };
 }
 
 const { frontmatter } = Astro.props;
-const allDocs = await getCollection('docs');
+const allDocs = await getCollection('docs', ({ data }) => !data.draft);
+
+type PrevNext = boolean | { link: string; label: string } | undefined;
+function resolvePrevNext(val: PrevNext): { link: string; label: string } | null {
+  if (!val || val === true) return null;
+  return val;
+}
+const prevLink = resolvePrevNext(frontmatter.prev);
+const nextLink = resolvePrevNext(frontmatter.next);
 ---
 
 <AppShell
@@ -39,17 +51,33 @@ const allDocs = await getCollection('docs');
         meta={{ status: frontmatter.status }}
       />
 
-      <article class="prose">
-        <slot />
-      </article>
+      {frontmatter.pagefind === false
+        ? <div data-pagefind-ignore><article class="prose"><slot /></article></div>
+        : <article class="prose" data-pagefind-body><slot /></article>
+      }
 
       <div class="mt-12 pt-8 border-t border-border">
-        <div class="flex justify-between text-sm">
+        <div class="flex justify-between items-center text-sm gap-4">
           <div>
-            <!-- Previous page -->
+            {prevLink && (
+              <a href={prevLink.link} class="flex items-center gap-2 text-text-muted hover:text-primary transition-colors">
+                <span aria-hidden="true">←</span>
+                <span>{prevLink.label}</span>
+              </a>
+            )}
           </div>
-          <div>
-            <!-- Next page -->
+          <div class="flex items-center gap-4">
+            {frontmatter.editUrl && (
+              <a href={frontmatter.editUrl} class="text-text-muted hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                Diese Seite bearbeiten
+              </a>
+            )}
+            {nextLink && (
+              <a href={nextLink.link} class="flex items-center gap-2 text-text-muted hover:text-primary transition-colors">
+                <span>{nextLink.label}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            )}
           </div>
         </div>
       </div>

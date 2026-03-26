@@ -1,18 +1,25 @@
 {
   "name": "@knowledge-core/content-model",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
     "./docs": "./src/docs.ts",
-    "./courses": "./src/courses.ts"
+    "./courses": "./src/courses.ts",
+    "./sidebar": "./src/sidebar.ts",
+    "./sidebar-utils": "./src/sidebar-utils.ts"
   },
   "dependencies": {
     "zod": "catalog:"
   },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
   "devDependencies": {
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

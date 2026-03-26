@@ -35,6 +35,11 @@ A production-ready template based on **Astro v6**, **MDX**, **Tailwind CSS v4**,
 - **Cloud Sync** — Sync learning progress across devices
 - **Pre-Commit Hooks** — Husky + lint-staged with Biome auto-fix
 - **Post-Build Audit** — SEO & a11y checks via @casoon/astro-post-audit
+- **Configurable Sidebar** — `defineSidebar()` with autogenerate, groups, manual links, and badges
+- **Extended Frontmatter** — `draft`, `editUrl`, `pagefind`, `sidebar.badge`, `prev/next` (Starlight-inspired)
+- **Pagefind-Optimized** — NavBar/Footer excluded from index; per-page `pagefind: false` support
+- **Unit Tests** — Vitest for content schemas (`docs`, `courses`, `sidebar`) and i18n utils
+- **Link Validation** — `pnpm linkcheck` checks all internal HTML links after build
 
 ## Use Cases
 
@@ -157,6 +162,18 @@ category: guides
 order: 1
 tags: [tutorial]
 status: stable
+# Optional Starlight-inspired fields:
+draft: false           # true = excluded from build
+editUrl: https://github.com/org/repo/edit/main/docs/my-page.mdx
+pagefind: true         # false = excluded from search index
+sidebar:
+  badge:
+    variant: tip       # note | tip | danger | caution | success
+    text: New
+prev:
+  link: /docs/intro
+  label: Introduction
+next: false            # disable next link
 ---
 
 import { Callout } from '@knowledge-core/ui';
@@ -303,6 +320,8 @@ pnpm check:fix           # Biome auto-fix
 pnpm format              # Format all files
 pnpm lint                # Lint only
 pnpm type-check          # TypeScript check
+pnpm test                # Vitest unit tests (content-model + i18n utils)
+pnpm linkcheck           # Build docs + validate all HTML links
 ```
 
 ### Pre-Commit Hook
@@ -327,9 +346,39 @@ pnpm preview             # All apps
 pnpm preview:docs        # Docs only
 pnpm preview:courses     # Courses only
 
+# Quality
+pnpm test                # Vitest unit tests
+pnpm linkcheck           # Build docs + check all HTML links
+pnpm type-check          # TypeScript check
+pnpm check               # Biome lint + format
+pnpm check:fix           # Biome auto-fix
+
 # Clean
 pnpm clean               # Remove all build artifacts
 ```
+
+## Sidebar Configuration
+
+The docs sidebar is configured declaratively in `apps/docs/src/config/sidebar.ts`:
+
+```ts
+import { defineSidebar } from '@knowledge-core/content-model/sidebar';
+
+export const sidebar = defineSidebar([
+  { label: 'Getting Started', autogenerate: { directory: 'getting-started' } },
+  { label: 'Guides', autogenerate: { directory: 'guides' } },
+  {
+    label: 'Reference',
+    collapsed: true,
+    items: [
+      { slug: 'api/overview' },
+      { slug: 'api/endpoints', badge: { variant: 'tip', text: 'New' } },
+    ],
+  },
+  { label: 'GitHub', link: 'https://github.com/casoon/knowledge-core' },
+]);
+```
+
 
 ## Deployment
 
