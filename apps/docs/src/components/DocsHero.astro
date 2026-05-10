@@ -1,22 +1,19 @@
 ---
 ---
 
-<section class="relative overflow-hidden bg-slate-950 py-24">
-  <div
-    class="pointer-events-none absolute inset-0 opacity-[0.04]"
-    style="background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px); background-size: 40px 40px;"
-  >
+<section class="relative overflow-hidden bg-white py-24 dark:bg-slate-950">
+  <div class="hero-grid pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.04]">
   </div>
 
   <div class="relative mx-auto max-w-4xl px-6 text-center">
     <div
-      class="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900 px-3.5 py-1.5"
+      class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-3.5 py-1.5 dark:border-slate-700 dark:bg-slate-900"
     >
       <span
-        class="h-1.5 w-1.5 rounded-full bg-emerald-400"
+        class="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400"
         style="box-shadow: 0 0 6px 2px oklch(79.2% 0.209 151.711 / 0.5)"
       ></span>
-      <div class="h-4 overflow-hidden text-xs font-mono text-slate-300">
+      <div class="h-4 overflow-hidden text-xs font-mono text-slate-600 dark:text-slate-300">
         <ul
           class="ws-hero-cycle m-0 list-none p-0 leading-4"
           aria-live="polite"
@@ -30,11 +27,11 @@
     </div>
 
     <h1
-      class="mt-8 text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+      class="mt-8 text-balance text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white"
     >
       Knowledge Core
     </h1>
-    <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-400">
+    <p class="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-400">
       A modern monorepo template for documentation and course platforms. Built with Astro,
       MDX, and Tailwind CSS.
     </p>
@@ -42,45 +39,45 @@
     <div class="mt-8 flex flex-wrap justify-center gap-3">
       <a
         href="/docs/getting-started/installation"
-        class="rounded-xl bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+        class="rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
       >
         Get started
       </a>
       <a
         href="/docs"
-        class="rounded-xl border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
+        class="rounded-xl border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-white"
       >
         View docs
       </a>
     </div>
 
-    <div class="mt-16 grid sm:grid-cols-3 gap-4 text-left">
+    <div class="mt-16 grid gap-4 text-left sm:grid-cols-3">
       <a
         href="/docs/getting-started/installation"
-        class="group rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-slate-600 hover:bg-slate-900"
+        class="group rounded-xl border border-slate-200 bg-slate-50/60 p-5 transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-600 dark:hover:bg-slate-900"
       >
-        <div class="text-2xl mb-3">🚀</div>
-        <h3 class="text-sm font-semibold text-slate-200 mb-1 group-hover:text-white transition-colors">
+        <div class="mb-3 text-2xl">🚀</div>
+        <h3 class="mb-1 text-sm font-semibold text-slate-700 transition-colors group-hover:text-slate-900 dark:text-slate-200 dark:group-hover:text-white">
           Quick Start
         </h3>
         <p class="text-xs text-slate-500">Installation and first steps in minutes.</p>
       </a>
       <a
         href="/docs/getting-started/structure"
-        class="group rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-slate-600 hover:bg-slate-900"
+        class="group rounded-xl border border-slate-200 bg-slate-50/60 p-5 transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-600 dark:hover:bg-slate-900"
       >
-        <div class="text-2xl mb-3">📁</div>
-        <h3 class="text-sm font-semibold text-slate-200 mb-1 group-hover:text-white transition-colors">
+        <div class="mb-3 text-2xl">📁</div>
+        <h3 class="mb-1 text-sm font-semibold text-slate-700 transition-colors group-hover:text-slate-900 dark:text-slate-200 dark:group-hover:text-white">
           Project Structure
         </h3>
         <p class="text-xs text-slate-500">Monorepo layout and package organization.</p>
       </a>
       <a
         href="/docs/components/overview"
-        class="group rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition hover:border-slate-600 hover:bg-slate-900"
+        class="group rounded-xl border border-slate-200 bg-slate-50/60 p-5 transition hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-600 dark:hover:bg-slate-900"
       >
-        <div class="text-2xl mb-3">🧩</div>
-        <h3 class="text-sm font-semibold text-slate-200 mb-1 group-hover:text-white transition-colors">
+        <div class="mb-3 text-2xl">🧩</div>
+        <h3 class="mb-1 text-sm font-semibold text-slate-700 transition-colors group-hover:text-slate-900 dark:text-slate-200 dark:group-hover:text-white">
           Components
         </h3>
         <p class="text-xs text-slate-500">All UI components with examples and API docs.</p>
@@ -90,14 +87,37 @@
 </section>
 
 <style>
+  .hero-grid {
+    background-image: linear-gradient(to right, oklch(0% 0 0 / 1) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0% 0 0 / 1) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  :global(.dark) .hero-grid {
+    background-image: linear-gradient(to right, #fff 1px, transparent 1px),
+      linear-gradient(to bottom, #fff 1px, transparent 1px);
+  }
+
   @keyframes ws-cycle {
-    0%, 26% { transform: translateY(0); }
-    33%, 59% { transform: translateY(-100%); }
-    66%, 92% { transform: translateY(-200%); }
-    100% { transform: translateY(0); }
+    0%,
+    26% {
+      transform: translateY(0);
+    }
+    33%,
+    59% {
+      transform: translateY(-100%);
+    }
+    66%,
+    92% {
+      transform: translateY(-200%);
+    }
+    100% {
+      transform: translateY(0);
+    }
   }
   @media (prefers-reduced-motion: reduce) {
-    .ws-hero-cycle { animation: none !important; }
+    .ws-hero-cycle {
+      animation: none !important;
+    }
   }
   .ws-hero-cycle {
     animation: ws-cycle 7.5s ease infinite;
