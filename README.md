@@ -18,12 +18,12 @@ A production-ready template based on **Astro v6**, **MDX**, **Tailwind CSS v4**,
 
 | Technology | Version | Purpose |
 |---|---|---|
-| [Astro](https://astro.build) | 6.0 | Framework — Vite Environment API, Content Collections, ClientRouter |
+| [Astro](https://astro.build) | 6.3 | Framework — Vite Environment API, Content Collections, ClientRouter |
 | [MDX](https://mdxjs.com) | 5.0 | Markdown with interactive components |
-| [Tailwind CSS](https://tailwindcss.com) | 4.2 | CSS-first config, Vite plugin, design tokens |
+| [Tailwind CSS](https://tailwindcss.com) | 4.3 | CSS-first config, Vite plugin, design tokens |
 | [Biome](https://biomejs.dev) | 2.4 | Linting, formatting, a11y, security & complexity checks |
 | [Zod](https://zod.dev) | 4.x | Runtime validation for content schemas |
-| [TypeScript](https://www.typescriptlang.org) | 5.9 | Strict mode throughout |
+| [TypeScript](https://www.typescriptlang.org) | 6.0 | Strict mode throughout |
 | [pnpm](https://pnpm.io) | 9.x | Workspaces with catalog for centralized dependency management |
 | Node.js | >= 22.12 | Runtime |
 
