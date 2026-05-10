@@ -14,8 +14,8 @@
   "dependencies": {
     "@astrojs/check": "catalog:",
     "@astrojs/mdx": "catalog:",
-    "@astrojs/sitemap": "catalog:",
     "@casoon/astro-post-audit": "catalog:",
+    "@casoon/astro-site-files": "catalog:",
     "@casoon/astro-speed-measure": "catalog:",
     "@knowledge-core/content-model": "workspace:*",
     "@knowledge-core/shared": "workspace:*",

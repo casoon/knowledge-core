@@ -68,6 +68,43 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
   const checkButton = quizContainer?.querySelector("[data-check-answers]");
   const resultDiv = quizContainer?.querySelector("[data-result]");
 
+  function renderFeedback(container, isCorrect, question) {
+    const color = isCorrect ? "success" : "error";
+    // Static SVG icons only — no content data interpolated
+    const iconSvg = isCorrect
+      ? `<svg class="w-5 h-5 text-success flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`
+      : `<svg class="w-5 h-5 text-error flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`;
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "flex items-start gap-3";
+    wrapper.innerHTML = iconSvg;
+
+    const textDiv = document.createElement("div");
+
+    const label = document.createElement("div");
+    label.className = `font-medium text-${color} mb-1`;
+    label.textContent = isCorrect ? "Correct!" : "Incorrect";
+    textDiv.appendChild(label);
+
+    if (!isCorrect) {
+      const answerP = document.createElement("p");
+      answerP.className = `text-sm text-${color}`;
+      answerP.textContent = `The correct answer is: ${question.options[question.correctAnswer]}`;
+      textDiv.appendChild(answerP);
+    }
+
+    if (question.explanation) {
+      const explP = document.createElement("p");
+      explP.className = `text-sm text-${color} mt-2`;
+      explP.textContent = question.explanation;
+      textDiv.appendChild(explP);
+    }
+
+    wrapper.appendChild(textDiv);
+    container.textContent = "";
+    container.appendChild(wrapper);
+  }
+
   checkButton?.addEventListener("click", () => {
     let correct = 0;
     const total = questions.length;
@@ -88,39 +125,16 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
       const selectedValue = parseInt(selectedInput.value);
       const isCorrect = selectedValue === question.correctAnswer;
 
+      feedbackDiv.classList.remove("hidden");
       if (isCorrect) {
         correct++;
-        feedbackDiv.classList.remove("hidden");
         feedbackContent.className =
           "p-4 rounded-lg bg-success-bg border border-success";
-        feedbackContent.innerHTML = `
-          <div class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-success flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <div>
-              <div class="font-medium text-success mb-1">Correct!</div>
-              ${question.explanation ? `<p class="text-sm text-success">${question.explanation}</p>` : ""}
-            </div>
-          </div>
-        `;
       } else {
-        feedbackDiv.classList.remove("hidden");
         feedbackContent.className =
           "p-4 rounded-lg bg-error-bg border border-error";
-        feedbackContent.innerHTML = `
-          <div class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-error flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            <div>
-              <div class="font-medium text-error mb-1">Incorrect</div>
-              <p class="text-sm text-error">The correct answer is: ${question.options[question.correctAnswer]}</p>
-              ${question.explanation ? `<p class="text-sm text-error mt-2">${question.explanation}</p>` : ""}
-            </div>
-          </div>
-        `;
       }
+      renderFeedback(feedbackContent, isCorrect, question);
     });
 
     if (resultDiv) {

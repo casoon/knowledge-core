@@ -7,10 +7,22 @@ export interface Props {
   description?: string;
   lang?: string;
   showFooter?: boolean;
+  ogImage?: string;
+  ogType?: string;
+  noIndex?: boolean;
 }
 
-const { title, description, lang = 'en', showFooter = true } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const {
+  title,
+  description,
+  lang = 'en',
+  showFooter = true,
+  ogImage,
+  ogType = 'website',
+  noIndex = false,
+} = Astro.props;
+const desc = description || title;
+const canonicalURL = Astro.url.href;
 ---
 
 <!doctype html>
@@ -19,9 +31,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description || title} />
+    <meta name="description" content={desc} />
     <title>{title}</title>
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={desc} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -45,6 +67,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class="min-h-screen flex flex-col">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:rounded focus:bg-primary focus:text-white focus:font-medium">
+      Skip to content
+    </a>
     <slot />
     {showFooter && <slot name="footer" />}
   </body>

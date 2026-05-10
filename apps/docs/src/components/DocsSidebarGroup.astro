@@ -1,0 +1,37 @@
+---
+import type {
+  ResolvedSidebarGroup,
+  ResolvedSidebarItem,
+} from '@knowledge-core/content-model/sidebar-utils';
+import DocsSidebarLink from './DocsSidebarLink.astro';
+
+export interface Props {
+  group: ResolvedSidebarGroup;
+}
+
+const { group } = Astro.props;
+const links = group.items.filter((item): item is ResolvedSidebarItem => item.type === 'link');
+const hasActiveChild = links.some((item) => item.active);
+---
+
+{links.length > 0 && (
+  <details open={hasActiveChild || undefined} class="group/details">
+    <summary class="flex cursor-pointer items-center justify-between py-1.5 px-3 rounded text-sm font-semibold uppercase tracking-wider text-text hover:bg-surface-alt list-none [&::-webkit-details-marker]:hidden">
+      <span>{group.label}</span>
+      <svg
+        class="w-3.5 h-3.5 text-text-muted transition-transform duration-200 group-open/details:rotate-180"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+      </svg>
+    </summary>
+    <ul class="mt-1 space-y-0.5 pb-2">
+      {links.map((item) => (
+        <li><DocsSidebarLink item={item} /></li>
+      ))}
+    </ul>
+  </details>
+)}

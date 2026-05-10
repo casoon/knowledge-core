@@ -3,6 +3,7 @@ import { AppShell, Footer, NavBar, ProgressBar } from '@knowledge-core/ui';
 import '@knowledge-core/styles/global.css';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
+import { groupLessonsByModule, sortLessons } from '@knowledge-core/content-model/lesson-utils';
 
 export async function getStaticPaths() {
   const courses = await getCollection('courses');
@@ -13,27 +14,12 @@ export async function getStaticPaths() {
 }
 
 const { course } = Astro.props as { course: CollectionEntry<'courses'> };
-const allLessons = await getCollection('lessons', ({ data }) => {
+const rawLessons = await getCollection('lessons', ({ data }) => {
   return data.courseSlug === course.data.slug;
 });
 
-// Group lessons by module
-const lessonsByModule = allLessons.reduce(
-  (acc, lesson) => {
-    const module = lesson.data.module;
-    if (!acc[module]) {
-      acc[module] = [];
-    }
-    acc[module].push(lesson);
-    return acc;
-  },
-  {} as Record<string, typeof allLessons>
-);
-
-// Sort lessons within each module
-for (const mod of Object.keys(lessonsByModule)) {
-  lessonsByModule[mod].sort((a, b) => a.data.orderInModule - b.data.orderInModule);
-}
+const allLessons = sortLessons(rawLessons);
+const lessonsByModule = groupLessonsByModule(allLessons);
 
 const levelColors = {
   beginner: 'badge-success',
@@ -48,7 +34,7 @@ const levelColors = {
 >
   <NavBar logo="Courses" logoHref="/" links={[]} />
 
-  <main class="flex-1 mt-16">
+  <main id="main-content" class="flex-1 mt-16">
     <section class="container-custom py-12">
       <!-- Course Header -->
       <div class="mb-12">
@@ -120,32 +106,49 @@ const levelColors = {
               </p>
             </div>
           ) : (
-            <div class="space-y-6">
-              {Object.keys(lessonsByModule).map((module) => (
-                <div class="card">
-                  <h3 class="text-xl font-semibold text-text mb-4">{module}</h3>
-                  <ul class="space-y-2">
+            <div class="space-y-3">
+              {Object.keys(lessonsByModule).map((module, index) => (
+                <details open={index === 0 || undefined} class="group card p-0 overflow-hidden">
+                  <summary class="flex cursor-pointer items-center justify-between px-6 py-4 list-none [&::-webkit-details-marker]:hidden">
+                    <div class="flex items-center gap-3">
+                      <h3 class="text-base font-semibold text-text">{module}</h3>
+                      <span class="text-xs text-text-muted">
+                        {lessonsByModule[module].length} {lessonsByModule[module].length === 1 ? 'lesson' : 'lessons'}
+                      </span>
+                    </div>
+                    <svg
+                      class="w-4 h-4 text-text-muted transition-transform duration-200 group-open:rotate-180 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </summary>
+                  <ul class="border-t border-border divide-y divide-border">
                     {lessonsByModule[module].map((lesson) => (
                       <li>
                         <a
                           href={`/courses/${course.data.slug}/${lesson.id}`}
-                          class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-alt transition-colors group"
+                          class="flex items-center justify-between px-6 py-3 hover:bg-surface-alt transition-colors group/lesson"
                         >
                           <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 rounded-full border-2 border-border flex items-center justify-center text-xs">
+                            <div class="w-6 h-6 rounded-full border-2 border-border flex items-center justify-center text-xs flex-shrink-0">
                               {lesson.data.orderInModule}
                             </div>
-                            <span class="text-text group-hover:text-primary transition-colors">
+                            <span class="text-sm text-text group-hover/lesson:text-primary transition-colors">
                               {lesson.data.title}
                             </span>
                           </div>
                           <div class="flex items-center gap-4 text-sm text-text-muted">
                             <span>{lesson.data.estimatedMinutes} min</span>
                             <svg
-                              class="w-5 h-5"
+                              class="w-4 h-4"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
+                              aria-hidden="true"
                             >
                               <path
                                 stroke-linecap="round"
@@ -159,7 +162,7 @@ const levelColors = {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </details>
               ))}
             </div>
           )

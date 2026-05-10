@@ -4,6 +4,11 @@ import '@knowledge-core/styles/global.css';
 import '@knowledge-core/styles/prose.css';
 import { getCollection } from 'astro:content';
 import type { LessonFrontmatter } from '@knowledge-core/content-model';
+import {
+  getLessonNavigation,
+  groupLessonsByModule,
+  sortLessons,
+} from '@knowledge-core/content-model/lesson-utils';
 import { getTranslations, locales, switchLocalePath } from '@knowledge-core/shared/i18n';
 
 export interface Props {
@@ -28,35 +33,13 @@ const course = await getCollection('courses').then((courses) =>
   courses.find((c) => c.data.slug === courseSlug)
 );
 
-const allLessons = await getCollection('lessons', ({ data }) => {
+const rawLessons = await getCollection('lessons', ({ data }) => {
   return data.courseSlug === courseSlug;
 });
 
-// Sort lessons by module and orderInModule
-allLessons.sort((a, b) => {
-  if (a.data.module !== b.data.module) {
-    return a.data.module.localeCompare(b.data.module);
-  }
-  return a.data.orderInModule - b.data.orderInModule;
-});
-
-// Group lessons by module
-const lessonsByModule = allLessons.reduce(
-  (acc, lesson) => {
-    const module = lesson.data.module;
-    if (!acc[module]) {
-      acc[module] = [];
-    }
-    acc[module].push(lesson);
-    return acc;
-  },
-  {} as Record<string, typeof allLessons>
-);
-
-// Find current lesson index
-const currentIndex = allLessons.findIndex((l) => l.id === lessonSlug);
-const prevLesson = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
-const nextLesson = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
+const allLessons = sortLessons(rawLessons);
+const lessonsByModule = groupLessonsByModule(allLessons);
+const { prevLesson, nextLesson } = getLessonNavigation(allLessons, lessonSlug);
 ---
 
 <AppShell

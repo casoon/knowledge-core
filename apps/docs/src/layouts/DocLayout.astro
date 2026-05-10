@@ -1,5 +1,12 @@
 ---
-import { AppShell, Footer, NavBar, PageHeader, SidebarLayout } from '@knowledge-core/ui';
+import {
+  AppShell,
+  Footer,
+  NavBar,
+  PageHeader,
+  SidebarLayout,
+  TableOfContents,
+} from '@knowledge-core/ui';
 import '@knowledge-core/styles/global.css';
 import '@knowledge-core/styles/prose.css';
 import { getCollection } from 'astro:content';
@@ -17,9 +24,10 @@ export interface Props {
     prev?: boolean | { link: string; label: string };
     next?: boolean | { link: string; label: string };
   };
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { frontmatter } = Astro.props;
+const { frontmatter, headings = [] } = Astro.props;
 const allDocs = await getCollection('docs', ({ data }) => !data.draft);
 
 const locale = Astro.currentLocale ?? 'en';
@@ -47,12 +55,14 @@ const nextLink = resolvePrevNext(frontmatter.next);
 >
   <NavBar logo="Docs" logoHref="/" links={[]} langs={langs} />
 
-  <SidebarLayout hasSidebar={true} hasTableOfContents={false}>
+  <SidebarLayout hasSidebar={true} hasTableOfContents={headings.filter(h => h.depth <= 3).length > 0}>
     <DocsSidebar
       slot="sidebar"
       docs={allDocs}
       currentPath={Astro.url.pathname}
     />
+
+    <TableOfContents slot="toc" headings={headings} />
 
     <div class="max-w-4xl mx-auto">
       <PageHeader

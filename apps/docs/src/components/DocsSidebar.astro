@@ -1,10 +1,9 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import {
-  type ResolvedSidebarEntry,
-  resolveSidebar,
-} from '@knowledge-core/content-model/sidebar-utils';
+import { resolveSidebar } from '@knowledge-core/content-model/sidebar-utils';
 import { sidebar as sidebarConfig } from '../config/sidebar';
+import DocsSidebarGroup from './DocsSidebarGroup.astro';
+import DocsSidebarLink from './DocsSidebarLink.astro';
 
 export interface Props {
   docs: CollectionEntry<'docs'>[];
@@ -13,17 +12,6 @@ export interface Props {
 
 const { docs, currentPath } = Astro.props;
 const resolved = resolveSidebar(sidebarConfig, docs, currentPath, '/docs');
-
-function badgeClass(variant: string): string {
-  const map: Record<string, string> = {
-    note: 'badge',
-    tip: 'badge badge-success',
-    danger: 'badge badge-error',
-    caution: 'badge badge-warning',
-    success: 'badge badge-success',
-  };
-  return map[variant] ?? 'badge';
-}
 ---
 
 <nav class="p-6" aria-label="Dokumentation">
@@ -37,67 +25,11 @@ function badgeClass(variant: string): string {
     />
   </div>
 
-  <div class="space-y-6">
-    {resolved.map((entry) => {
-      if (entry.type === 'group') {
-        const group = entry as Extract<ResolvedSidebarEntry, { type: 'group' }>;
-        if (group.items.length === 0) return null;
-        return (
-          <div>
-            <h3 class="text-sm font-semibold text-text mb-2 uppercase tracking-wider">
-              {group.label}
-            </h3>
-            <ul class="space-y-1">
-              {group.items.map((item) => {
-                if (item.type !== 'link') return null;
-                return (
-                  <li>
-                    <a
-                      href={item.href}
-                      class:list={[
-                        'flex items-center justify-between py-1.5 px-3 rounded text-sm transition-colors',
-                        item.active
-                          ? 'bg-primary/10 text-primary font-medium'
-                          : 'text-text-muted hover:text-text hover:bg-surface-alt',
-                      ]}
-                      aria-current={item.active ? 'page' : undefined}
-                    >
-                      <span>{item.label}</span>
-                      {item.badge && (
-                        <span class={`ml-2 text-xs ${badgeClass(item.badge.variant)}`}>
-                          {item.badge.text}
-                        </span>
-                      )}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        );
-      }
-      if (entry.type === 'link') {
-        return (
-          <a
-            href={entry.href}
-            class:list={[
-              'flex items-center justify-between py-1.5 px-3 rounded text-sm transition-colors',
-              entry.active
-                ? 'bg-primary/10 text-primary font-medium'
-                : 'text-text-muted hover:text-text hover:bg-surface-alt',
-            ]}
-            aria-current={entry.active ? 'page' : undefined}
-          >
-            <span>{entry.label}</span>
-            {entry.badge && (
-              <span class={`ml-2 text-xs ${badgeClass(entry.badge.variant)}`}>
-                {entry.badge.text}
-              </span>
-            )}
-          </a>
-        );
-      }
-      return null;
-    })}
+  <div class="space-y-2">
+    {resolved.map((entry) =>
+      entry.type === 'group'
+        ? <DocsSidebarGroup group={entry} />
+        : <DocsSidebarLink item={entry} />
+    )}
   </div>
 </nav>

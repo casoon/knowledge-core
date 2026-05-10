@@ -1,0 +1,36 @@
+---
+import type { ResolvedSidebarItem } from '@knowledge-core/content-model/sidebar-utils';
+
+export interface Props {
+  item: ResolvedSidebarItem;
+}
+
+const { item } = Astro.props;
+
+const badgeClasses: Record<string, string> = {
+  note: 'badge',
+  tip: 'badge badge-success',
+  danger: 'badge badge-error',
+  caution: 'badge badge-warning',
+  success: 'badge badge-success',
+};
+const badgeClass = item.badge ? (badgeClasses[item.badge.variant] ?? 'badge') : '';
+---
+
+<a
+  href={item.href}
+  class:list={[
+    'flex items-center justify-between py-1.5 px-3 rounded text-sm transition-colors',
+    item.active
+      ? 'bg-primary/10 text-primary font-medium'
+      : 'text-text-muted hover:text-text hover:bg-surface-alt',
+  ]}
+  aria-current={item.active ? 'page' : undefined}
+>
+  <span>{item.label}</span>
+  {item.badge && (
+    <span class:list={['ml-2 text-xs', badgeClass]}>
+      {item.badge.text}
+    </span>
+  )}
+</a>

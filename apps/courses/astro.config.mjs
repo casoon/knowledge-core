@@ -1,6 +1,6 @@
 import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 import postAudit from '@casoon/astro-post-audit';
+import siteFiles from '@casoon/astro-site-files';
 import speedMeasure from '@casoon/astro-speed-measure';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
@@ -10,7 +10,14 @@ export default defineConfig({
 
   integrations: [
     mdx(),
-    sitemap(),
+    siteFiles({
+      robots: {},
+      llms: {
+        title: 'Knowledge Core – Courses',
+        description:
+          'Interactive learning platform with progress tracking, quizzes, and practical exercises.',
+      },
+    }),
     speedMeasure(),
     postAudit({
       rules: {

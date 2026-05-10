@@ -8,26 +8,26 @@ onlyBuiltDependencies:
 
 catalog:
   # Astro v6 (stable)
-  astro: ^6.0.4
-  '@astrojs/check': ^0.9.7
-  '@astrojs/mdx': ^5.0.0
-  '@astrojs/sitemap': ^3.7.0
-  '@casoon/astro-post-audit': ^0.2.6
+  astro: ^6.3.1
+  '@astrojs/check': ^0.9.9
+  '@astrojs/mdx': ^5.0.4
+  '@casoon/astro-post-audit': ^0.2.10
+  '@casoon/astro-site-files': ^0.1.6
   '@casoon/astro-speed-measure': ^0.2.0
 
   # Tailwind v4
-  tailwindcss: ^4.2.1
-  '@tailwindcss/vite': ^4.2.1
+  tailwindcss: ^4.3.0
+  '@tailwindcss/vite': ^4.3.0
 
   # Core
-  typescript: ^5.9.3
-  zod: ^4.2.1
+  typescript: ^6.0.3
+  zod: ^4.4.3
   clsx: ^2.1.1
   tailwind-merge: ^3.3.1
   sharp: ^0.34.5
 
   # Formatting & Linting (Biome only - no more ESLint/Prettier hybrid)
-  '@biomejs/biome': ^2.4.6
+  '@biomejs/biome': ^2.4.15
   husky: ^9.1.7
   lint-staged: ^16.3.3
 

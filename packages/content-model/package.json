@@ -9,7 +9,8 @@
     "./docs": "./src/docs.ts",
     "./courses": "./src/courses.ts",
     "./sidebar": "./src/sidebar.ts",
-    "./sidebar-utils": "./src/sidebar-utils.ts"
+    "./sidebar-utils": "./src/sidebar-utils.ts",
+    "./lesson-utils": "./src/lesson-utils.ts"
   },
   "dependencies": {
     "zod": "catalog:"

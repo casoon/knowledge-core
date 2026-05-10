@@ -62,10 +62,36 @@ function navigateToSelected(): void {
   }
 }
 
+function showStatus(container: HTMLElement, message: string): void {
+  container.textContent = '';
+  const div = document.createElement('div');
+  div.className = 'text-center py-8 text-text-muted text-sm';
+  div.textContent = message;
+  container.appendChild(div);
+}
+
+function buildResultItem(result: SearchResult): HTMLAnchorElement {
+  const a = document.createElement('a');
+  a.href = result.url;
+  a.className =
+    'search-result-item block p-3 rounded-lg border border-transparent hover:bg-primary/10 hover:border-primary/30 transition-colors';
+
+  const titleDiv = document.createElement('div');
+  titleDiv.className = 'font-medium text-text mb-1';
+  titleDiv.textContent = result.title;
+
+  const excerptDiv = document.createElement('div');
+  excerptDiv.className = 'text-sm text-text-muted line-clamp-2';
+  excerptDiv.innerHTML = result.excerpt; // Pagefind excerpts contain <mark> for search highlighting
+
+  a.appendChild(titleDiv);
+  a.appendChild(excerptDiv);
+  return a;
+}
+
 async function performSearch(query: string, resultsContainer: HTMLElement): Promise<void> {
   if (!query.trim()) {
-    resultsContainer.innerHTML =
-      '<div class="text-center py-8 text-text-muted text-sm">Start typing to search...</div>';
+    showStatus(resultsContainer, 'Start typing to search...');
     results = [];
     selectedIndex = -1;
     return;
@@ -73,8 +99,7 @@ async function performSearch(query: string, resultsContainer: HTMLElement): Prom
 
   const pf = await loadPagefind();
   if (!pf) {
-    resultsContainer.innerHTML =
-      '<div class="text-center py-8 text-text-muted text-sm">Search not available</div>';
+    showStatus(resultsContainer, 'Search not available');
     return;
   }
 
@@ -82,8 +107,7 @@ async function performSearch(query: string, resultsContainer: HTMLElement): Prom
   results = [];
 
   if (search.results.length === 0) {
-    resultsContainer.innerHTML =
-      '<div class="text-center py-8 text-text-muted text-sm">No results found</div>';
+    showStatus(resultsContainer, 'No results found');
     return;
   }
 
@@ -96,16 +120,12 @@ async function performSearch(query: string, resultsContainer: HTMLElement): Prom
     excerpt: data.excerpt || '',
   }));
 
-  resultsContainer.innerHTML = results
-    .map(
-      (result) => `
-    <a href="${result.url}" class="search-result-item block p-3 rounded-lg border border-transparent hover:bg-primary/10 hover:border-primary/30 transition-colors">
-      <div class="font-medium text-text mb-1">${result.title}</div>
-      <div class="text-sm text-text-muted line-clamp-2">${result.excerpt}</div>
-    </a>
-  `
-    )
-    .join('');
+  resultsContainer.textContent = '';
+  const fragment = document.createDocumentFragment();
+  for (const result of results) {
+    fragment.appendChild(buildResultItem(result));
+  }
+  resultsContainer.appendChild(fragment);
 
   selectedIndex = 0;
   updateSelection(resultsContainer);
@@ -142,8 +162,7 @@ export function initSearchManager(): void {
     searchModal.classList.add('hidden');
     document.body.style.overflow = '';
     searchInput.value = '';
-    searchResults.innerHTML =
-      '<div class="text-center py-8 text-text-muted text-sm">Start typing to search...</div>';
+    showStatus(searchResults, 'Start typing to search...');
     selectedIndex = -1;
     results = [];
   }
