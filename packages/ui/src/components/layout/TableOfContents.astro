@@ -1,0 +1,77 @@
+---
+export interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  filtered.length > 0 && (
+    <nav class="p-6" aria-label="Table of contents" data-toc>
+      <p class="text-xs font-semibold uppercase tracking-wider text-text-muted mb-4">
+        On this page
+      </p>
+      <ul class="space-y-1">
+        {filtered.map((heading) => (
+          <li>
+            <a
+              href={`#${heading.slug}`}
+              data-toc-link
+              class:list={[
+                'block py-1 text-sm transition-colors',
+                heading.depth === 3 ? 'pl-4' : '',
+                'text-text-muted hover:text-text',
+              ]}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  function initToc() {
+    const nav = document.querySelector('[data-toc]');
+    if (!nav) return;
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+    if (links.length === 0) return;
+
+    const headingIds = links.map((a) => a.getAttribute('href')!.slice(1));
+    const headingEls = headingIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    function setActive(activeId: string | null) {
+      for (const a of links) {
+        const isActive = activeId !== null && a.getAttribute('href') === `#${activeId}`;
+        a.classList.toggle('text-primary', isActive);
+        a.classList.toggle('font-medium', isActive);
+        a.classList.toggle('text-text-muted', !isActive);
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+            return;
+          }
+        }
+      },
+      { rootMargin: '-64px 0px -80% 0px', threshold: 0 },
+    );
+
+    for (const el of headingEls) {
+      observer.observe(el);
+    }
+  }
+
+  initToc();
+  document.addEventListener('astro:page-load', initToc);
+</script>

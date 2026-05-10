@@ -16,9 +16,12 @@ export interface Props {
   href: string;
   /** Optional completion percentage (0-100) */
   progress?: number;
+  /** Optional total lesson count */
+  lessonCount?: number;
 }
 
-const { title, description, level, estimatedMinutes, tags, href, progress } = Astro.props;
+const { title, description, level, estimatedMinutes, tags, href, progress, lessonCount } =
+  Astro.props;
 ---
 
 <a
@@ -45,30 +48,40 @@ const { title, description, level, estimatedMinutes, tags, href, progress } = As
   </div>
 
   <div class="flex items-center justify-between text-sm text-text-muted">
-    <div class="flex items-center gap-2">
-      <svg
-        class="w-4 h-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <span>{Math.round(estimatedMinutes / 60)} hours</span>
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-1.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span>{Math.round(estimatedMinutes / 60)} h</span>
+      </div>
+      {
+        lessonCount !== undefined && (
+          <div class="flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+              />
+            </svg>
+            <span>{lessonCount} {lessonCount === 1 ? 'lesson' : 'lessons'}</span>
+          </div>
+        )
+      }
     </div>
 
     {
       progress !== undefined && (
         <div class="flex items-center gap-2">
           <div class="w-16 h-2 bg-surface-alt rounded-full overflow-hidden">
-            <div
-              class="h-full bg-primary transition-all"
-              style={`width: ${progress}%`}
-            />
+            <div class="h-full bg-primary transition-all" style={`width: ${progress}%`} />
           </div>
           <span>{progress}%</span>
         </div>

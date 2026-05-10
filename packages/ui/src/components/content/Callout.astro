@@ -2,9 +2,11 @@
 export interface Props {
   type?: 'info' | 'success' | 'warning' | 'error';
   title?: string;
+  collapsible?: boolean;
+  open?: boolean;
 }
 
-const { type = 'info', title } = Astro.props;
+const { type = 'info', title, collapsible = false, open = true } = Astro.props;
 
 const icons = {
   info: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -22,24 +24,56 @@ const icons = {
 };
 ---
 
-<div
-  class:list={[
-    'rounded-lg border-l-4 p-4 my-6',
-    {
-      'bg-info-bg border-info text-info': type === 'info',
-      'bg-success-bg border-success text-success': type === 'success',
-      'bg-warning-bg border-warning text-warning': type === 'warning',
-      'bg-error-bg border-error text-error': type === 'error',
-    },
-  ]}
->
-  <div class="flex gap-3">
-    <div class="flex-shrink-0" set:html={icons[type]} />
-    <div class="flex-1">
-      {title && <div class="font-semibold mb-1">{title}</div>}
-      <div class="text-sm">
-        <slot />
+{collapsible ? (
+  <details
+    open={open || undefined}
+    class:list={[
+      'group rounded-lg border-l-4 my-6',
+      {
+        'bg-info-bg border-info text-info': type === 'info',
+        'bg-success-bg border-success text-success': type === 'success',
+        'bg-warning-bg border-warning text-warning': type === 'warning',
+        'bg-error-bg border-error text-error': type === 'error',
+      },
+    ]}
+  >
+    <summary class="flex cursor-pointer items-center gap-3 px-4 py-3 list-none [&::-webkit-details-marker]:hidden">
+      <div class="flex-shrink-0" set:html={icons[type]} />
+      <span class="flex-1 font-semibold text-sm">{title ?? type}</span>
+      <svg
+        class="w-4 h-4 flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+      </svg>
+    </summary>
+    <div class="px-4 pb-4 pt-1 text-sm">
+      <slot />
+    </div>
+  </details>
+) : (
+  <div
+    class:list={[
+      'rounded-lg border-l-4 p-4 my-6',
+      {
+        'bg-info-bg border-info text-info': type === 'info',
+        'bg-success-bg border-success text-success': type === 'success',
+        'bg-warning-bg border-warning text-warning': type === 'warning',
+        'bg-error-bg border-error text-error': type === 'error',
+      },
+    ]}
+  >
+    <div class="flex gap-3">
+      <div class="flex-shrink-0" set:html={icons[type]} />
+      <div class="flex-1">
+        {title && <div class="font-semibold mb-1">{title}</div>}
+        <div class="text-sm">
+          <slot />
+        </div>
       </div>
     </div>
   </div>
-</div>
+)}

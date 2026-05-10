@@ -22,6 +22,7 @@ export { default as AppShell } from './components/layout/AppShell.astro';
 export { default as Footer } from './components/layout/Footer.astro';
 export { default as PageHeader } from './components/layout/PageHeader.astro';
 export { default as SidebarLayout } from './components/layout/SidebarLayout.astro';
+export { default as TableOfContents } from './components/layout/TableOfContents.astro';
 export { default as FontSizeControl } from './components/navigation/FontSizeControl.astro';
 // Navigation Components
 export { default as LanguageSelect } from './components/navigation/LanguageSelect.astro';
