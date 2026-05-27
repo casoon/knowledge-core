@@ -23,6 +23,7 @@ const {
 } = Astro.props;
 const desc = description || title;
 const canonicalURL = Astro.url.href;
+const resolvedOgImage = ogImage ?? `${Astro.url.origin}/og-image.png`;
 ---
 
 <!doctype html>
@@ -39,11 +40,11 @@ const canonicalURL = Astro.url.href;
     <meta property="og:description" content={desc} />
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalURL} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={resolvedOgImage} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={desc} />
-    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    <meta name="twitter:image" content={resolvedOgImage} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

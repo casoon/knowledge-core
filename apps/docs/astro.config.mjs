@@ -21,7 +21,7 @@ export default defineConfig({
     speedMeasure(),
     postAudit({
       rules: {
-        filters: { exclude: ['404.html'] },
+        filters: { exclude: ['404.html', 'de/**'] },
         canonical: { self_reference: true },
         headings: { no_skip: true },
         html_basics: { meta_description_required: true },

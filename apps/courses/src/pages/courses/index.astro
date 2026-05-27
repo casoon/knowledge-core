@@ -35,19 +35,22 @@ const lessonCountByCourse = allLessons.reduce(
             </p>
           </div>
         ) : (
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {publishedCourses.map((course) => (
-              <CourseCard
-                title={course.data.title}
-                description={course.data.description}
-                level={course.data.level}
-                estimatedMinutes={course.data.estimatedTotalMinutes}
-                tags={course.data.tags}
-                href={`/courses/${course.data.slug}`}
-                lessonCount={lessonCountByCourse[course.data.slug]}
-              />
-            ))}
-          </div>
+          <>
+            <h2 class="sr-only">All Courses</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {publishedCourses.map((course) => (
+                <CourseCard
+                  title={course.data.title}
+                  description={course.data.description}
+                  level={course.data.level}
+                  estimatedMinutes={course.data.estimatedTotalMinutes}
+                  tags={course.data.tags}
+                  href={`/courses/${course.data.slug}`}
+                  lessonCount={lessonCountByCourse[course.data.slug]}
+                />
+              ))}
+            </div>
+          </>
         )
       }
     </section>

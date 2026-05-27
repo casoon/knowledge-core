@@ -1,6 +1,6 @@
 {
   "name": "knowledge-core",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "description": "Monorepo template for documentation and course platforms",
   "author": "casoon",

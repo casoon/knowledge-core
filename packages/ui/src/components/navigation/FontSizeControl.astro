@@ -10,7 +10,7 @@
 <div class="font-size-control flex items-center gap-1">
   <button
     type="button"
-    id="font-size-decrease"
+    data-font-size="decrease"
     class="btn btn-ghost p-1.5 text-text-muted hover:text-text"
     aria-label="Decrease font size"
     title="Decrease font size"
@@ -25,13 +25,13 @@
   </button>
 
   <span
-    id="font-size-indicator"
+    data-font-size="indicator"
     class="text-xs text-text-muted w-8 text-center font-mono">100%</span
   >
 
   <button
     type="button"
-    id="font-size-increase"
+    data-font-size="increase"
     class="btn btn-ghost p-1.5 text-text-muted hover:text-text"
     aria-label="Increase font size"
     title="Increase font size"
@@ -62,33 +62,36 @@
 
   function applySize(size: number): void {
     document.documentElement.style.fontSize = size + "%";
-    const indicator = document.getElementById("font-size-indicator");
-    const decreaseBtn = document.getElementById("font-size-decrease") as HTMLButtonElement | null;
-    const increaseBtn = document.getElementById("font-size-increase") as HTMLButtonElement | null;
 
-    if (indicator) indicator.textContent = size + "%";
-    if (decreaseBtn) {
-      decreaseBtn.disabled = size <= MIN_SIZE;
-      decreaseBtn.classList.toggle("opacity-30", size <= MIN_SIZE);
-    }
-    if (increaseBtn) {
-      increaseBtn.disabled = size >= MAX_SIZE;
-      increaseBtn.classList.toggle("opacity-30", size >= MAX_SIZE);
-    }
+    document.querySelectorAll<HTMLElement>('[data-font-size="indicator"]').forEach((el) => {
+      el.textContent = size + "%";
+    });
+    document.querySelectorAll<HTMLButtonElement>('[data-font-size="decrease"]').forEach((btn) => {
+      btn.disabled = size <= MIN_SIZE;
+      btn.classList.toggle("opacity-30", size <= MIN_SIZE);
+    });
+    document.querySelectorAll<HTMLButtonElement>('[data-font-size="increase"]').forEach((btn) => {
+      btn.disabled = size >= MAX_SIZE;
+      btn.classList.toggle("opacity-30", size >= MAX_SIZE);
+    });
+
     safeSetItem(STORAGE_KEY, size.toString());
   }
 
   function initFontSizeControl(): void {
     applySize(getCurrentSize());
 
-    document.getElementById("font-size-decrease")?.addEventListener("click", () => {
-      const current = getCurrentSize();
-      if (current > MIN_SIZE) applySize(current - STEP);
+    document.querySelectorAll<HTMLButtonElement>('[data-font-size="decrease"]').forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const current = getCurrentSize();
+        if (current > MIN_SIZE) applySize(current - STEP);
+      });
     });
-
-    document.getElementById("font-size-increase")?.addEventListener("click", () => {
-      const current = getCurrentSize();
-      if (current < MAX_SIZE) applySize(current + STEP);
+    document.querySelectorAll<HTMLButtonElement>('[data-font-size="increase"]').forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const current = getCurrentSize();
+        if (current < MAX_SIZE) applySize(current + STEP);
+      });
     });
   }
 

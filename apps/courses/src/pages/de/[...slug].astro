@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const courses = await getCollection('courses');
+  const lessons = await getCollection('lessons');
+  return [
+    { params: { slug: undefined } },
+    { params: { slug: 'courses' } },
+    ...courses.map((c) => ({ params: { slug: `courses/${c.data.slug}` } })),
+    ...lessons.map((l) => ({
+      params: { slug: `courses/${l.data.courseSlug}/${l.id}` },
+    })),
+  ];
+}
+
+const { slug } = Astro.params;
+const target = slug ? `/${slug}` : '/';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Redirecting…</title>
+  </head>
+  <body>
+    <p>Redirecting to <a href={target}>{target}</a></p>
+  </body>
+</html>

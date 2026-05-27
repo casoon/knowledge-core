@@ -65,7 +65,7 @@ const progress = Math.round(((currentIndex + 1) / lessons.length) * 100);
       {
         Object.entries(lessonsByModule).map(([module, moduleLessons]) => (
           <div class="module-group">
-            <h4 class="module-title">{module}</h4>
+            <p class="module-title">{module}</p>
             <ul class="lesson-list">
               {moduleLessons.map((lesson, idx) => {
                 const isActive = lesson.id === currentLessonSlug;
