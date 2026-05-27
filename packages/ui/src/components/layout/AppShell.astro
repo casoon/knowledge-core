@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import ChatWidget from '../content/ChatWidget.astro';
 import StorageUtils from '../utils/StorageUtils.astro';
 
 export interface Props {
@@ -10,6 +11,7 @@ export interface Props {
   ogImage?: string;
   ogType?: string;
   noIndex?: boolean;
+  showChat?: boolean;
 }
 
 const {
@@ -20,6 +22,7 @@ const {
   ogImage,
   ogType = 'website',
   noIndex = false,
+  showChat = true,
 } = Astro.props;
 const desc = description || title;
 const canonicalURL = Astro.url.href;
@@ -73,5 +76,6 @@ const resolvedOgImage = ogImage ?? `${Astro.url.origin}/og-image.png`;
     </a>
     <slot />
     {showFooter && <slot name="footer" />}
+    {showChat && <ChatWidget />}
   </body>
 </html>

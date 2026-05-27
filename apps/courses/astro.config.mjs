@@ -63,6 +63,7 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    envDir: '../../',
   },
 
   i18n: {

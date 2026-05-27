@@ -5,14 +5,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
 
-> Modern monorepo template for documentation and course platforms
+> Modern monorepo template for documentation and course platforms — with a built-in AI assistant
 
-A production-ready template based on **Astro v6**, **MDX**, **Tailwind CSS v4**, and **pnpm Workspaces** - optimized for creating technical documentation and interactive learning platforms.
+A production-ready template based on **Astro v6**, **MDX**, **Tailwind CSS v4**, and **pnpm Workspaces** - optimized for creating technical documentation and interactive learning platforms. Ships with a **RAG-based AI chat assistant** powered by Cloudflare Vectorize and Workers AI that answers questions about your content in real time.
 
 ## Live Previews
 
 - **Docs App:** [kc-docs.casoon.dev](https://kc-docs.casoon.dev)
 - **Courses App:** [kc-courses.casoon.dev](https://kc-courses.casoon.dev)
+- **Chat Worker:** `https://knowledge-core-chat-worker.casoon.workers.dev/chat`
+
+The AI assistant is live on both apps — click the chat button in the bottom-right corner and ask anything about the documentation or courses.
 
 ## Tech Stack
 
@@ -26,9 +29,13 @@ A production-ready template based on **Astro v6**, **MDX**, **Tailwind CSS v4**,
 | [TypeScript](https://www.typescriptlang.org) | 6.0 | Strict mode throughout |
 | [pnpm](https://pnpm.io) | 9.x | Workspaces with catalog for centralized dependency management |
 | Node.js | >= 22.12 | Runtime |
+| [Cloudflare Vectorize](https://developers.cloudflare.com/vectorize/) | v2 | Vector database for semantic content search |
+| [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) | — | Embedding model (`bge-large-en-v1.5`) + LLM (`llama-3-8b-instruct`) |
+| [Cloudflare Workers](https://workers.cloudflare.com) | — | Edge-deployed chat backend |
 
 ## Features
 
+- **AI Chat Assistant** — RAG-based chat widget backed by Cloudflare Vectorize + Workers AI; answers questions about your docs and courses in real time
 - **Shared Components** — Reusable UI components across apps
 - **Interactive Courses** — Quiz, exercises, progress tracking
 - **Dark Mode** — With theme persistence via ClientRouter
@@ -121,32 +128,89 @@ pnpm build:courses
 ```
 knowledge-core/
 ├── apps/
-│   ├── docs/              # Documentation app
+│   ├── docs/              # Documentation app (Cloudflare Pages)
 │   │   ├── src/
 │   │   │   ├── content/   # MDX files
 │   │   │   ├── layouts/   # Astro layouts
 │   │   │   └── pages/     # Pages & routing
 │   │   └── package.json
 │   │
-│   └── courses/           # Course platform app
-│       ├── src/
-│       │   ├── content/
-│       │   │   ├── courses/  # Course definitions
-│       │   │   └── lessons/  # Lessons (MDX)
-│       │   ├── layouts/
-│       │   └── pages/
-│       └── package.json
+│   ├── courses/           # Course platform app (Cloudflare Pages)
+│   │   ├── src/
+│   │   │   ├── content/
+│   │   │   │   ├── courses/  # Course definitions (JSON)
+│   │   │   │   └── lessons/  # Lessons (MDX)
+│   │   │   ├── layouts/
+│   │   │   └── pages/
+│   │   └── package.json
+│   │
+│   └── chat-worker/       # AI chat backend (Cloudflare Workers)
+│       ├── src/index.ts   # RAG pipeline: embed → search → generate → stream
+│       └── wrangler.toml  # Vectorize + AI bindings
 │
 ├── packages/
-│   ├── ui/                # Shared UI components
+│   ├── ui/                # Shared UI components (incl. ChatWidget)
 │   ├── styles/            # Tailwind v4 + design tokens
 │   ├── content-model/     # Zod v4 content schemas
 │   └── config/            # Shared configs (TypeScript, Biome)
 │
+├── scripts/
+│   └── ingest-content.ts  # Chunks & embeds docs/lessons → Vectorize
+│
 ├── shared/                # Shared layouts, SEO, utilities
+├── .env.example           # Environment variable template
 ├── package.json           # Root package
 └── pnpm-workspace.yaml
 ```
+
+## AI Chat Setup
+
+The template includes a fully functional AI assistant. After cloning, four steps are needed to activate it:
+
+### 1 — Create the Vectorize index
+
+```bash
+CLOUDFLARE_ACCOUNT_ID=<your-account-id> \
+  wrangler vectorize create knowledge-core \
+  --preset="@cf/baai/bge-large-en-v1.5"
+```
+
+### 2 — Configure credentials
+
+```bash
+cp .env.example .env
+```
+
+Fill in `.env` (never commit this file):
+
+```ini
+CLOUDFLARE_ACCOUNT_ID=your-account-id
+CLOUDFLARE_API_TOKEN=your-api-token        # Workers AI + Vectorize permissions
+CLOUDFLARE_VECTORIZE_INDEX=knowledge-core
+PUBLIC_CHAT_ENDPOINT=https://knowledge-core-chat-worker.<subdomain>.workers.dev/chat
+```
+
+Create the API token at **Cloudflare Dashboard → My Profile → API Tokens → Create Token** with:
+- Account > **Workers AI** — Edit
+- Account > **Vectorize** — Edit
+
+### 3 — Ingest content
+
+```bash
+pnpm run ingest
+```
+
+Chunks all MDX files from `apps/docs` and `apps/courses`, generates vector embeddings, and uploads them to Vectorize. Re-run this whenever you add or significantly update content.
+
+### 4 — Deploy the chat worker
+
+```bash
+pnpm --filter chat-worker run deploy
+```
+
+The Worker is now live at `https://knowledge-core-chat-worker.<subdomain>.workers.dev/chat`. The `ChatWidget` in both apps automatically picks up `PUBLIC_CHAT_ENDPOINT` from your `.env` at build time.
+
+> **Local development:** run `pnpm --filter chat-worker run dev` to start the Worker on `http://localhost:8787`. No config change needed — `ChatWidget` falls back to this URL automatically.
 
 ## Creating Content
 
@@ -240,6 +304,7 @@ import { Quiz, Exercise } from '@knowledge-core/ui';
 - **CodeBlock** - Syntax highlighting with copy button
 - **Card** - Content cards
 - **Tabs** / **TabPanel** - Tab navigation
+- **ChatWidget** - Floating AI chat panel (RAG-backed, SSE streaming)
 
 ### Course Components
 
@@ -353,6 +418,9 @@ pnpm type-check          # TypeScript check
 pnpm check               # Biome lint + format
 pnpm check:fix           # Biome auto-fix
 
+# AI
+pnpm run ingest          # Embed & upload all content to Cloudflare Vectorize
+
 # Clean
 pnpm clean               # Remove all build artifacts
 ```
@@ -382,10 +450,25 @@ export const sidebar = defineSidebar([
 
 ## Deployment
 
-### Cloudflare Pages
+### Cloudflare Pages (docs & courses)
 
-1. Build Command: `pnpm build:docs`
-2. Build output directory: `apps/docs/dist`
+Set `PUBLIC_CHAT_ENDPOINT` as an environment variable in the Pages project build settings, then:
+
+1. Build Command: `pnpm --filter docs build` / `pnpm --filter courses build`
+2. Build output directory: `apps/docs/dist` / `apps/courses/dist`
+
+Or deploy manually after a local build:
+
+```bash
+wrangler pages deploy apps/docs/dist --project-name=knowledge-core-docs
+wrangler pages deploy apps/courses/dist --project-name=knowledge-core
+```
+
+### Chat Worker (Cloudflare Workers)
+
+```bash
+pnpm --filter chat-worker run deploy
+```
 
 ### Vercel
 

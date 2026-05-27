@@ -1,0 +1,77 @@
+---
+title: Welcome to Knowledge Core
+description: A monorepo template for documentation platforms, course sites, and knowledge bases — with a built-in AI assistant
+category: getting-started
+order: 0
+tags: [overview, ai, getting-started]
+status: stable
+---
+
+import { Callout, Hint } from '@knowledge-core/ui';
+
+**Knowledge Core** is an open-source monorepo template that lets you ship a documentation site and an interactive course platform in one go — powered by Astro v6, Tailwind CSS v4, and a live AI assistant backed by Cloudflare Vectorize.
+
+## What's included
+
+| Feature | Description |
+|---|---|
+| **Docs app** | Full documentation site with sidebar navigation, search, and MDX components |
+| **Courses app** | Interactive learning platform with progress tracking, quizzes, and exercises |
+| **UI package** | Shared component library: Callout, Tabs, Quiz, Exercise, CodeBlock, and more |
+| **AI assistant** | RAG-based chat widget that answers questions about your content in real time |
+| **Cloudflare Workers** | Edge-deployed chat backend with Vectorize semantic search and Workers AI |
+
+## Try the AI assistant
+
+The chat button in the bottom-right corner is live. It has already indexed all the documentation and course content on this site. Try asking:
+
+- *"How do I install Knowledge Core?"*
+- *"What components are available in the UI package?"*
+- *"How does the AI chat work?"*
+- *"How do I create a course lesson?"*
+- *"What is Cloudflare Vectorize?"*
+
+<Callout type="info" title="How it works">
+Every question is first converted to a vector embedding, then matched against the indexed docs via semantic similarity search. The top results are injected into the context window of a Llama 3 model running on Cloudflare Workers AI. Answers are streamed back in real time.
+</Callout>
+
+## Quick tour
+
+### Documentation platform
+
+The docs app (`apps/docs`) is a full-featured Astro site with:
+
+- Auto-generated sidebar from content directories
+- Pagefind full-text search
+- Dark mode, responsive layout
+- MDX components: Callout, Tabs, CodeBlock, Hint
+- Zod-validated frontmatter schemas
+
+### Course platform
+
+The courses app (`apps/courses`) adds:
+
+- Course → Module → Lesson hierarchy
+- Progress tracking via localStorage
+- Interactive quizzes with explanations
+- Exercises with difficulty levels and hints
+
+### AI chat (Cloudflare Workers)
+
+The chat worker (`apps/chat-worker`) is a Cloudflare Worker that:
+
+1. Embeds the user's question with `@cf/baai/bge-large-en-v1.5`
+2. Queries a Cloudflare Vectorize index for the 5 most relevant content chunks
+3. Passes the retrieved context to `@cf/meta/llama-3-8b-instruct`
+4. Streams the response back as Server-Sent Events
+
+<Hint title="Want to set this up yourself?">
+See the [AI Chat Integration guide](/docs/guides/ai-chat) for the complete four-step setup.
+</Hint>
+
+## Next steps
+
+- [Installation](/docs/getting-started/installation) — clone, install, and run locally
+- [Project structure](/docs/getting-started/structure) — understand the monorepo layout
+- [Creating content](/docs/guides/creating-content) — write your first doc or lesson
+- [AI Chat Integration](/docs/guides/ai-chat) — deploy your own AI-powered assistant

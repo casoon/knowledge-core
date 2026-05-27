@@ -1,0 +1,173 @@
+---
+title: AI Chat Integration
+description: Deploy a RAG-based AI assistant that answers questions about your documentation and courses using Cloudflare Vectorize and Workers AI
+category: guides
+order: 20
+tags: [ai, cloudflare, vectorize, workers-ai, rag]
+status: stable
+---
+
+import { Callout, Hint } from '@knowledge-core/ui';
+
+Knowledge Core ships with a ready-made AI assistant: a Cloudflare Worker that indexes your content with vector embeddings and answers visitor questions via Retrieval-Augmented Generation (RAG).
+
+## Architecture
+
+```
+Visitor question
+      │
+      ▼
+┌─────────────────────────────────────────┐
+│  chat-worker (Cloudflare Workers)       │
+│                                         │
+│  1. Embed question                      │
+│     @cf/baai/bge-large-en-v1.5         │
+│              │                          │
+│  2. Semantic search                     │
+│     Cloudflare Vectorize               │
+│     (top 5 matching chunks)            │
+│              │                          │
+│  3. Generate answer with context        │
+│     @cf/meta/llama-3-8b-instruct       │
+│              │                          │
+│  4. Stream SSE response                 │
+└─────────────────────────────────────────┘
+      │
+      ▼
+ ChatWidget (browser)
+```
+
+The content from `apps/docs` and `apps/courses` is chunked into ~800-character segments, embedded once, and stored in a Cloudflare Vectorize index. The Worker retrieves the most relevant chunks at query time — no full-text search, no keyword matching, pure semantic similarity.
+
+## Setup in four steps
+
+### Step 1 — Create the Vectorize index
+
+```bash
+CLOUDFLARE_ACCOUNT_ID=<your-account-id> \
+  wrangler vectorize create knowledge-core \
+  --preset="@cf/baai/bge-large-en-v1.5"
+```
+
+This creates an index with 1024 dimensions and cosine distance, pre-configured for the embedding model used by the ingest script.
+
+### Step 2 — Configure credentials
+
+Copy `.env.example` to `.env` and fill in your values:
+
+```bash
+cp .env.example .env
+```
+
+```ini
+# .env (gitignored — never commit this file)
+CLOUDFLARE_ACCOUNT_ID=your-account-id
+CLOUDFLARE_API_TOKEN=your-api-token
+CLOUDFLARE_VECTORIZE_INDEX=knowledge-core
+```
+
+<Callout type="info" title="Creating an API token">
+Go to **Cloudflare Dashboard → My Profile → API Tokens → Create Token**.  
+Use a Custom Token with two permissions:
+
+- Account > **Workers AI** — Edit
+- Account > **Vectorize** — Edit
+</Callout>
+
+<Callout type="warning" title="Keep secrets out of git">
+The `.env` file is already in `.gitignore`. Never add real tokens to `.env.example` or `wrangler.toml`.
+</Callout>
+
+### Step 3 — Ingest your content
+
+```bash
+pnpm run ingest
+```
+
+This script:
+1. Recursively finds all `.md` and `.mdx` files in `apps/docs` and `apps/courses`
+2. Strips frontmatter and cleans MDX syntax
+3. Splits each file into ~800-character semantic chunks
+4. Sends chunks in batches of 20 to the Cloudflare AI embeddings API
+5. Uploads the resulting vectors to Vectorize
+
+Re-run this command whenever you add or update significant content.
+
+<Hint title="What gets indexed?">
+All files under `apps/docs/src/content/docs/` and `apps/courses/src/content/lessons/`. The chunk metadata includes the page title, file path, app name, and slug — the Worker uses these to cite sources in answers.
+</Hint>
+
+### Step 4 — Deploy the chat worker
+
+```bash
+pnpm --filter chat-worker run deploy
+```
+
+Wrangler uploads the Worker script and activates the Vectorize and AI bindings. The Worker is deployed to:
+
+```
+https://knowledge-core-chat-worker.<your-subdomain>.workers.dev
+```
+
+## Using the ChatWidget
+
+The `ChatWidget` component is already exported from `@knowledge-core/ui`. Add it to any Astro layout:
+
+```astro
+---
+import { ChatWidget } from '@knowledge-core/ui';
+---
+
+<ChatWidget
+  apiEndpoint="https://knowledge-core-chat-worker.<your-subdomain>.workers.dev/chat"
+  title="Docs Assistant"
+  placeholder="Ask anything about this documentation..."
+/>
+```
+
+| Prop | Default | Description |
+|---|---|---|
+| `apiEndpoint` | `http://localhost:8787/chat` | URL of the deployed chat worker |
+| `title` | `Knowledge AI Assistant` | Header text in the chat panel |
+| `placeholder` | `Ask AI about this project...` | Input field placeholder |
+
+The widget streams Server-Sent Events from the Worker and renders the response incrementally, with basic Markdown formatting (bold, inline code, code blocks).
+
+## Updating the index
+
+Content changes are not automatically reflected — you need to re-ingest:
+
+```bash
+pnpm run ingest
+```
+
+The ingest script uses `insert` (not upsert), so if you re-run it with the same chunk IDs, Vectorize will deduplicate. For a full reset, delete and recreate the index:
+
+```bash
+wrangler vectorize delete knowledge-core
+CLOUDFLARE_ACCOUNT_ID=<id> wrangler vectorize create knowledge-core \
+  --preset="@cf/baai/bge-large-en-v1.5"
+pnpm run ingest
+```
+
+## Customizing the system prompt
+
+The system prompt is in `apps/chat-worker/src/index.ts`. Edit the `systemPrompt` variable to change the assistant's persona, language, or instructions:
+
+```typescript
+const systemPrompt = `You are a helpful AI assistant for Knowledge Core...
+Answer in the same language as the user's query.
+
+Context:
+${context || 'No specific documentation found.'}`;
+```
+
+## Local development
+
+Run the Worker locally with:
+
+```bash
+pnpm --filter chat-worker run dev
+```
+
+The Worker starts on `http://localhost:8787`. The `ChatWidget` defaults to this URL, so no config changes are needed for local development.

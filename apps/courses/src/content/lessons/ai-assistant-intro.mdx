@@ -1,0 +1,132 @@
+---
+courseSlug: getting-started
+title: AI Assistant
+module: AI Features
+orderInModule: 1
+estimatedMinutes: 8
+requiresExperience: false
+type: text
+goals:
+  - Understand what RAG (Retrieval-Augmented Generation) means
+  - Know how the Knowledge Core AI assistant works
+  - Be able to ask good questions to the AI
+---
+
+import { Callout, Hint, Quiz } from '@knowledge-core/ui';
+
+Knowledge Core ships with a live AI assistant. It's not a generic chatbot — it has read your documentation and course content and can answer specific questions about them.
+
+## How it works: RAG in plain language
+
+The assistant uses a technique called **Retrieval-Augmented Generation (RAG)**. Instead of relying only on what a language model was trained on, it first *retrieves* relevant pieces of your content, then uses those as context for generating an answer.
+
+Here's the flow for every question:
+
+```
+Your question
+     │
+     ▼
+1. Embedding
+   Convert the question into a vector (a list of ~1000 numbers
+   that captures its semantic meaning).
+     │
+     ▼
+2. Similarity search (Cloudflare Vectorize)
+   Find the 5 content chunks whose vectors are most similar
+   to the question vector.
+     │
+     ▼
+3. Context injection
+   Prepend the retrieved chunks to the prompt as context.
+     │
+     ▼
+4. LLM generation (Llama 3 on Workers AI)
+   Generate an answer based on the retrieved context.
+     │
+     ▼
+Streamed answer in the chat widget
+```
+
+<Callout type="info" title="Why RAG?">
+A language model's training data has a cutoff date and knows nothing about your specific project. RAG bridges this gap: the model gets the facts from your docs, and only needs to handle reasoning and language.
+</Callout>
+
+## What the AI knows
+
+The assistant has indexed all content from:
+
+- **Documentation** — every page under `apps/docs/src/content/docs/`
+- **Course lessons** — every lesson under `apps/courses/src/content/lessons/`
+
+Content is split into ~800-character chunks before embedding, so the AI can retrieve precise sub-sections rather than entire pages.
+
+## Good questions to try
+
+The AI works best with specific, content-oriented questions:
+
+| Good question | Why it works |
+|---|---|
+| "How do I install Knowledge Core?" | Maps directly to the Installation guide |
+| "What UI components are available?" | Matches the Components overview page |
+| "How do I create a new course lesson?" | Targets the Creating Content guide |
+| "What is Cloudflare Vectorize?" | Covered in the AI Chat Integration guide |
+| "How does the quiz component work?" | Explained in this very course |
+
+<Hint title="Language">
+The AI will answer in the same language you use. Ask in German, get an answer in German.
+</Hint>
+
+## The tech stack behind it
+
+| Component | Technology |
+|---|---|
+| Embedding model | `@cf/baai/bge-large-en-v1.5` (1024 dimensions) |
+| Vector database | Cloudflare Vectorize |
+| Language model | `@cf/meta/llama-3-8b-instruct` |
+| Runtime | Cloudflare Workers (edge, ~0ms cold start) |
+| Transport | Server-Sent Events (streaming) |
+
+Everything runs on Cloudflare's edge network — no dedicated server, no GPU to manage, pay-per-request pricing.
+
+## Keeping the index fresh
+
+The vector index is built once by running `pnpm run ingest`. It does **not** automatically update when you edit content. After adding new pages or making significant changes, re-run the ingest command to update the index.
+
+<Callout type="warning" title="Stale answers">
+If you ask the AI about something you just added and it says it doesn't know — the index probably hasn't been updated yet. Run `pnpm run ingest` and the new content will be searchable within seconds.
+</Callout>
+
+---
+
+<Quiz
+  questions={[
+    {
+      question: "What does RAG stand for?",
+      options: [
+        "Random Answer Generation",
+        "Retrieval-Augmented Generation",
+        "Real-time AI Gateway",
+        "Recursive Aggregation Graph"
+      ],
+      correctIndex: 1,
+      explanation: "RAG = Retrieval-Augmented Generation. The model retrieves relevant documents first, then uses them to generate a grounded answer."
+    },
+    {
+      question: "How many content chunks does the chat worker retrieve per question?",
+      options: ["1", "3", "5", "10"],
+      correctIndex: 2,
+      explanation: "The worker queries Vectorize with topK: 5, returning the 5 most semantically similar chunks to the user's question."
+    },
+    {
+      question: "What do you need to do after adding new documentation pages?",
+      options: [
+        "Redeploy the chat worker",
+        "Clear the browser cache",
+        "Run pnpm run ingest",
+        "Nothing — it updates automatically"
+      ],
+      correctIndex: 2,
+      explanation: "The vector index is not updated automatically. Run `pnpm run ingest` to re-embed all content and push the new vectors to Vectorize."
+    }
+  ]}
+/>
