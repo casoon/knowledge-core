@@ -51,12 +51,13 @@ git checkout -b feature/mein-feature
 # Development-Server starten
 pnpm dev
 
-# Code prüfen
-pnpm lint
-pnpm format:check
-
-# TypeScript Check
+# Code und Formatierung prüfen
 pnpm check
+
+# Typen, Tests und Produktions-Build prüfen
+pnpm type-check
+pnpm test
+pnpm build
 ```
 
 #### Commit Guidelines
@@ -67,7 +68,7 @@ Verwende aussagekräftige Commit-Messages:
 feat: Add new Quiz component
 fix: Resolve navigation bug in sidebar
 docs: Update installation guide
-style: Format code with prettier
+style: Format code with Biome
 refactor: Simplify theme toggle logic
 test: Add tests for Quiz component
 chore: Update dependencies
@@ -95,8 +96,7 @@ Hilf uns, die Docs zu verbessern:
 ### Code Style
 
 - TypeScript für alle neuen Dateien
-- Prettier für Formatierung
-- ESLint-Regeln beachten
+- Biome für Linting und Formatierung
 - Aussagekräftige Variablennamen
 
 ### Komponenten
@@ -148,11 +148,13 @@ knowledge-core/
 
 ## Testing
 
-Aktuell haben wir noch keine automatisierten Tests. Du kannst helfen:
+Vitest deckt Content-Schemas, Sidebar-/Lesson-Utilities, i18n und die Request-Validierung des Chat-Workers ab:
 
-1. Test-Framework einrichten (Vitest)
-2. Tests für Komponenten schreiben
-3. E2E-Tests hinzufügen
+```bash
+pnpm test
+```
+
+Für neue Logik sollen passende Unit-Tests ergänzt werden. UI-Interaktionen benötigen zusätzlich einen manuellen Browser-Test oder einen fokussierten E2E-Test.
 
 ## Fragen?
 

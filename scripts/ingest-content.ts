@@ -245,7 +245,7 @@ async function main() {
   }
 
   console.log('Starting content ingestion...');
-  const rootDir = path.resolve(__dirname, '..');
+  const rootDir = path.resolve(import.meta.dirname, '..');
   const docsDir = path.join(rootDir, 'apps/docs/src/content/docs');
   const lessonsDir = path.join(rootDir, 'apps/courses/src/content/lessons');
 

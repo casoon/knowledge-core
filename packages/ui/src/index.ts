@@ -16,7 +16,6 @@ export { default as LessonComplete } from './components/courses/LessonComplete.a
 export { default as LessonNav } from './components/courses/LessonNav.astro';
 export { default as ProgressBar } from './components/courses/ProgressBar.astro';
 export { default as Quiz } from './components/courses/Quiz.astro';
-export { default as SyncProgress } from './components/courses/SyncProgress.astro';
 export { default as TotalProgress } from './components/courses/TotalProgress.astro';
 // Layout Components
 export { default as AppShell } from './components/layout/AppShell.astro';

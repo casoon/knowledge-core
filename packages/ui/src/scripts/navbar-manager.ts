@@ -70,7 +70,7 @@ export function initMobileMenu(): void {
 let mobileTriggersController: AbortController | null = null;
 
 /**
- * Initializes the Mobile Menu Triggers for Search and Sync Modals
+ * Initializes the Mobile Menu Trigger for Search
  */
 export function initMobileTriggers(): void {
   mobileTriggersController?.abort();
@@ -78,10 +78,8 @@ export function initMobileTriggers(): void {
   const { signal } = mobileTriggersController;
 
   const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
-  const mobileSyncTrigger = document.getElementById('mobile-sync-trigger');
   const searchModal = document.getElementById('search-modal');
   const searchInput = document.getElementById('search-input');
-  const syncModal = document.getElementById('sync-modal');
   const mobileMenu = document.getElementById('mobile-menu');
 
   if (mobileSearchTrigger && searchModal) {
@@ -92,18 +90,6 @@ export function initMobileTriggers(): void {
         searchModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         if (searchInput) (searchInput as HTMLInputElement).focus();
-      },
-      { signal }
-    );
-  }
-
-  if (mobileSyncTrigger && syncModal) {
-    mobileSyncTrigger.addEventListener(
-      'click',
-      () => {
-        if (mobileMenu) mobileMenu.classList.add('hidden');
-        syncModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
       },
       { signal }
     );

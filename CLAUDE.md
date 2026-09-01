@@ -2,7 +2,7 @@
 
 ## Project Purpose
 
-Monorepo template for documentation and course platforms. Built with Astro v6, MDX, Tailwind CSS v4, and TypeScript.
+Monorepo template for documentation and course platforms. Built with Astro v7, MDX, Tailwind CSS v4, and TypeScript.
 
 ## Architecture
 
@@ -28,8 +28,8 @@ shared/           # v6 template shared library (layouts, SEO, utils)
 
 ## Tech Stack
 
-- **Astro v6** (Stable) - Vite Environment API, Live Collections, CSP
-- **Node >= 22.12.0** - Required for Astro v6
+- **Astro v7** - Vite Environment API, Content Collections, CSP
+- **Node >= 22.12.0** - Required runtime
 - **Tailwind v4** - CSS-first, Vite plugin (`@tailwindcss/vite`)
 - **Zod v4** - `z.optional(z.string())` instead of `z.string().optional()`, `z.coerce.date()`
 - **Biome** - Single tool for linting + formatting (no ESLint/Prettier)
@@ -43,7 +43,7 @@ shared/           # v6 template shared library (layouts, SEO, utils)
 - Export `interface Props` in Astro components
 - Zod v4 syntax: `z.optional()` wrapper, `z.coerce.date()`
 
-### Astro v6 Breaking Changes
+### Current Astro APIs
 - `render(entry)` instead of `entry.render()` for Content Collections
 - `getEntry()` instead of `getEntryBySlug()`
 - `entry.id` instead of `entry.slug`
@@ -72,14 +72,14 @@ shared/           # v6 template shared library (layouts, SEO, utils)
 
 Detailed development guidelines are available as skills under `.claude/skills/`:
 
-- **astro-v6** — Astro v6 API, Content Collections, Zod v4, component patterns
+- **astro-architecture** — Astro API, Content Collections, Zod v4, component patterns
 - **client-scripts** — `<script>` vs `is:inline`, bundling, FOUC prevention, SPA events
 - **tailwind-v4** — Tailwind v4 syntax, design tokens, dark mode, CSS-first config
 - **svelte-5** — Runes API ($state, $derived, $effect), event handlers, props
 - **cloudflare** — Workers deploy, wrangler, KV bindings
 - **biome** — Lint/format config, pre-commit hooks
 - **mdx-content** — Content Collections, Loader API, blog posts
-- **seo** — OG images, PageSEO component, sitemap, JSON-LD
+- **seo** — OG metadata, sitemap, canonical URLs, JSON-LD
 - **local-business-seo** — LocalBusiness JSON-LD, geo meta tags, areaServed, regionale Keywords
 - **wcag-a11y** — WCAG 2.2 AA patterns: landmarks, forms, focus, contrast, ARIA, motion, dialogs, checklists
 - **i18n** — Translations, locale routing, adding pages/locales

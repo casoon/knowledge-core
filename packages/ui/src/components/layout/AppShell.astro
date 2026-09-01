@@ -27,6 +27,9 @@ const {
 const desc = description || title;
 const canonicalURL = Astro.url.href;
 const resolvedOgImage = ogImage ?? `${Astro.url.origin}/og-image.png`;
+const chatEndpoint =
+  import.meta.env.PUBLIC_CHAT_ENDPOINT ||
+  (import.meta.env.DEV ? 'http://localhost:8787/chat' : undefined);
 ---
 
 <!doctype html>
@@ -76,6 +79,6 @@ const resolvedOgImage = ogImage ?? `${Astro.url.origin}/og-image.png`;
     </a>
     <slot />
     {showFooter && <slot name="footer" />}
-    {showChat && <ChatWidget />}
+    {showChat && chatEndpoint && <ChatWidget apiEndpoint={chatEndpoint} />}
   </body>
 </html>

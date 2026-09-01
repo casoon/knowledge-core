@@ -80,7 +80,7 @@ function resolveDocItem(
     (d) => d.id === entry.slug || d.id.replace(/\.(md|mdx)$/, '') === entry.slug
   );
   if (!doc) return null;
-  const href = `${baseHref}/${doc.id}`;
+  const href = `${baseHref}/${doc.id}/`;
   return {
     type: 'link',
     label: doc.data.title,
@@ -122,7 +122,7 @@ function resolveAutoGroup(
     label: entry.label,
     collapsed: entry.collapsed ?? false,
     items: matched.map((doc) => {
-      const href = `${baseHref}/${doc.id}`;
+      const href = `${baseHref}/${doc.id}/`;
       return {
         type: 'link' as const,
         label: doc.data.title,

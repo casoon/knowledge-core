@@ -16,7 +16,7 @@ for implementing /Users/jseidel/GitHub/web-casoon/packages/knowledge/src/pages/i
 ### Navigation Components
 - NavBar            - Main navigation with mobile support, theme toggle
   Props: logo, logoSrc, logoAlt, logoHref, links[], showThemeToggle, showSearch,
-         showSync, showFontSize, showQuizToggle, courseNav
+         showFontSize, showQuizToggle, courseNav
 - SearchBar         - Full-text search with Pagefind (Cmd+K)
 - FontSizeControl   - Accessibility font size +/- buttons
 - QuizToggle        - Show/hide quizzes toggle
@@ -43,7 +43,6 @@ for implementing /Users/jseidel/GitHub/web-casoon/packages/knowledge/src/pages/i
 - Hint              - Collapsible hint section
   Props: title (default: "Hint")
 - LessonNav         - Lesson sidebar navigation
-- SyncProgress      - Cloud sync modal for progress
 
 ================================================================================
 ## CONSTANTS (@knowledge-core/ui -> constants.ts)
@@ -62,10 +61,6 @@ LEVEL_LABELS = { beginner: "Beginner", intermediate: "Intermediate", advanced: "
 
 ### Quiz Thresholds
 QUIZ_THRESHOLDS = { excellent: 80, passing: 60 }
-
-### Sync Settings
-SYNC_CODE_TTL_DAYS = 30
-SYNC_CODE_LENGTH = 8
 
 ### Types
 - Difficulty = "easy" | "medium" | "hard"
@@ -161,13 +156,12 @@ docsFrontmatterSchema = {
 1. Progress Tracking - Automatic saving of learning progress
 2. Interactive Quizzes - Instant feedback with explanations
 3. Practical Exercises - Graded difficulty levels (Easy/Medium/Hard)
-4. Cloud Sync - Sync progress across devices (8-char code, 30 days)
-5. Dark Mode - Automatic with CSS variables
-6. Full-Text Search - Pagefind integration (Cmd+K)
-7. Accessibility - Font size control, keyboard nav, ARIA labels
-8. MDX Content - Markdown with embedded components
-9. Monorepo Structure - Shared packages (ui, styles, content-model)
-10. Type-Safe - TypeScript + Zod schemas
+4. Dark Mode - Automatic with CSS variables
+5. Full-Text Search - Pagefind integration (Cmd+K)
+6. Accessibility - Font size control, keyboard nav, ARIA labels
+7. MDX Content - Markdown with embedded components
+8. Monorepo Structure - Shared packages (ui, styles, content-model)
+9. Type-Safe - TypeScript + Zod schemas
 
 ================================================================================
 ## IMPORTS SUMMARY
@@ -186,7 +180,7 @@ import {
   Callout, CodeBlock, CodeExample, Card, Tabs, TabPanel,
   // Courses
   CourseCard, ProgressBar, TotalProgress, LessonComplete,
-  Quiz, Exercise, Hint, LessonNav, SyncProgress,
+  Quiz, Exercise, Hint, LessonNav,
   // Constants
   DIFFICULTY_LABELS, LEVEL_LABELS, DIFFICULTY_COLORS, LEVEL_COLORS,
 } from "@knowledge-core/ui";

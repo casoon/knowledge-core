@@ -119,17 +119,6 @@ Use the `Tabs` and `TabPanel` components.
 4. Test the progress tracking
 </Exercise>
 
-## Cloud Sync Feature
-
-<Callout type="info" title="Sync Progress">
-Learning progress can be synchronized across different devices. Click the cloud icon in the navigation to open the sync dialog.
-
-**How it works:**
-1. Export your progress as a code
-2. Import the code on another device
-3. Your progress is restored
-</Callout>
-
 ## Full-Text Search
 
 The integrated search is based on **Pagefind** and indexes all content automatically:
@@ -200,12 +189,12 @@ All components are accessible:
       question: "How is progress saved?",
       options: [
         "In a database",
-        "In localStorage with optional cloud sync",
+        "In localStorage in the browser",
         "In cookies",
         "Not at all"
       ],
       correctAnswer: 1,
-      explanation: "Progress is stored in localStorage and can optionally be synchronized via a code-based cloud sync."
+      explanation: "Progress is stored locally in the current browser."
     },
     {
       question: "Can components be nested?",
@@ -229,7 +218,6 @@ You've now learned all the advanced features:
 - Responsive design for all devices
 - Nested components
 - Different difficulty levels
-- Cloud sync for progress
 - Full-text search with Pagefind
 - Accessibility
 

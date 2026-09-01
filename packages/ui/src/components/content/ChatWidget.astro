@@ -1,12 +1,12 @@
 ---
 export interface Props {
-  apiEndpoint?: string;
+  apiEndpoint: string;
   placeholder?: string;
   title?: string;
 }
 
 const {
-  apiEndpoint = import.meta.env.PUBLIC_CHAT_ENDPOINT || 'http://localhost:8787/chat',
+  apiEndpoint,
   placeholder = 'Ask AI about this project...',
   title = 'Knowledge AI Assistant',
 } = Astro.props;

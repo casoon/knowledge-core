@@ -16,6 +16,18 @@ export default defineConfig({
         title: 'Knowledge Core – Courses',
         description:
           'Interactive learning platform with progress tracking, quizzes, and practical exercises.',
+        sections: [
+          {
+            title: 'Courses',
+            links: [
+              { title: 'Course catalog', url: '/courses/' },
+              {
+                title: 'Getting Started with Knowledge Core',
+                url: '/courses/getting-started/',
+              },
+            ],
+          },
+        ],
       },
     }),
     speedMeasure(),

@@ -75,7 +75,7 @@ Use a Custom Token with two permissions:
 </Callout>
 
 <Callout type="warning" title="Keep secrets out of git">
-The `.env` file is already in `.gitignore`. Never add real tokens to `.env.example` or `wrangler.toml`.
+The `.env` file is already in `.gitignore`. Never add real tokens to `.env.example` or `wrangler.jsonc`.
 </Callout>
 
 ### Step 3 — Ingest your content
@@ -98,6 +98,8 @@ All files under `apps/docs/src/content/docs/` and `apps/courses/src/content/less
 </Hint>
 
 ### Step 4 — Deploy the chat worker
+
+Update `ALLOWED_ORIGINS` in `apps/chat-worker/wrangler.jsonc` before deployment. Only these browser origins may call the Worker. If `namespace_id = "1001"` is already used by another rate-limit binding in your account, choose another positive integer.
 
 ```bash
 pnpm --filter chat-worker run deploy
@@ -127,11 +129,11 @@ import { ChatWidget } from '@knowledge-core/ui';
 
 | Prop | Default | Description |
 |---|---|---|
-| `apiEndpoint` | `http://localhost:8787/chat` | URL of the deployed chat worker |
+| `apiEndpoint` | required | URL of the deployed chat worker |
 | `title` | `Knowledge AI Assistant` | Header text in the chat panel |
 | `placeholder` | `Ask AI about this project...` | Input field placeholder |
 
-The widget streams Server-Sent Events from the Worker and renders the response incrementally, with basic Markdown formatting (bold, inline code, code blocks).
+The widget streams Server-Sent Events from the Worker and renders the response incrementally, with basic Markdown formatting (bold, inline code, code blocks). The Worker restricts browser origins, request sizes, history roles, and request frequency before invoking Workers AI.
 
 ## Updating the index
 
@@ -170,4 +172,4 @@ Run the Worker locally with:
 pnpm --filter chat-worker run dev
 ```
 
-The Worker starts on `http://localhost:8787`. The `ChatWidget` defaults to this URL, so no config changes are needed for local development.
+The Worker starts on `http://localhost:8787`. `AppShell` uses this endpoint automatically during local development. In production, set `PUBLIC_CHAT_ENDPOINT`; without it, the chat widget is not rendered.

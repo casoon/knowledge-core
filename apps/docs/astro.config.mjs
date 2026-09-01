@@ -7,6 +7,7 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://docs.knowledge-core.dev',
+  trailingSlash: 'always',
 
   integrations: [
     mdx(),
@@ -15,7 +16,19 @@ export default defineConfig({
       llms: {
         title: 'Knowledge Core – Documentation',
         description:
-          'Documentation platform for the Knowledge Core monorepo template. Built with Astro v6, MDX, and Tailwind CSS.',
+          'Documentation platform for the Knowledge Core monorepo template. Built with Astro v7, MDX, and Tailwind CSS.',
+        sections: [
+          {
+            title: 'Documentation',
+            links: [
+              { title: 'Overview', url: '/docs/getting-started/overview/' },
+              { title: 'Installation', url: '/docs/getting-started/installation/' },
+              { title: 'Project structure', url: '/docs/getting-started/structure/' },
+              { title: 'Components', url: '/docs/components/overview/' },
+              { title: 'AI chat integration', url: '/docs/guides/ai-chat/' },
+            ],
+          },
+        ],
       },
     }),
     speedMeasure(),

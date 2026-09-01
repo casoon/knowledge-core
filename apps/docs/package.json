@@ -9,7 +9,7 @@
     "preview": "astro preview",
     "type-check": "astro check",
     "clean": "rm -rf dist .astro",
-    "linkcheck": "astro build && check-html-links dist"
+    "linkcheck": "astro build && node --input-type=module -e \"import { CheckHtmlLinksCli } from 'check-html-links'; const checker = new CheckHtmlLinksCli({ argv: ['dist'] }); checker.setOptions({ continueOnError: false }); await checker.run();\""
   },
   "dependencies": {
     "@astrojs/check": "catalog:",

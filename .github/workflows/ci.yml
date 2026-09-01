@@ -10,7 +10,7 @@ env:
   PNPM_VERSION: '9.15.4'
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   ci:
@@ -54,11 +54,24 @@ jobs:
       - name: Type check
         run: pnpm type-check
 
+      - name: Unit tests
+        run: pnpm test
+
       - name: Build all apps
         run: pnpm build
 
+  badges:
+    name: Update version badges
+    if: github.event_name == 'push'
+    needs: ci
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Update version badges
-        if: github.event_name == 'push'
         run: |
           bash scripts/update-badges.sh
           if git diff --quiet README.md; then

@@ -326,15 +326,13 @@ export { default as MyComponent } from './components/custom/MyComponent.astro';
 
 ### Extend Tailwind
 
-```javascript
-// packages/styles/tailwind.config.js
-export default {
-  theme: {
-    extend: {
-      // Your customizations
-    },
-  },
-};
+Tailwind v4 is configured in CSS. Add project tokens to `packages/styles/src/global.css`:
+
+```css
+@theme {
+  --color-brand: var(--color-primary);
+  --spacing-content: 72rem;
+}
 ```
 
 ### Add New Content Categories

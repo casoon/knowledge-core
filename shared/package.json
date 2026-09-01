@@ -3,32 +3,16 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "main": "./src/utils/index.ts",
+  "main": "./src/i18n/index.ts",
   "exports": {
-    "./styles/*": "./src/styles/*",
-    "./layouts/*": "./src/layouts/*",
-    "./components/*": "./src/components/*",
-    "./seo/*": "./src/seo/*",
-    ".": "./src/utils/index.ts",
-    "./utils": "./src/utils/index.ts",
-    "./utils/*": "./src/utils/*",
+    ".": "./src/i18n/index.ts",
     "./i18n": "./src/i18n/index.ts"
   },
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "dependencies": {
-    "@resvg/resvg-js": "^2.6.2",
-    "clsx": "catalog:",
-    "satori": "^0.26.0",
-    "tailwind-merge": "catalog:",
-    "zod": "catalog:"
-  },
   "devDependencies": {
     "vitest": "catalog:"
-  },
-  "peerDependencies": {
-    "astro": "catalog:"
   }
 }

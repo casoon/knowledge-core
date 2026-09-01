@@ -56,7 +56,7 @@ describe('resolveSidebar', () => {
     const config = defineSidebar([
       { label: 'Getting Started', autogenerate: { directory: 'getting-started' } },
     ]);
-    const result = resolveSidebar(config, docs, '/docs/getting-started/introduction');
+    const result = resolveSidebar(config, docs, '/docs/getting-started/introduction/');
 
     expect(result).toHaveLength(1);
     const group = result[0];

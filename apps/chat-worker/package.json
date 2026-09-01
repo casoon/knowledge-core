@@ -4,10 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "wrangler deploy --dry-run --outdir dist",
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "type-check": "wrangler types --include-runtime false --check worker-configuration.d.ts && tsc --noEmit",
+    "types": "wrangler types --include-runtime false worker-configuration.d.ts"
   },
   "devDependencies": {
-    "wrangler": "^3.109.0"
+    "@cloudflare/workers-types": "^5.20260901.1",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "^4.127.1"
   }
 }

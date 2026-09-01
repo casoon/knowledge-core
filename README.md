@@ -7,7 +7,7 @@
 
 > Modern monorepo template for documentation and course platforms — with a built-in AI assistant
 
-A production-ready template based on **Astro v6**, **MDX**, **Tailwind CSS v4**, and **pnpm Workspaces** - optimized for creating technical documentation and interactive learning platforms. Ships with a **RAG-based AI chat assistant** powered by Cloudflare Vectorize and Workers AI that answers questions about your content in real time.
+A production-ready template based on **Astro v7**, **MDX**, **Tailwind CSS v4**, and **pnpm Workspaces** - optimized for creating technical documentation and interactive learning platforms. Ships with a **RAG-based AI chat assistant** powered by Cloudflare Vectorize and Workers AI that answers questions about your content in real time.
 
 ## Live Previews
 
@@ -21,10 +21,10 @@ The AI assistant is live on both apps — click the chat button in the bottom-ri
 
 | Technology | Version | Purpose |
 |---|---|---|
-| [Astro](https://astro.build) | 6.3 | Framework — Vite Environment API, Content Collections, ClientRouter |
-| [MDX](https://mdxjs.com) | 5.0 | Markdown with interactive components |
+| [Astro](https://astro.build) | 7.2 | Framework — Vite Environment API, Content Collections, ClientRouter |
+| [MDX](https://mdxjs.com) | 8.0 | Markdown with interactive components |
 | [Tailwind CSS](https://tailwindcss.com) | 4.3 | CSS-first config, Vite plugin, design tokens |
-| [Biome](https://biomejs.dev) | 2.4 | Linting, formatting, a11y, security & complexity checks |
+| [Biome](https://biomejs.dev) | 2.5 | Linting, formatting, a11y, security & complexity checks |
 | [Zod](https://zod.dev) | 4.x | Runtime validation for content schemas |
 | [TypeScript](https://www.typescriptlang.org) | 6.0 | Strict mode throughout |
 | [pnpm](https://pnpm.io) | 9.x | Workspaces with catalog for centralized dependency management |
@@ -39,7 +39,6 @@ The AI assistant is live on both apps — click the chat button in the bottom-ri
 - **Shared Components** — Reusable UI components across apps
 - **Interactive Courses** — Quiz, exercises, progress tracking
 - **Dark Mode** — With theme persistence via ClientRouter
-- **Cloud Sync** — Sync learning progress across devices
 - **Pre-Commit Hooks** — Husky + lint-staged with Biome auto-fix
 - **Post-Build Audit** — SEO & a11y checks via @casoon/astro-post-audit
 - **Configurable Sidebar** — `defineSidebar()` with autogenerate, groups, manual links, and badges
@@ -146,7 +145,7 @@ knowledge-core/
 │   │
 │   └── chat-worker/       # AI chat backend (Cloudflare Workers)
 │       ├── src/index.ts   # RAG pipeline: embed → search → generate → stream
-│       └── wrangler.toml  # Vectorize + AI bindings
+│       └── wrangler.jsonc # AI, Vectorize, rate-limit and observability bindings
 │
 ├── packages/
 │   ├── ui/                # Shared UI components (incl. ChatWidget)
@@ -157,7 +156,7 @@ knowledge-core/
 ├── scripts/
 │   └── ingest-content.ts  # Chunks & embeds docs/lessons → Vectorize
 │
-├── shared/                # Shared layouts, SEO, utilities
+├── shared/                # Shared i18n dictionaries and helpers
 ├── .env.example           # Environment variable template
 ├── package.json           # Root package
 └── pnpm-workspace.yaml
@@ -204,11 +203,13 @@ Chunks all MDX files from `apps/docs` and `apps/courses`, generates vector embed
 
 ### 4 — Deploy the chat worker
 
+Before deploying, update `ALLOWED_ORIGINS` in `apps/chat-worker/wrangler.jsonc` with the public origins of your docs and courses sites. Also choose a `ratelimits[].namespace_id` that is unique within your Cloudflare account.
+
 ```bash
 pnpm --filter chat-worker run deploy
 ```
 
-The Worker is now live at `https://knowledge-core-chat-worker.<subdomain>.workers.dev/chat`. The `ChatWidget` in both apps automatically picks up `PUBLIC_CHAT_ENDPOINT` from your `.env` at build time.
+The Worker is now live at `https://knowledge-core-chat-worker.<subdomain>.workers.dev/chat`. Set `PUBLIC_CHAT_ENDPOINT` in both site build environments; production builds render the `ChatWidget` only when this variable is configured.
 
 > **Local development:** run `pnpm --filter chat-worker run dev` to start the Worker on `http://localhost:8787`. No config change needed — `ChatWidget` falls back to this URL automatically.
 
@@ -316,7 +317,6 @@ import { Quiz, Exercise } from '@knowledge-core/ui';
 - **LessonNav** - Lesson navigation sidebar
 - **LessonComplete** - Mark lessons as complete
 - **TotalProgress** - Overall progress display
-- **SyncProgress** - Cloud sync for progress
 
 ### Navigation Components
 
@@ -385,7 +385,7 @@ pnpm check:fix           # Biome auto-fix
 pnpm format              # Format all files
 pnpm lint                # Lint only
 pnpm type-check          # TypeScript check
-pnpm test                # Vitest unit tests (content-model + i18n utils)
+pnpm test                # Vitest unit tests (content model, i18n, chat validation)
 pnpm linkcheck           # Build docs + validate all HTML links
 ```
 
@@ -405,6 +405,7 @@ pnpm dev:courses         # Courses only
 pnpm build               # All apps
 pnpm build:docs          # Docs only
 pnpm build:courses       # Courses only
+pnpm build:worker        # Chat Worker dry-run bundle
 
 # Preview
 pnpm preview             # All apps
