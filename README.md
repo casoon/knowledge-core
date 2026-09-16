@@ -11,6 +11,7 @@ A production-ready template based on **Astro v7**, **MDX**, **Tailwind CSS v4**,
 
 ## Live Previews
 
+- **Website:** [knowledge.casoon.de](https://knowledge.casoon.de/en/)
 - **Docs App:** [kc-docs.casoon.dev](https://kc-docs.casoon.dev)
 - **Courses App:** [kc-courses.casoon.dev](https://kc-courses.casoon.dev)
 - **Chat Worker:** `https://knowledge-core-chat-worker.casoon.workers.dev/chat`
