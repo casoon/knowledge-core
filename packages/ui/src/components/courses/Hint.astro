@@ -4,14 +4,13 @@ export interface Props {
 }
 
 const { title = 'Hint' } = Astro.props;
-const hintId = `hint-${Math.random().toString(36).substring(7)}`;
 ---
 
 <div class="hint-container my-6">
   <button
     type="button"
     class="hint-toggle flex items-center gap-2 text-text-muted hover:text-text transition-colors"
-    data-hint-toggle={hintId}
+    data-hint-toggle
     aria-expanded="false"
   >
     <svg
@@ -31,7 +30,7 @@ const hintId = `hint-${Math.random().toString(36).substring(7)}`;
 
   <div
     class="hint-content hidden mt-3 p-4 bg-warning-bg rounded-lg border border-warning"
-    data-hint-content={hintId}
+    data-hint-content
   >
     <div class="flex gap-3">
       <svg
@@ -53,12 +52,13 @@ const hintId = `hint-${Math.random().toString(36).substring(7)}`;
   </div>
 </div>
 
-<script define:vars={{ hintId }}>
-  const toggle = document.querySelector(`[data-hint-toggle="${hintId}"]`);
-  const content = document.querySelector(`[data-hint-content="${hintId}"]`);
-  const icon = toggle?.querySelector(".hint-icon");
-
-  toggle?.addEventListener("click", () => {
+<script>
+  // Bundled instead of is:inline/define:vars: the CSP only allows scripts Astro hashed or served from 'self'.
+  document.addEventListener("click", (e) => {
+    const toggle = (e.target as Element).closest<HTMLElement>("[data-hint-toggle]");
+    if (!toggle) return;
+    const content = toggle.closest(".hint-container")?.querySelector("[data-hint-content]");
+    const icon = toggle.querySelector(".hint-icon");
     const isHidden = content?.classList.contains("hidden");
 
     if (isHidden) {

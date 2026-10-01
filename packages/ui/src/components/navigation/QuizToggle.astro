@@ -54,72 +54,32 @@
   }
 </style>
 
-<script is:inline>
-  // safeGetItem, safeSetItem sind global via StorageUtils
-  (function () {
-    const STORAGE_KEY = "quiz-enabled";
-    let currentState = null;
+<script>
+  // Bundled instead of is:inline: the CSP only allows scripts Astro hashed or served from 'self'.
+  // AppShell's head script sets html.quiz-hidden from the stored choice before the first paint.
+  import { safeSetItem } from "../../scripts/storage";
 
-    function isQuizEnabled() {
-      if (currentState !== null) return currentState;
-      const stored = safeGetItem(STORAGE_KEY);
-      currentState = stored !== "false";
-      return currentState;
+  const STORAGE_KEY = "quiz-enabled";
+
+  function syncButtons(): void {
+    const enabled = !document.documentElement.classList.contains("quiz-hidden");
+    for (const btn of document.querySelectorAll(".quiz-toggle")) {
+      const label = enabled ? "Quizze ausblenden" : "Quizze einblenden";
+      btn.setAttribute("aria-pressed", enabled.toString());
+      btn.setAttribute("title", label);
+      btn.setAttribute("aria-label", label);
+      btn.classList.remove("quiz-on", "quiz-off");
+      btn.classList.add(enabled ? "quiz-on" : "quiz-off");
     }
+  }
 
-    function setQuizEnabled(enabled) {
-      currentState = enabled;
-      safeSetItem(STORAGE_KEY, enabled.toString());
-    }
+  document.addEventListener("click", (e) => {
+    if (!(e.target as Element).closest(".quiz-toggle")) return;
+    e.preventDefault();
+    const hidden = document.documentElement.classList.toggle("quiz-hidden");
+    safeSetItem(STORAGE_KEY, (!hidden).toString());
+    syncButtons();
+  });
 
-    function applyState(enabled) {
-      if (enabled) {
-        document.documentElement.classList.remove("quiz-hidden");
-      } else {
-        document.documentElement.classList.add("quiz-hidden");
-      }
-      setQuizEnabled(enabled);
-
-      document.querySelectorAll(".quiz-toggle").forEach(function (btn) {
-        btn.setAttribute("aria-pressed", enabled.toString());
-        btn.setAttribute(
-          "title",
-          enabled ? "Quizze ausblenden" : "Quizze einblenden",
-        );
-        btn.setAttribute(
-          "aria-label",
-          enabled ? "Quizze ausblenden" : "Quizze einblenden",
-        );
-
-        btn.classList.remove("quiz-on", "quiz-off");
-        btn.classList.add(enabled ? "quiz-on" : "quiz-off");
-      });
-    }
-
-    function handleClick(e) {
-      e.preventDefault();
-      const newState = !isQuizEnabled();
-      applyState(newState);
-    }
-
-    // Apply initial state
-    applyState(isQuizEnabled());
-
-    // Register click delegation only once (guard prevents accumulation)
-    if (!window.__quizToggleInit) {
-      window.__quizToggleInit = true;
-      document.addEventListener("click", function (e) {
-        var btn = e.target.closest(".quiz-toggle");
-        if (btn) {
-          handleClick(e);
-        }
-      });
-    }
-
-    // Re-apply state after ClientRouter navigation
-    document.addEventListener("astro:after-swap", function () {
-      currentState = null;
-      applyState(isQuizEnabled());
-    });
-  })();
+  document.addEventListener("astro:page-load", syncButtons);
 </script>
