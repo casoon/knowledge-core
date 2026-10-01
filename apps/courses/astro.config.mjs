@@ -2,6 +2,7 @@ import mdx from '@astrojs/mdx';
 import postAudit from '@casoon/astro-post-audit';
 import siteFiles from '@casoon/astro-site-files';
 import speedMeasure from '@casoon/astro-speed-measure';
+import { shikiStyleToClass } from '@knowledge-core/styles/shiki.mjs';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
@@ -53,6 +54,7 @@ export default defineConfig({
     shikiConfig: {
       theme: 'github-dark',
       wrap: true,
+      transformers: [shikiStyleToClass],
     },
   },
 
@@ -61,12 +63,14 @@ export default defineConfig({
     defaultStrategy: 'viewport',
   },
 
+  // Astro reads the CSP only under security; a top-level csp key is silently ignored.
   security: {
     checkOrigin: true,
-  },
-
-  csp: {
-    algorithm: 'SHA-256',
+    csp: {
+      algorithm: 'SHA-256',
+      // AppShell loads the Inter stylesheet from Google Fonts
+      styleDirective: { resources: ["'self'", 'https://fonts.googleapis.com'] },
+    },
   },
 
   image: {
