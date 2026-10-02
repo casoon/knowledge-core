@@ -1,4 +1,5 @@
 /* MDX/Prose Styling */
+@import "./shiki.css";
 @reference "@knowledge-core/styles/global.css";
 
 @layer components {

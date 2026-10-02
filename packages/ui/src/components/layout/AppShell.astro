@@ -67,10 +67,25 @@ const chatEndpoint =
           const theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
           document.documentElement.classList.toggle("dark", theme === "dark");
         }
+        // Quizzes switched off via QuizToggle stay hidden from the first paint
+        function applyQuizVisibility() {
+          document.documentElement.classList.toggle("quiz-hidden", safeGetItem("quiz-enabled") === "false");
+        }
         applyTheme();
+        applyQuizVisibility();
         // Re-apply after ClientRouter navigation (DOM swap)
         document.addEventListener("astro:after-swap", applyTheme);
+        document.addEventListener("astro:after-swap", applyQuizVisibility);
       })();
+    </script>
+    <script>
+      // Progress bars carry their width as data-width: the CSP blocks style attributes,
+      // CSSOM writes are allowed.
+      document.addEventListener("astro:page-load", () => {
+        for (const el of document.querySelectorAll<HTMLElement>("[data-width]")) {
+          el.style.width = `${el.dataset.width}%`;
+        }
+      });
     </script>
   </head>
   <body class="min-h-screen flex flex-col">

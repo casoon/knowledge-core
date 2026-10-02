@@ -12,7 +12,11 @@ const {
 } = Astro.props;
 ---
 
-<div class="fixed bottom-6 right-6 z-50 font-sans" id="knowledge-chat-container">
+<div
+  class="fixed bottom-6 right-6 z-50 font-sans"
+  id="knowledge-chat-container"
+  data-api-endpoint={apiEndpoint}
+>
   <!-- Trigger Button -->
   <button
     id="chat-trigger"
@@ -84,169 +88,175 @@ const {
   </div>
 </div>
 
-<script define:vars={{ apiEndpoint }}>
-  // Initialize state
-  let isOpen = false;
-  let chatHistory = [];
+<script>
+  // Bundled instead of is:inline/define:vars: the CSP only allows scripts Astro hashed or served from 'self'.
+  document.addEventListener('astro:page-load', () => {
+    const container = document.getElementById('knowledge-chat-container');
+    const apiEndpoint = container?.dataset.apiEndpoint;
+    if (!apiEndpoint) return;
 
-  const container = document.getElementById('knowledge-chat-container');
-  const trigger = document.getElementById('chat-trigger');
-  const panel = document.getElementById('chat-panel');
-  const closeBtn = document.getElementById('chat-close');
-  const messagesContainer = document.getElementById('chat-messages');
-  const form = document.getElementById('chat-form');
-  const input = document.getElementById('chat-input');
+    // Initialize state
+    let isOpen = false;
+    const chatHistory: { role: string; content: string }[] = [];
 
-  const chatIcon = trigger?.querySelector('.chat-icon');
-  const closeIcon = trigger?.querySelector('.close-icon');
+    const trigger = document.getElementById('chat-trigger');
+    const panel = document.getElementById('chat-panel');
+    const closeBtn = document.getElementById('chat-close');
+    const messagesContainer = document.getElementById('chat-messages');
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input') as HTMLInputElement | null;
 
-  function toggleChat() {
-    isOpen = !isOpen;
-    if (isOpen) {
-      panel?.classList.remove('hidden');
-      setTimeout(() => panel?.classList.remove('scale-95', 'opacity-0'), 50);
-      chatIcon?.classList.add('hidden');
-      closeIcon?.classList.remove('hidden');
-      input?.focus();
-    } else {
-      panel?.classList.add('scale-95', 'opacity-0');
-      setTimeout(() => panel?.classList.add('hidden'), 300);
-      chatIcon?.classList.remove('hidden');
-      closeIcon?.classList.add('hidden');
+    const chatIcon = trigger?.querySelector('.chat-icon');
+    const closeIcon = trigger?.querySelector('.close-icon');
+
+    function toggleChat() {
+      isOpen = !isOpen;
+      if (isOpen) {
+        panel?.classList.remove('hidden');
+        setTimeout(() => panel?.classList.remove('scale-95', 'opacity-0'), 50);
+        chatIcon?.classList.add('hidden');
+        closeIcon?.classList.remove('hidden');
+        input?.focus();
+      } else {
+        panel?.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => panel?.classList.add('hidden'), 300);
+        chatIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      }
     }
-  }
 
-  trigger?.addEventListener('click', toggleChat);
-  closeBtn?.addEventListener('click', toggleChat);
+    trigger?.addEventListener('click', toggleChat);
+    closeBtn?.addEventListener('click', toggleChat);
 
-  // Helper to escape HTML and parse simple markdown bold & code blocks
-  function formatMessage(text) {
-    const escaped = text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    // Helper to escape HTML and parse simple markdown bold & code blocks
+    function formatMessage(text: string) {
+      const escaped = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
     
-    // Parse inline code `code`
-    let formatted = escaped.replace(/`([^`]+)`/g, '<code class="bg-surface text-primary px-1.5 py-0.5 rounded font-mono text-xs border border-border">$1</code>');
+      // Parse inline code `code`
+      let formatted = escaped.replace(/`([^`]+)`/g, '<code class="bg-surface text-primary px-1.5 py-0.5 rounded font-mono text-xs border border-border">$1</code>');
     
-    // Parse bold **text**
-    formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      // Parse bold **text**
+      formatted = formatted.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
-    // Parse code blocks ```lang ... ```
-    formatted = formatted.replace(/```(?:[a-zA-Z]+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-950 dark:bg-black text-gray-100 p-3 rounded-lg font-mono text-xs overflow-x-auto border border-border my-2"><code class="block whitespace-pre">$1</code></pre>');
+      // Parse code blocks ```lang ... ```
+      formatted = formatted.replace(/```(?:[a-zA-Z]+)?\n([\s\S]*?)```/g, '<pre class="bg-gray-950 dark:bg-black text-gray-100 p-3 rounded-lg font-mono text-xs overflow-x-auto border border-border my-2"><code class="block whitespace-pre">$1</code></pre>');
 
-    // Parse paragraph breaks
-    return formatted.replace(/\n/g, '<br>');
-  }
-
-  function appendMessage(sender, text, isStreaming = false) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'flex gap-2 max-w-[85%]';
-    if (sender === 'user') {
-      messageDiv.className += ' ml-auto flex-row-reverse';
+      // Parse paragraph breaks
+      return formatted.replace(/\n/g, '<br>');
     }
 
-    const avatarDiv = document.createElement('div');
-    avatarDiv.className = 'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm';
-    if (sender === 'user') {
-      avatarDiv.className += ' bg-primary text-white';
-      avatarDiv.textContent = 'U';
-    } else {
-      avatarDiv.className += ' bg-primary/10 text-primary';
-      avatarDiv.textContent = 'AI';
-    }
-
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'text-text text-sm rounded-2xl px-3 py-2 leading-relaxed border border-border';
-    if (sender === 'user') {
-      contentDiv.className += ' bg-primary/5 rounded-tr-none';
-    } else {
-      contentDiv.className += ' bg-surface-alt rounded-tl-none';
-    }
-    
-    contentDiv.innerHTML = formatMessage(text);
-    messageDiv.appendChild(avatarDiv);
-    messageDiv.appendChild(contentDiv);
-    messagesContainer?.appendChild(messageDiv);
-    
-    // Scroll to bottom
-    if (messagesContainer) {
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-
-    return contentDiv;
-  }
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!input) return;
-    const text = input.value.trim();
-    if (!text) return;
-
-    input.value = '';
-    appendMessage('user', text);
-
-    // Add loading indicator bubble
-    const responseBubble = appendMessage('assistant', '...', true);
-
-    try {
-      const response = await fetch(apiEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: text,
-          history: chatHistory,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get answer from AI Server.');
+    function appendMessage(sender: 'user' | 'assistant', text: string) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'flex gap-2 max-w-[85%]';
+      if (sender === 'user') {
+        messageDiv.className += ' ml-auto flex-row-reverse';
       }
 
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let aiResponseText = '';
-      responseBubble.innerHTML = '';
+      const avatarDiv = document.createElement('div');
+      avatarDiv.className = 'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm';
+      if (sender === 'user') {
+        avatarDiv.className += ' bg-primary text-white';
+        avatarDiv.textContent = 'U';
+      } else {
+        avatarDiv.className += ' bg-primary/10 text-primary';
+        avatarDiv.textContent = 'AI';
+      }
 
-      if (reader) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'text-text text-sm rounded-2xl px-3 py-2 leading-relaxed border border-border';
+      if (sender === 'user') {
+        contentDiv.className += ' bg-primary/5 rounded-tr-none';
+      } else {
+        contentDiv.className += ' bg-surface-alt rounded-tl-none';
+      }
+    
+      contentDiv.innerHTML = formatMessage(text);
+      messageDiv.appendChild(avatarDiv);
+      messageDiv.appendChild(contentDiv);
+      messagesContainer?.appendChild(messageDiv);
+    
+      // Scroll to bottom
+      if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
 
-          const chunk = decoder.decode(value, { stream: true });
+      return contentDiv;
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      appendMessage('user', text);
+
+      // Add loading indicator bubble
+      const responseBubble = appendMessage('assistant', '...');
+
+      try {
+        const response = await fetch(apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: text,
+            history: chatHistory,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to get answer from AI Server.');
+        }
+
+        const reader = response.body?.getReader();
+        const decoder = new TextDecoder();
+        let aiResponseText = '';
+        responseBubble.innerHTML = '';
+
+        if (reader) {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
           
-          // Split SSE lines
-          const lines = chunk.split('\n');
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const dataText = line.slice(6).trim();
-              if (dataText === '[DONE]') continue;
-              try {
-                const parsed = JSON.parse(dataText);
-                if (parsed.response) {
-                  aiResponseText += parsed.response;
-                  responseBubble.innerHTML = formatMessage(aiResponseText);
-                  if (messagesContainer) {
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            // Split SSE lines
+            const lines = chunk.split('\n');
+            for (const line of lines) {
+              if (line.startsWith('data: ')) {
+                const dataText = line.slice(6).trim();
+                if (dataText === '[DONE]') continue;
+                try {
+                  const parsed = JSON.parse(dataText);
+                  if (parsed.response) {
+                    aiResponseText += parsed.response;
+                    responseBubble.innerHTML = formatMessage(aiResponseText);
+                    if (messagesContainer) {
+                      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }
                   }
+                } catch (e) {
+                  // Not a valid JSON chunk, standard LLM text streams sometimes return raw tokens
+                  aiResponseText += dataText;
+                  responseBubble.innerHTML = formatMessage(aiResponseText);
                 }
-              } catch (e) {
-                // Not a valid JSON chunk, standard LLM text streams sometimes return raw tokens
-                aiResponseText += dataText;
-                responseBubble.innerHTML = formatMessage(aiResponseText);
               }
             }
           }
-        }
 
-        // Save to local history
-        chatHistory.push({ role: 'user', content: text });
-        chatHistory.push({ role: 'assistant', content: aiResponseText });
+          // Save to local history
+          chatHistory.push({ role: 'user', content: text });
+          chatHistory.push({ role: 'assistant', content: aiResponseText });
+        }
+      } catch (err) {
+        responseBubble.innerHTML = `<span class="text-error font-medium">Error: ${(err as Error).message}</span>`;
       }
-    } catch (err) {
-      responseBubble.innerHTML = `<span class="text-error font-medium">Error: ${err.message}</span>`;
-    }
+    });
   });
 </script>

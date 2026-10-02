@@ -7,7 +7,9 @@
   "exports": {
     "./global.css": "./src/global.css",
     "./tokens.css": "./src/tokens.css",
-    "./prose.css": "./src/prose.css"
+    "./prose.css": "./src/prose.css",
+    "./shiki.css": "./src/shiki.css",
+    "./shiki.mjs": "./src/shiki.mjs"
   },
   "dependencies": {
     "tailwindcss": "catalog:"

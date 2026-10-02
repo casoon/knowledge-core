@@ -98,6 +98,7 @@
 }
 
 .lesson-nav .progress-bar-fill {
+  width: 0;
   height: 100%;
   background: var(--color-primary);
   border-radius: 2px;

@@ -1,0 +1,86 @@
+/*
+  Classes for the inline styles of Shiki code blocks (github-dark), written by the
+  shikiStyleToClass transformer in shiki.mjs. Unlayered, like the style attributes
+  they replace, so they win over layered rules such as .prose pre.astro-code span.
+*/
+.shiki-color-6a737d {
+  color: #6a737d;
+}
+.shiki-color-79b8ff {
+  color: #79b8ff;
+}
+.shiki-color-b392f0 {
+  color: #b392f0;
+}
+.shiki-color-e1e4e8 {
+  color: #e1e4e8;
+}
+.shiki-color-85e89d {
+  color: #85e89d;
+}
+.shiki-color-f97583 {
+  color: #f97583;
+}
+.shiki-color-9ecbff {
+  color: #9ecbff;
+}
+.shiki-color-ffab70 {
+  color: #ffab70;
+}
+.shiki-color-fdaeb7 {
+  color: #fdaeb7;
+}
+.shiki-color-24292e {
+  color: #24292e;
+}
+.shiki-color-dbedff {
+  color: #dbedff;
+}
+.shiki-color-2f363d {
+  color: #2f363d;
+}
+.shiki-color-d1d5da {
+  color: #d1d5da;
+}
+.shiki-background-color-24292e {
+  background-color: #24292e;
+}
+.shiki-background-color-f97583 {
+  background-color: #f97583;
+}
+.shiki-background-color-86181d {
+  background-color: #86181d;
+}
+.shiki-background-color-144620 {
+  background-color: #144620;
+}
+.shiki-background-color-c24e00 {
+  background-color: #c24e00;
+}
+.shiki-background-color-79b8ff {
+  background-color: #79b8ff;
+}
+.shiki-overflow-x-auto {
+  overflow-x: auto;
+}
+.shiki-white-space-pre-wrap {
+  white-space: pre-wrap;
+}
+.shiki-word-wrap-break-word {
+  word-wrap: break-word;
+}
+.shiki-font-style-italic {
+  font-style: italic;
+}
+.shiki-font-weight-bold {
+  font-weight: bold;
+}
+.shiki-text-decoration-underline {
+  text-decoration: underline;
+}
+.shiki-text-decoration-line-through {
+  text-decoration: line-through;
+}
+.shiki-text-decoration-underline-line-through {
+  text-decoration: underline line-through;
+}

@@ -22,8 +22,8 @@ const percentage = Math.round((current / total) * 100);
   }
   <div class="w-full h-3 bg-surface-alt rounded-full overflow-hidden">
     <div
-      class="h-full bg-primary transition-all duration-300"
-      style={`width: ${percentage}%`}
+      class="h-full w-0 bg-primary transition-all duration-300"
+      data-width={percentage}
       role="progressbar"
       aria-valuenow={current}
       aria-valuemin="0"

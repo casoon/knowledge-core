@@ -18,6 +18,7 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
 <div
   class="quiz-container my-8 p-6 bg-surface-alt rounded-lg border border-border"
   data-quiz-id={quizId}
+  data-questions={JSON.stringify(questions)}
 >
   <h3 class="text-xl font-semibold text-text mb-6">{title}</h3>
 
@@ -63,12 +64,11 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
   </div>
 </div>
 
-<script define:vars={{ questions, quizId }}>
-  const quizContainer = document.querySelector(`[data-quiz-id="${quizId}"]`);
-  const checkButton = quizContainer?.querySelector("[data-check-answers]");
-  const resultDiv = quizContainer?.querySelector("[data-result]");
+<script>
+  type QuizQuestion = { options: string[]; correctAnswer: number; explanation?: string };
 
-  function renderFeedback(container, isCorrect, question) {
+  // Bundled instead of is:inline/define:vars: the CSP only allows scripts Astro hashed or served from 'self'.
+  function renderFeedback(container: Element, isCorrect: boolean, question: QuizQuestion) {
     const color = isCorrect ? "success" : "error";
     // Static SVG icons only — no content data interpolated
     const iconSvg = isCorrect
@@ -105,18 +105,24 @@ const quizId = `quiz-${Math.random().toString(36).substring(7)}`;
     container.appendChild(wrapper);
   }
 
-  checkButton?.addEventListener("click", () => {
+  document.addEventListener("click", (e) => {
+    const checkButton = (e.target as Element).closest<HTMLElement>("[data-check-answers]");
+    const quizContainer = checkButton?.closest<HTMLElement>("[data-quiz-id]");
+    if (!checkButton || !quizContainer) return;
+    const quizId = quizContainer.dataset.quizId;
+    const questions: QuizQuestion[] = JSON.parse(quizContainer.dataset.questions ?? "[]");
+    const resultDiv = quizContainer.querySelector("[data-result]");
     let correct = 0;
     const total = questions.length;
 
     questions.forEach((question, qIndex) => {
-      const selectedInput = quizContainer?.querySelector(
+      const selectedInput = quizContainer.querySelector<HTMLInputElement>(
         `input[name="${quizId}-q${qIndex}"]:checked`,
       );
-      const feedbackDiv = quizContainer?.querySelector(
+      const feedbackDiv = quizContainer.querySelector(
         `[data-question-index="${qIndex}"] [data-feedback]`,
       );
-      const feedbackContent = quizContainer?.querySelector(
+      const feedbackContent = quizContainer.querySelector(
         `[data-question-index="${qIndex}"] [data-feedback-content]`,
       );
 
