@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "type": "flow",
+  "title": "How Knowledge Core works",
+  "description": "You write docs pages and lessons in MDX. When the sites build, every file is checked against the Zod schemas in packages/content-model, and both apps take their components and design tokens from packages/ui and packages/styles. The docs app and the courses app each build to static files for any static host. Optionally, pnpm run ingest indexes the same content in Cloudflare Vectorize for the AI assistant.",
+  "source": "apps/docs, apps/courses, apps/chat-worker, packages/*, scripts/ingest-content.ts",
+  "width": 1100,
+  "height": 320,
+  "flow": {
+    "nodes": [
+      {
+        "id": "content",
+        "label": "Your content",
+        "sublabel": "MDX pages and lessons",
+        "kind": "start"
+      },
+      { "id": "schemas", "label": "Checked on build", "sublabel": "Zod schemas" },
+      { "id": "shared", "label": "Shared components", "sublabel": "packages/ui, styles" },
+      { "id": "docs", "label": "Docs site", "sublabel": "apps/docs" },
+      { "id": "courses", "label": "Course site", "sublabel": "apps/courses" },
+      { "id": "host", "label": "Static files", "sublabel": "any static host", "kind": "end" },
+      {
+        "id": "chat",
+        "label": "AI assistant",
+        "sublabel": "Vectorize, Workers AI",
+        "kind": "external"
+      }
+    ],
+    "edges": [
+      { "from": "content", "to": "schemas" },
+      { "from": "schemas", "to": "docs" },
+      { "from": "schemas", "to": "courses" },
+      { "from": "shared", "to": "docs" },
+      { "from": "shared", "to": "courses" },
+      { "from": "docs", "to": "host", "label": "build" },
+      { "from": "courses", "to": "host", "label": "build" },
+      { "from": "content", "to": "chat", "label": "ingest", "dash": "dashed" }
+    ],
+    "mainPath": ["content", "schemas", "docs", "host"],
+    "orientation": "landscape"
+  }
+}

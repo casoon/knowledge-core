@@ -46,3 +46,6 @@ order: 1
 
 Husky runs lint-staged before each commit, which applies `biome check --write` to staged
 `js`, `mjs`, `cjs`, `ts`, `tsx`, `json`, `astro` and `css` files.
+
+Both sites also run `@casoon/astro-post-audit` at the end of `astro build`, which checks the built
+pages for SEO and accessibility problems.

@@ -2,7 +2,6 @@
 import {
   Badge,
   Badges,
-  BuildOutput,
   Button,
   CodeBlock,
   Facts,
@@ -13,98 +12,142 @@ import {
 } from '@casoon/pages-theme/components';
 import Base from '@casoon/pages-theme/layouts/Base.astro';
 import { url } from '@casoon/pages-theme/url';
-// Real files from the template, read at build time so the page cannot drift from the repo.
-import course from '../../../apps/courses/src/content/courses/getting-started.json?raw';
-import sidebar from '../../../apps/docs/src/config/sidebar.ts?raw';
+import Diagram from '../components/Diagram.astro';
 
-const quickstart = `git clone https://github.com/casoon/knowledge-core.git
-cd knowledge-core
-pnpm install
-pnpm dev`;
+// Screenshots of the template's own live sites (kc-docs.casoon.dev, kc-courses.casoon.dev),
+// captured with Playwright at 1280 × 800 and stored as WebP in site/public/screens/.
+const run = `pnpm install
+pnpm dev   # docs :4321, courses :4322, chat :8787`;
 ---
 
 <Base>
   <Hero
     title="Docs and courses from one monorepo."
-    lead="Knowledge Core is a template for documentation sites and course platforms: two Astro 7 apps on shared MDX components, Zod-validated content and Tailwind CSS 4 tokens, plus an optional AI assistant that answers from your own content via Cloudflare Vectorize and Workers AI."
+    lead="Knowledge Core is a starting point for teams who publish documentation, training or a knowledge base: a docs site and a course platform with quizzes and progress, built from the same components and written in MDX. Optionally, an AI assistant answers visitor questions from your own content."
   >
     <Install
       commands={[
-        { label: 'git', command: 'git clone https://github.com/casoon/knowledge-core.git' },
-        { label: 'pnpm', command: 'pnpm install && pnpm dev' },
+        {
+          label: 'git',
+          command: 'git clone https://github.com/casoon/knowledge-core.git',
+        },
       ]}
     />
     <Badges>
-      <Badge>MIT</Badge>
+      <Badge>Free · MIT</Badge>
       <Badge>v0.3.1</Badge>
       <Badge>Astro 7</Badge>
-      <Badge>Node 22.12+</Badge>
-      <Badge>GitHub template</Badge>
+      <Badge>English · German</Badge>
     </Badges>
     <p class="actions">
       <Button href={url('docs/')}>Read the docs</Button>
-      <Button href="https://knowledge.casoon.de" variant="secondary">Live site</Button>
+      <Button href="https://kc-docs.casoon.dev/" variant="secondary">Live docs demo</Button>
+      <Button href="https://kc-courses.casoon.dev/" variant="secondary">Live course demo</Button>
     </p>
-    <CodeBlock
+    <img
       slot="output"
-      code={sidebar}
-      lang="ts"
-      title="apps/docs/src/config/sidebar.ts"
-      label="TypeScript"
+      class="shot"
+      src={url('screens/docs-page.webp')}
+      width="1280"
+      height="800"
+      alt="The live docs demo at kc-docs.casoon.dev: the Installation page with a sidebar for Getting started, Guides and Components on the left, a tip box in the text, an 'On this page' outline on the right and search, quiz, language and dark-mode controls in the header."
     />
   </Hero>
 
+  <Features
+    heading="Who it is for"
+    items={[
+      {
+        title: 'Teams that document a product',
+        body: 'Guides, references and how-tos in MDX, with a sidebar you configure, search, an outline per page and English and German versions.',
+      },
+      {
+        title: 'Teams that train people',
+        body: 'Courses split into modules and lessons, with quizzes, exercises and hints. Progress stays in the learner’s browser, so there is no account and no backend to run.',
+      },
+      {
+        title: 'Both from one place',
+        body: 'The docs site and the course site share their components and design tokens. Change a button or a colour once and both sites follow.',
+      },
+      {
+        title: 'Mistakes caught before they go live',
+        body: 'Every page and lesson is checked against a schema when the site builds. A missing title or an unknown course level stops the build instead of shipping a broken page.',
+      },
+    ]}
+  />
+
+  <section class="screens" aria-labelledby="screens-heading">
+    <h2 id="screens-heading">The course platform</h2>
+    <p class="intro">
+      Both screenshots are from the live demo at{' '}
+      <a href="https://kc-courses.casoon.dev/">kc-courses.casoon.dev</a>, built from the sample course
+      that ships with the template.
+    </p>
+    <div class="grid">
+      <figure>
+        <img
+          src={url('screens/courses-course.webp')}
+          width="1280"
+          height="800"
+          loading="lazy"
+          alt="Course page 'Getting Started with Knowledge Core': level badge beginner, duration, tags, a progress bar at 0 of 5 lessons, a Start Course button and the course content grouped into the modules AI Features, Introduction and Practice."
+        />
+        <figcaption>A course with its modules, lessons and the learner’s progress.</figcaption>
+      </figure>
+      <figure>
+        <img
+          src={url('screens/courses-quiz.webp')}
+          width="1280"
+          height="800"
+          loading="lazy"
+          alt="Quiz in a lesson after checking the answers: question 3 marked Correct with an explanation, question 4 marked Incorrect with the right answer 'In the packages/ui package' and a short explanation, and the result '3 of 4 correct (75%)' next to a Try Again button."
+        />
+        <figcaption>A quiz after checking: feedback and explanation per question.</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <Facts
     items={[
-      { value: '3', label: 'apps: docs, courses and the chat worker' },
-      { value: '25', label: 'Astro components exported from @knowledge-core/ui' },
-      { value: '67', label: 'Vitest tests across content model, i18n and chat worker' },
-      { value: '2', label: 'locales out of the box, English and German' },
+      { value: '2', label: 'sites: documentation and courses' },
+      { value: '25', label: 'shared Astro components for both' },
+      { value: '2', label: 'languages out of the box, English and German' },
+      { value: '67', label: 'tests for schemas, i18n and the chat worker' },
     ]}
   />
 
-  <Features
-    items={[
-      {
-        title: 'Two apps, one component library',
-        body: 'apps/docs and apps/courses build from the same packages: UI components, Tailwind tokens and Zod content schemas. A change in packages/ui reaches both sites.',
-      },
-      {
-        title: 'Content that fails the build when it is wrong',
-        body: 'Docs pages, courses and lessons are Astro content collections validated against the schemas in packages/content-model. A missing title or an unknown level stops the build instead of rendering an empty page.',
-      },
-      {
-        title: 'Courses with quizzes, exercises and progress',
-        body: 'Quiz, Exercise, Hint, ProgressBar and LessonComplete are MDX components. Lesson progress is kept in the visitor’s browser via localStorage, with no account or backend.',
-      },
-      {
-        title: 'An assistant that answers from your content',
-        body: 'pnpm run ingest chunks every docs page and lesson, embeds it with bge-large-en-v1.5 and stores it in Vectorize. The chat worker retrieves the top five matches and streams an answer from llama-3-8b-instruct, limited to 20 requests per minute per origin and IP.',
-      },
-      {
-        title: 'Quality checks wired in',
-        body: 'Biome for lint and format, Husky with lint-staged before each commit, astro check for types, Vitest for schemas and utilities, @casoon/astro-post-audit for SEO and accessibility after the docs build, and pnpm linkcheck for internal links.',
-      },
-    ]}
-  />
-
-  <BuildOutput
-    heading="Straight from the repository"
-    caption="The sample course that ships with the courses app. It is validated against courseFrontmatterSchema when the app builds; its five lessons are MDX files in the same app."
-    file="apps/courses/src/content/courses/getting-started.json"
-  >
-    <CodeBlock code={course} lang="json" title="getting-started.json" label="JSON" />
-  </BuildOutput>
+  <section class="how" aria-labelledby="how-heading">
+    <h2 id="how-heading">How it works</h2>
+    <div class="text">
+      <p>
+        You write pages and lessons as MDX files. When the sites build, each file is checked
+        against the content schemas, and both apps take their look from the shared packages. The
+        result is plain static files that run on any static host.
+      </p>
+      <p>
+        The AI assistant is optional. One command indexes the same content in Cloudflare Vectorize,
+        and a small Cloudflare Worker answers questions from it in a chat window on both sites.
+      </p>
+    </div>
+    <Diagram name="how-it-works" format="svg" narrow={{ width: 560, height: 760 }} />
+    <div class="links">
+      <Button href={url('docs/getting-started/project-structure/')} variant="secondary">
+        Project structure
+      </Button>
+      <Button href={url('docs/guides/ai-chat/')} variant="secondary">AI assistant</Button>
+      <Button href="https://knowledge.casoon.de/" variant="quiet">Product website →</Button>
+    </div>
+  </section>
 
   <Quickstart
-    lead="Use the GitHub template or clone the repository, install once at the root, and one command starts every app in parallel."
+    lead="Create a repository from the GitHub template or clone it, install once at the root, and one command starts everything."
     steps={[
       'Install Node.js 22.12 or newer and pnpm 9 or newer.',
-      'Create a repository from the template, or clone it, and run <code>pnpm install</code>.',
-      'Run <code>pnpm dev</code>: docs on port 4321, courses on 4322, the chat worker on 8787.',
+      'Use the template on GitHub, or clone the repository with the line above.',
+      'Run <code>pnpm install</code> and <code>pnpm dev</code>, then replace the sample pages and the sample course with your own.',
     ]}
   >
-    <CodeBlock code={quickstart} lang="shell" title="terminal" label="Shell" />
+    <CodeBlock code={run} lang="sh" label="Start" />
   </Quickstart>
 </Base>
 
@@ -114,5 +157,60 @@ pnpm dev`;
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 24px;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line, rgb(127 127 127 / 0.25));
+    border-radius: 10px;
+  }
+  .screens,
+  .how {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+  h2 {
+    margin: 0 0 14px;
+    color: var(--heading);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .intro {
+    margin: 0 0 24px;
+    font-size: 15.5px;
+  }
+  .intro a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+    gap: 32px;
+  }
+  figure {
+    margin: 0;
+  }
+  figcaption {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .text {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    gap: 0 48px;
+  }
+  .text p {
+    margin: 0 0 16px;
+    font-size: 15.5px;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
   }
 </style>

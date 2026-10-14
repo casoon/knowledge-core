@@ -14,7 +14,7 @@ export default defineConfig({
       repo: 'casoon/knowledge-core',
       version: '0.3.1',
       license: 'MIT',
-      packages: [{ label: 'Live site', href: 'https://knowledge.casoon.de' }],
+      packages: [{ label: 'Website', href: 'https://knowledge.casoon.de' }],
       docsGroups: {
         'getting-started': 'Getting started',
         guides: 'Guides',
