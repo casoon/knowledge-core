@@ -1,0 +1,118 @@
+---
+import {
+  Badge,
+  Badges,
+  BuildOutput,
+  Button,
+  CodeBlock,
+  Facts,
+  Features,
+  Hero,
+  Install,
+  Quickstart,
+} from '@casoon/pages-theme/components';
+import Base from '@casoon/pages-theme/layouts/Base.astro';
+import { url } from '@casoon/pages-theme/url';
+// Real files from the template, read at build time so the page cannot drift from the repo.
+import course from '../../../apps/courses/src/content/courses/getting-started.json?raw';
+import sidebar from '../../../apps/docs/src/config/sidebar.ts?raw';
+
+const quickstart = `git clone https://github.com/casoon/knowledge-core.git
+cd knowledge-core
+pnpm install
+pnpm dev`;
+---
+
+<Base>
+  <Hero
+    title="Docs and courses from one monorepo."
+    lead="Knowledge Core is a template for documentation sites and course platforms: two Astro 7 apps on shared MDX components, Zod-validated content and Tailwind CSS 4 tokens, plus an optional AI assistant that answers from your own content via Cloudflare Vectorize and Workers AI."
+  >
+    <Install
+      commands={[
+        { label: 'git', command: 'git clone https://github.com/casoon/knowledge-core.git' },
+        { label: 'pnpm', command: 'pnpm install && pnpm dev' },
+      ]}
+    />
+    <Badges>
+      <Badge>MIT</Badge>
+      <Badge>v0.3.1</Badge>
+      <Badge>Astro 7</Badge>
+      <Badge>Node 22.12+</Badge>
+      <Badge>GitHub template</Badge>
+    </Badges>
+    <p class="actions">
+      <Button href={url('docs/')}>Read the docs</Button>
+      <Button href="https://knowledge.casoon.de" variant="secondary">Live site</Button>
+    </p>
+    <CodeBlock
+      slot="output"
+      code={sidebar}
+      lang="ts"
+      title="apps/docs/src/config/sidebar.ts"
+      label="TypeScript"
+    />
+  </Hero>
+
+  <Facts
+    items={[
+      { value: '3', label: 'apps: docs, courses and the chat worker' },
+      { value: '25', label: 'Astro components exported from @knowledge-core/ui' },
+      { value: '67', label: 'Vitest tests across content model, i18n and chat worker' },
+      { value: '2', label: 'locales out of the box, English and German' },
+    ]}
+  />
+
+  <Features
+    items={[
+      {
+        title: 'Two apps, one component library',
+        body: 'apps/docs and apps/courses build from the same packages: UI components, Tailwind tokens and Zod content schemas. A change in packages/ui reaches both sites.',
+      },
+      {
+        title: 'Content that fails the build when it is wrong',
+        body: 'Docs pages, courses and lessons are Astro content collections validated against the schemas in packages/content-model. A missing title or an unknown level stops the build instead of rendering an empty page.',
+      },
+      {
+        title: 'Courses with quizzes, exercises and progress',
+        body: 'Quiz, Exercise, Hint, ProgressBar and LessonComplete are MDX components. Lesson progress is kept in the visitor’s browser via localStorage, with no account or backend.',
+      },
+      {
+        title: 'An assistant that answers from your content',
+        body: 'pnpm run ingest chunks every docs page and lesson, embeds it with bge-large-en-v1.5 and stores it in Vectorize. The chat worker retrieves the top five matches and streams an answer from llama-3-8b-instruct, limited to 20 requests per minute per origin and IP.',
+      },
+      {
+        title: 'Quality checks wired in',
+        body: 'Biome for lint and format, Husky with lint-staged before each commit, astro check for types, Vitest for schemas and utilities, @casoon/astro-post-audit for SEO and accessibility after the docs build, and pnpm linkcheck for internal links.',
+      },
+    ]}
+  />
+
+  <BuildOutput
+    heading="Straight from the repository"
+    caption="The sample course that ships with the courses app. It is validated against courseFrontmatterSchema when the app builds; its five lessons are MDX files in the same app."
+    file="apps/courses/src/content/courses/getting-started.json"
+  >
+    <CodeBlock code={course} lang="json" title="getting-started.json" label="JSON" />
+  </BuildOutput>
+
+  <Quickstart
+    lead="Use the GitHub template or clone the repository, install once at the root, and one command starts every app in parallel."
+    steps={[
+      'Install Node.js 22.12 or newer and pnpm 9 or newer.',
+      'Create a repository from the template, or clone it, and run <code>pnpm install</code>.',
+      'Run <code>pnpm dev</code>: docs on port 4321, courses on 4322, the chat worker on 8787.',
+    ]}
+  >
+    <CodeBlock code={quickstart} lang="shell" title="terminal" label="Shell" />
+  </Quickstart>
+</Base>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+</style>
