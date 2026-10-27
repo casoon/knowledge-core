@@ -8,7 +8,7 @@ Knowledge Core is a pnpm monorepo you start a project from, not a package you in
 two Astro 7 sites, one for documentation and one for courses, the packages they share, and a
 Cloudflare Worker that answers visitor questions from the content of both sites.
 
-The template's own sites run at [knowledge.casoon.de](https://knowledge.casoon.de).
+The template's own sites run at [kc-docs.casoon.dev](https://kc-docs.casoon.dev) and [kc-courses.casoon.dev](https://kc-courses.casoon.dev).
 
 ## What is in the repository
 

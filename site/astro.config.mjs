@@ -12,11 +12,9 @@ export default defineConfig({
       description:
         'Monorepo template for documentation and course platforms: Astro 7, MDX, Tailwind CSS 4 and an optional RAG chat assistant on Cloudflare.',
       tagline: 'Template for docs and course platforms',
-      website: 'https://knowledge.casoon.de',
       repo: 'casoon/knowledge-core',
       version: '0.3.1',
       license: 'MIT',
-      packages: [{ label: 'Website', href: 'https://knowledge.casoon.de' }],
       docsGroups: {
         'getting-started': 'Getting started',
         guides: 'Guides',
