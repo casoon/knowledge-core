@@ -1,16 +1,21 @@
 ---
+import { readFile } from 'node:fs/promises';
+import config from 'virtual:casoon-pages/config';
 import {
   Badge,
   Badges,
   Button,
   CodeBlock,
   Facts,
+  Faq,
   Features,
   Hero,
   Install,
   Quickstart,
+  ReleaseHighlights,
 } from '@casoon/pages-theme/components';
 import Base from '@casoon/pages-theme/layouts/Base.astro';
+import { parseChangelog } from '@casoon/pages-theme/lib/changelog';
 import { url } from '@casoon/pages-theme/url';
 import Diagram from '../components/Diagram.astro';
 
@@ -18,6 +23,13 @@ import Diagram from '../components/Diagram.astro';
 // captured with Playwright at 1280 × 800 and stored as WebP in site/public/screens/.
 const run = `pnpm install
 pnpm dev   # docs :4321, courses :4322, chat :8787`;
+
+// Skip "Unreleased": it has no version to show as "New in v…" yet.
+const latestRelease = config.changelog
+  ? parseChangelog(await readFile(config.changelog, 'utf8')).find(
+      (r) => r.version.toLowerCase() !== 'unreleased'
+    )
+  : undefined;
 ---
 
 <Base>
@@ -148,6 +160,33 @@ pnpm dev   # docs :4321, courses :4322, chat :8787`;
   >
     <CodeBlock code={run} lang="sh" label="Start" />
   </Quickstart>
+
+  {latestRelease && <ReleaseHighlights release={latestRelease} />}
+
+  <Faq
+    items={[
+      {
+        q: 'Is the AI chat assistant required?',
+        a: 'No. It is optional and off by default. Activating it takes four steps: create a Cloudflare Vectorize index, configure the API credentials, ingest your content, and deploy the chat worker.',
+      },
+      {
+        q: 'What happens if I skip the AI setup?',
+        a: 'The docs and course sites build and run normally. The ChatWidget only renders once PUBLIC_CHAT_ENDPOINT is configured in the build environment, so nothing breaks or shows a broken widget without it.',
+      },
+      {
+        q: 'Are my pages and lessons validated before they go live?',
+        a: 'Yes. Every MDX file is checked against Zod content schemas when the site builds — a missing title or an invalid course level stops the build instead of shipping a broken page.',
+      },
+      {
+        q: 'Can I use this without the course platform, just for documentation?',
+        a: 'Yes. Docs and courses are separate apps in the monorepo (pnpm dev:docs, pnpm build:docs) that happen to share components and design tokens — you can run or deploy either one on its own.',
+      },
+      {
+        q: 'Where do I change colors, fonts, or other design tokens?',
+        a: 'In packages/styles/src/tokens.css for token values and packages/styles/src/global.css for the Tailwind v4 theme — both apps pick up the change since they share the same styles package.',
+      },
+    ]}
+  />
 </Base>
 
 <style>
