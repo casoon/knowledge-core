@@ -68,8 +68,6 @@ export default defineConfig({
     checkOrigin: true,
     csp: {
       algorithm: 'SHA-256',
-      // AppShell loads the Inter stylesheet from Google Fonts
-      styleDirective: { resources: ["'self'", 'https://fonts.googleapis.com'] },
     },
   },
 
