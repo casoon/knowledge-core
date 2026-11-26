@@ -505,6 +505,8 @@ MIT License - see [LICENSE](LICENSE)
 
 Built with [Astro](https://astro.build), [Tailwind CSS](https://tailwindcss.com), [MDX](https://mdxjs.com), [Biome](https://biomejs.dev), and [pnpm](https://pnpm.io).
 
+Built and maintained by [Jörn Seidel](https://www.casoon.de/joern-seidel/) ([CASOON](https://www.casoon.de/)). Background and design decisions are described in an article on Insights (in German): [Vom Template zur Lernplattform: Knowledge Core in der Praxis](https://insights.casoon.de/artikel/learn-casoon-lernplattform-knowledge-core/).
+
 ---
 
 **Made with care for developers and educators**
