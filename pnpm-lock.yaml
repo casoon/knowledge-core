@@ -19,8 +19,8 @@ catalogs:
       specifier: ^0.5.3
       version: 0.5.3
     '@casoon/astro-site-files':
-      specifier: ^0.4.2
-      version: 0.4.2
+      specifier: ^0.8.0
+      version: 0.8.0
     '@casoon/astro-speed-measure':
       specifier: ^0.4.0
       version: 0.4.0
@@ -106,16 +106,16 @@ importers:
         version: 0.9.10(prettier@3.9.6)(typescript@6.0.3)
       '@astrojs/mdx':
         specifier: 'catalog:'
-        version: 8.0.0(@astrojs/markdown-satteri@0.4.0)(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 8.0.0(@astrojs/markdown-satteri@0.4.0)(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@casoon/astro-post-audit':
         specifier: 'catalog:'
-        version: 0.5.3(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 0.5.3(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@casoon/astro-site-files':
         specifier: 'catalog:'
-        version: 0.4.2(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 0.8.0(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@casoon/astro-speed-measure':
         specifier: 'catalog:'
-        version: 0.4.0(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 0.4.0(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@knowledge-core/content-model':
         specifier: workspace:*
         version: link:../../packages/content-model
@@ -130,7 +130,7 @@ importers:
         version: link:../../packages/ui
       astro:
         specifier: 'catalog:'
-        version: 7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
+        version: 7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       sharp:
         specifier: 'catalog:'
         version: 0.35.4(@types/node@24.13.3)
@@ -155,16 +155,16 @@ importers:
         version: 0.9.10(prettier@3.9.6)(typescript@6.0.3)
       '@astrojs/mdx':
         specifier: 'catalog:'
-        version: 8.0.0(@astrojs/markdown-satteri@0.4.0)(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 8.0.0(@astrojs/markdown-satteri@0.4.0)(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@casoon/astro-post-audit':
         specifier: 'catalog:'
-        version: 0.5.3(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 0.5.3(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@casoon/astro-site-files':
         specifier: 'catalog:'
-        version: 0.4.2(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 0.8.0(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@casoon/astro-speed-measure':
         specifier: 'catalog:'
-        version: 0.4.0(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
+        version: 0.4.0(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
       '@knowledge-core/content-model':
         specifier: workspace:*
         version: link:../../packages/content-model
@@ -179,7 +179,7 @@ importers:
         version: link:../../packages/ui
       astro:
         specifier: 'catalog:'
-        version: 7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
+        version: 7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
       sharp:
         specifier: 'catalog:'
         version: 0.35.4(@types/node@24.13.3)
@@ -478,11 +478,11 @@ packages:
     peerDependencies:
       astro: ^5.0.0 || ^6.0.0 || ^7.0.0
 
-  '@casoon/astro-site-files@0.4.2':
-    resolution: {integrity: sha512-AsSRJrm0k3M91xU6jgw9btCvl79LyL72cnFHNnV+DTvQc65W1VoybneB4e9UfhHJdbzQkvTa6gR4Iy0FFMifTg==}
+  '@casoon/astro-site-files@0.8.0':
+    resolution: {integrity: sha512-QvgxWwyls+/IKiH7FmowFaBPtfk/nXNPFCtiDB6VYuxmrMqaK8s+NgfbBHVtHX1VI1FRV5Oj23xYy5X9PDwBTg==}
     engines: {node: '>=22.12.0'}
     peerDependencies:
-      astro: '*'
+      astro: '>=6.0.0'
     peerDependenciesMeta:
       astro:
         optional: true
@@ -3120,11 +3120,11 @@ snapshots:
     dependencies:
       astro: 7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
 
-  '@casoon/astro-site-files@0.4.2(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))':
+  '@casoon/astro-site-files@0.8.0(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))':
     optionalDependencies:
       astro: 7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
 
-  '@casoon/astro-site-files@0.4.2(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))':
+  '@casoon/astro-site-files@0.8.0(astro@7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))':
     optionalDependencies:
       astro: 7.2.10(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0)
 

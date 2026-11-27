@@ -12,7 +12,7 @@ catalog:
   '@astrojs/check': ^0.9.10
   '@astrojs/mdx': ^8.0.0
   '@casoon/astro-post-audit': ^0.5.3
-  '@casoon/astro-site-files': ^0.4.2
+  '@casoon/astro-site-files': ^0.8.0
   '@casoon/astro-speed-measure': ^0.4.0
 
   # Tailwind v4

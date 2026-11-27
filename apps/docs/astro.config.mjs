@@ -13,7 +13,12 @@ export default defineConfig({
   integrations: [
     mdx(),
     siteFiles({
-      robots: {},
+      // KI-Suche, Nutzerabrufe, Training und Archive erlaubt; gesperrt sind nur KI-Scraper
+      // ohne veröffentlichte Crawler-Regeln.
+      robots: {
+        preset: 'openToAi',
+        groups: { unknownAi: 'disallow' },
+      },
       llms: {
         title: 'Knowledge Core – Documentation',
         description:
